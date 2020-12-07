@@ -19,7 +19,7 @@ private RoleRepository roleRepository;
 	@Override
 	public Role creer(Role entity) throws InvalideImmobilierException {
 		// TODO Auto-generated method stub
-		return null;
+		return roleRepository.save(entity);
 	}
 
 	@Override
@@ -31,13 +31,13 @@ private RoleRepository roleRepository;
 	@Override
 	public List<Role> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return roleRepository.findAll();
 	}
 
 	@Override
 	public Role findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return roleRepository.findById(id).get();
 	}
 
 	@Override
