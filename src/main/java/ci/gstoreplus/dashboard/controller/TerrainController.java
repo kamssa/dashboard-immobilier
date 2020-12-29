@@ -6,11 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +29,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ci.gstoreplus.dashboard.metier.CloudinaryService;
+import ci.gstoreplus.dashboard.metier.ImageService;
 import ci.gstoreplus.dashboard.metier.catalogue.TerrainMetier;
 import ci.gstoreplus.entity.catalogue.Categorie;
+import ci.gstoreplus.entity.catalogue.Image;
 import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
@@ -39,6 +45,10 @@ import ci.gstoreplus.utilitaire.Static;
 public class TerrainController {
 	@Autowired
 	private TerrainMetier terrainMetier;
+	@Autowired
+	CloudinaryService cloudinaryService;
+	@Autowired
+	ImageService imageSevice;
 	@Autowired
 	private ObjectMapper jsonMapper;
 	@Value("${dir.images}")
@@ -192,11 +202,37 @@ public class TerrainController {
 					return jsonMapper.writeValueAsString(reponse);
 
 				}
+				@GetMapping("/list")
+				  public ResponseEntity<List<Image>> list(){
+					List<Image> list = imageSevice.list();
+					return new ResponseEntity(list, HttpStatus.OK);
+				}
+				// solution alterntive cloudinary//////////////////////////
+				@PostMapping("/upload")
+				public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile,
+						@RequestParam Long id) throws IOException{
+					Map result = cloudinaryService.upload(multipartFile);
+					Image image = new Image(id,(String) result.get("original_filename"), (String) result.get("url"),(String) result.get("public_id"));
+					imageSevice.save(image);
+					return new ResponseEntity(result, HttpStatus.OK);
+				}
+				// supp image
+				@DeleteMapping("/delete/{id}")
+				public ResponseEntity<?> delete(@PathVariable("id") Long id) throws IOException{
+					if(!imageSevice.exists(id)) {
+						new InvalideImmobilierException("l'image n'xiste pas");
+					}
+					Image image = imageSevice.findById(id).get();
+					Map result = cloudinaryService.delete(image.getImageId());
+					imageSevice.deleteById(id);
+					return new ResponseEntity(new InvalideImmobilierException("image supprimée"), HttpStatus.OK);
+				}
+				
 			/////////////////////////////////////////////////////////////////////////////////////////////////
 			////// ajouter une image a la base a partir du libelle d'un block
 			///////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////
 
-			@PostMapping("/imageTerrain")
+			/*@PostMapping("/imageTerrain")
 			public String createImage(@RequestParam(name = "image_terrain") 
 			MultipartFile file, @RequestParam Long id) throws Exception {
 				Reponse<Terrain> reponse = null;
@@ -246,5 +282,5 @@ public class TerrainController {
 				byte[] img = IOUtils.toByteArray(new FileInputStream(f));
 
 				return img;
-			}
+			}*/
 }

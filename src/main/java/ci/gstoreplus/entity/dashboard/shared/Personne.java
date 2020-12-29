@@ -89,6 +89,15 @@ public class Personne extends AbstractEntity {
 		 this.actived=false;
 	}
 
+	public Personne(@NotBlank @Size(max = 40) String nom, @NotBlank @Size(max = 15) String prenom,
+			@NotBlank @Size(max = 40) @Email String email, @NotBlank @Size(max = 100) String password) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+	}
+
 	public Personne(Long id, @NotBlank @Size(max = 40) String nom, @NotBlank @Size(max = 15) String prenom,
 			@NotBlank @Size(max = 40) @Email String email, @NotBlank @Size(max = 100) String password, String fonction,
 			Set<Role> roles) {
