@@ -6,11 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +30,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ci.gstoreplus.dashboard.metier.CloudinaryService;
+import ci.gstoreplus.dashboard.metier.ImageService;
 import ci.gstoreplus.dashboard.metier.catalogue.FlashTerrainMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.TerrainMetier;
 import ci.gstoreplus.entity.catalogue.FlashTerrain;
+import ci.gstoreplus.entity.catalogue.Image;
 import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
@@ -40,6 +47,10 @@ import ci.gstoreplus.utilitaire.Static;
 public class FlashTerrainController {
 	@Autowired
 	private FlashTerrainMetier flashTerrainMetier;
+	@Autowired
+	CloudinaryService cloudinaryService;
+	@Autowired
+	ImageService imageSevice;
 	@Autowired
 	private ObjectMapper jsonMapper;
 	@Value("${dir.images}")
@@ -171,12 +182,34 @@ public class FlashTerrainController {
 				return jsonMapper.writeValueAsString(reponse);
 
 			}
-	
+			// solution alterntive cloudinary//////////////////////////
+			@PostMapping("/uploadf")
+			public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile,
+					@RequestParam Long id) throws IOException, InvalideImmobilierException{
+				Map result = cloudinaryService.upload(multipartFile);
+				FlashTerrain ft = flashTerrainMetier.findById(id);
+				ft.setPath((String) result.get("url"));
+				 flashTerrainMetier.modifier(ft);
+				
+				return new ResponseEntity(result, HttpStatus.OK);
+			}
+			// supp image
+			@DeleteMapping("/supprim/{id}")
+			public ResponseEntity<?> delete(@PathVariable("id") Long id) throws IOException{
+				Image image = imageSevice.findById(id).get();
+				Map result = cloudinaryService.delete(image.getImageId());
+				imageSevice.deleteById(id);
+				return new ResponseEntity(new InvalideImmobilierException("image supprimée"), HttpStatus.OK);
+			}
+			@GetMapping("/downloadImgft/{publicId}")
+		     public ResponseEntity<ByteArrayResource> downloadImg(@PathVariable String publicId) {
+		        return cloudinaryService.downloadImg(publicId);
+		    }
 			/////////////////////////////////////////////////////////////////////////////////////////////////
 			////// ajouter une image a la base a partir du libelle d'un block
 			///////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////
 
-			@PostMapping("/imageFlashTerrain")
+			/*@PostMapping("/imageFlashTerrain")
 			public String createImage(@RequestParam(name = "image_flash") 
 			MultipartFile file, @RequestParam Long id) throws Exception {
 				Reponse<FlashTerrain> reponse = null;
@@ -226,5 +259,5 @@ public class FlashTerrainController {
 				byte[] img = IOUtils.toByteArray(new FileInputStream(f));
 
 				return img;
-			}
+			}*/
 }

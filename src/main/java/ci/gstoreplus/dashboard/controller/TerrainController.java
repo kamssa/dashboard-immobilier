@@ -1,19 +1,14 @@
 package ci.gstoreplus.dashboard.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ci.gstoreplus.dashboard.metier.CloudinaryService;
 import ci.gstoreplus.dashboard.metier.ImageService;
 import ci.gstoreplus.dashboard.metier.catalogue.TerrainMetier;
-import ci.gstoreplus.entity.catalogue.Categorie;
 import ci.gstoreplus.entity.catalogue.Image;
 import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
@@ -204,18 +197,16 @@ public class TerrainController {
 					return jsonMapper.writeValueAsString(reponse);
 
 				}
-				@GetMapping("/list")
-				  public ResponseEntity<List<Image>> list(){
-					List<Image> list = imageSevice.list();
-					return new ResponseEntity(list, HttpStatus.OK);
-				}
+				
 				// solution alterntive cloudinary//////////////////////////
 				@PostMapping("/upload")
 				public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile,
-						@RequestParam Long id) throws IOException{
+						@RequestParam Long id) throws IOException, InvalideImmobilierException{
 					Map result = cloudinaryService.upload(multipartFile);
-					Image image = new Image(id,(String) result.get("original_filename"), (String) result.get("url"),(String) result.get("public_id"));
-					imageSevice.save(image);
+					Terrain terrain = terrainMetier.findById(id);
+					terrain.setPath((String) result.get("url"));
+					terrainMetier.modifier(terrain);
+					
 					return new ResponseEntity(result, HttpStatus.OK);
 				}
 				// supp image
