@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gstoreplus.dashboard.metier.DemandeMetier;
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
-import ci.gstoreplus.entity.catalogue.Demande;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin
 public class RoleController {
 	@Autowired
@@ -50,7 +49,7 @@ public class RoleController {
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-////////////////// enregistrer une role  dans la base de donnee
+////////////////// enregistrer un role  dans la base de donnee
 ////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
 	@PostMapping("/role")
