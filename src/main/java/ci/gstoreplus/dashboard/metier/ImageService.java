@@ -32,4 +32,8 @@ public class ImageService {
 	public boolean exists(Long id) {
 		return imageRepository.existsById(id);
 	}
+	public Image findImageByIdTerrain(Long id) {
+		return imageRepository.findImageByIdTerrain(id);
+	}
+
 }
