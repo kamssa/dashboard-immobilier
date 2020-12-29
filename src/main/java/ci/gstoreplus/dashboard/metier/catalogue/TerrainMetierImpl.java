@@ -50,7 +50,7 @@ private TerrainRepository terrainRepository;
 	public List<Terrain> findAll() {
 		List<Terrain> ters = null;
 		List<Terrain> terrains = terrainRepository.findAll();
-	    ters = terrains.stream().limit(2).collect(Collectors.toList());
+	    ters = terrains.stream().collect(Collectors.toList());
 	    return ters;
 	}
 
