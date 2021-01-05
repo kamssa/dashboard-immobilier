@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("TT")
-public class TopTerrain extends Terrains{
+public class TopTerrain extends Produit{
 
 	
 	private static final long serialVersionUID = 1L;

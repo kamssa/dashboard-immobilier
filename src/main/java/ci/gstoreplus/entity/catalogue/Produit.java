@@ -13,23 +13,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
-import ci.gstoreplus.entity.dashboard.shared.Personne;
 
 @Entity
-@Table(name = "T_Terrains")
+@Table(name = "T_Produit")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TYPE_TERRAIN", discriminatorType = DiscriminatorType.STRING, length = 2)
+@DiscriminatorColumn(name = "TYPE_PRODUIT", discriminatorType = DiscriminatorType.STRING, length = 2)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ 
 	@Type(name = "TT", value = TopTerrain.class),
 	@Type(name = "FT", value = FlashTerrain.class),
-	@Type(name = "TE", value = Terrain.class)
+	@Type(name = "TE", value = Terrain.class),
+	@Type(name = "MA", value = Maison.class)
 	
 })
-public class Terrains extends AbstractEntity{
+public class Produit extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
 	private String libelle;
 	private String description;
@@ -56,13 +57,13 @@ public class Terrains extends AbstractEntity{
 	private long idVille;
 	
 	
-	@Column(name = "TYPE_TERRAIN", insertable = false, updatable = false)
+	@Column(name = "TYPE_PRODUIT", insertable = false, updatable = false)
 	private String type;
-	public Terrains() {
+	public Produit() {
 		super();
 	}
 	
-	public Terrains(String libelle, String description, double prix, Categorie categorie) {
+	public Produit(String libelle, String description, double prix, Categorie categorie) {
 		super();
 		this.libelle = libelle;
 		this.description = description;
@@ -171,7 +172,7 @@ public class Terrains extends AbstractEntity{
 	}
 
 	public void setNumero() {
-		this.numero = "T"+ (Math.random() * (10));
+		this.numero = "P"+ (Math.random() * (10));
 	}
 
 	public String getNote() {
@@ -184,8 +185,12 @@ public class Terrains extends AbstractEntity{
 
 	@Override
 	public String toString() {
-		return "Terrain [libelle=" + libelle + ", description=" + description + ", prix=" + prix + ", categorie="
-				+ categorie + "]";
+		return "Produit [libelle=" + libelle + ", description=" + description + ", prix=" + prix + ", path=" + path
+				+ ", latitude=" + latitude + ", longitude=" + longitude + ", numero=" + numero + ", categorie="
+				+ categorie + ", ville=" + ville + ", paye=" + paye + ", abonneGeo=" + abonneGeo + ", unite=" + unite
+				+ ", note=" + note + ", idCategorie=" + idCategorie + ", idVille=" + idVille + ", type=" + type + "]";
 	}
+
+	
 
 }
