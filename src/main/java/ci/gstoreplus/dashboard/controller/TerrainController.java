@@ -100,6 +100,7 @@ public class TerrainController {
 			reponseTerrainModif = getTerrainById(modif.getId());
 			if (reponseTerrainModif.getBody() != null) {
 				try {
+					modif.setPath(reponseTerrainModif.getBody().getPath());
 					System.out.println("modif recupere2:"+ modif);
 					Terrain terrain = terrainMetier.modifier(modif);
 					List<String> messages = new ArrayList<>();
