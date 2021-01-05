@@ -79,7 +79,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 		String token = "";
 		String tokenHtml = "";
 		String token1 = "";
-		String lien = "http://localhost:4200/#/verification?login=" +
+		String lien = "https://immo.gstoreplus.ci/#/verification?login=" +
 		personne.getEmail() + "&key="
 				+ UUID.randomUUID().toString();
 
