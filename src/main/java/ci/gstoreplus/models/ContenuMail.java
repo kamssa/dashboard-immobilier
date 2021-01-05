@@ -189,8 +189,8 @@ private String lien="";
  		"				<div style='line-height: 24px;'>\r\n" + 
  		"					<font face='Arial, Helvetica, sans-serif' size='4' color='#57697e' style='font-size: 15px;'>\r\n" + 
  		"					<span style='font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;'>\r\n" + 
- 		"						Merci pour votre inscription à la plateforme. Pour avoir un accès total à votre Dashboard veuillez cliquer ci-dessous sur le lien proposé: <a href='";
-                           String    var1="' target='_blank'>Cliquez ici pour activer</a> \r\n" + 
+ 		"						Merci pour votre inscription à la plateforme. Pour avoir un accès total à votre Dashboard veuillez utiliser ces chiffres: <a href='";
+                           String    var1="' target='_blank'></a> \r\n" + 
  		"					</span></font>\r\n" + 
  		"					<div style='width:400px;  margin:15px;  display:flex; justify-content:center;'>";			
  								
