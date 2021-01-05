@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ci.gstoreplus.dashboard.metier.DemandeMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.TerrainAcheterMetier;
 import ci.gstoreplus.entity.catalogue.Demande;
+import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.entity.catalogue.TerrainAcheter;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
@@ -159,4 +160,22 @@ public class TerrainAcheterController {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
+             //////////recupere les terrains achetés par id personne
+				@GetMapping("/getTerrainAcheteByIdPersonne/{id}")
+				public String chercherParVille(@PathVariable Long id) throws JsonProcessingException {
+					Reponse<TerrainAcheter> reponse = null;
+
+					try {
+						TerrainAcheter t = terrainAcheterMetier.findTerrainAcheteByIdPersonne(id);
+						List<String> messages = new ArrayList<>();
+						messages.add(String.format(" à été créer avec succes"));
+						reponse = new Reponse<TerrainAcheter>(0, messages, t);
+
+					} catch (Exception e) {
+
+						reponse = new Reponse<TerrainAcheter>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
 }

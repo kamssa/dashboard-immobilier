@@ -67,4 +67,10 @@ private TerrainAcheterRepository terrainAcheterRepository;
 		return null;
 	}
 
+	@Override
+	public TerrainAcheter findTerrainAcheteByIdPersonne(long id) {
+		// TODO Auto-generated method stub
+		return terrainAcheterRepository.findTerrainAcheteByIdPersonne(id);
+	}
+
 }
