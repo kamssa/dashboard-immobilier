@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gstoreplus.dashboard.metier.DemandeMetier;
-import ci.gstoreplus.dashboard.metier.catalogue.TerrainAcheterMetier;
+import ci.gstoreplus.dashboard.metier.catalogue.ProduitAcheterMetier;
 import ci.gstoreplus.entity.catalogue.Demande;
 import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.entity.catalogue.TerrainAcheter;
@@ -29,9 +29,9 @@ import ci.gstoreplus.utilitaire.Static;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class TerrainAcheterController {
+public class ProduitAcheterController {
 	@Autowired
-	private TerrainAcheterMetier terrainAcheterMetier;
+	private ProduitAcheterMetier terrainAcheterMetier;
 	@Autowired
 	private ObjectMapper jsonMapper;
 

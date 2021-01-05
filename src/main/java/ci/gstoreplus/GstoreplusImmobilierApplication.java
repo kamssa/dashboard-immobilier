@@ -40,7 +40,7 @@ public class GstoreplusImmobilierApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		/*this.roleRepository.save(new Role(RoleName.ROLE_ADMIN));
+		this.roleRepository.save(new Role(RoleName.ROLE_ADMIN));
 		this.roleRepository.save(new Role(RoleName.ROLE_EMPLOYE));
 		this.roleRepository.save(new Role(RoleName.ROLE_MANAGER));
 		this.roleRepository.save(new Role(RoleName.ROLE_MEMBRE));
@@ -48,7 +48,7 @@ public class GstoreplusImmobilierApplication implements CommandLineRunner {
 		Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
 		Admin ad = new Admin("Traore", "Abdoulaye", "kamssa@gmail.com", passwordEncoder.encode("123456"));
 		ad.setRoles(Collections.singleton(userRole));
-         ad = personneRepository.save(ad);*/
+         ad = personneRepository.save(ad);
 	}
 
 }
