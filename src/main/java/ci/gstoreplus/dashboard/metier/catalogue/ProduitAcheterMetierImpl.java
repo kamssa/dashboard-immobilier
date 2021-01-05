@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ci.gstoreplus.dao.dashboard.catalogue.TerrainAcheterRepository;
+import ci.gstoreplus.dao.dashboard.catalogue.PoduitAcheterRepository;
 import ci.gstoreplus.entity.catalogue.TerrainAcheter;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
-public class TerainAcheterMetierImpl implements TerrainAcheterMetier {
+public class ProduitAcheterMetierImpl implements ProduitAcheterMetier {
 @Autowired
-private TerrainAcheterRepository terrainAcheterRepository;
+private PoduitAcheterRepository terrainAcheterRepository;
 	@Override
 	public TerrainAcheter creer(TerrainAcheter entity) throws InvalideImmobilierException {
 		// TODO Auto-generated method stub
