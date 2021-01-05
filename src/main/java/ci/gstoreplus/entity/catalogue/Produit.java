@@ -34,7 +34,7 @@ import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 public class Produit extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
 	private String libelle;
-	@Lob
+	@Column(columnDefinition="TEXT")
 	private String description;
 	private double prix;
 	private String path;
