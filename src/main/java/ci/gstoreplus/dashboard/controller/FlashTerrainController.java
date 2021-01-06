@@ -107,6 +107,8 @@ public class FlashTerrainController {
 			reponseTerrainModif = getFlashTerrainById(modif.getId());
 			if (reponseTerrainModif.getBody() != null) {
 				try {
+					modif.setPath(reponseTerrainModif.getBody().getPath());
+					System.out.println("modif recupere2:"+ modif);
 					System.out.println("modif recupere2:"+ modif);
 					FlashTerrain terrain = flashTerrainMetier.modifier(modif);
 					List<String> messages = new ArrayList<>();
