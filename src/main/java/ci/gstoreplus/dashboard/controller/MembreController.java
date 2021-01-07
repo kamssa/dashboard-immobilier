@@ -227,6 +227,25 @@ public class MembreController {
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
+	// recherche le membre par id
+		@GetMapping("/getMembre/{email}")
+		public String getPersonnesByEmail(@PathVariable("email") String email) throws JsonProcessingException {
+
+			Reponse<Personne> reponse;
+
+			try {
+
+				Personne p = personneMetier.findByEmail(email);
+				List<String> messages = new ArrayList<>();
+				messages.add(String.format(" à été créer avec succes"));
+				reponse = new Reponse<Personne>(0, messages, p);
+
+			} catch (Exception e) {
+
+				reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+			}
+			return jsonMapper.writeValueAsString(reponse);
+		}
 
 	// supprimer une categorie
 	@DeleteMapping("/membre/{id}")
@@ -244,7 +263,7 @@ public class MembreController {
 
 		return jsonMapper.writeValueAsString(reponse);
 	}
-
+	
 	// get all employe
 	@GetMapping("/membre")
 	public String findAll() throws JsonProcessingException {

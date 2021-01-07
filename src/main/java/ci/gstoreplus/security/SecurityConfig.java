@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         		"/api/getCategorieByNom/**",
                         		"/api/imageFlashTerrain/**",
                         		"/api/imageTerrain/**",
-                        		"/api/getImageTerrain/**").permitAll()
+                        		"/api/getImageTerrain/**","/api/getMembre/**").permitAll()
                     .anyRequest()
                         .authenticated();
 

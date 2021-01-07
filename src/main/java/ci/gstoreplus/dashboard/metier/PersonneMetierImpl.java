@@ -133,4 +133,11 @@ public static final String TOKEN_VALID = "VALID";
 			return TOKEN_VALID;
 		}
 
+
+		@Override
+		public Personne findByEmail(String email) {
+			// TODO Auto-generated method stub
+			return personneRepository.findByEmail(email).get();
+		}
+
 }
