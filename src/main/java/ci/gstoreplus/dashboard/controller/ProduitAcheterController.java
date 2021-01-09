@@ -162,7 +162,7 @@ public class ProduitAcheterController {
 		}
              //////////recupere les terrains achetés par id personne
 				@GetMapping("/getTerrainAcheteByIdPersonne/{id}")
-				public String chercherParVille(@PathVariable Long id) throws JsonProcessingException {
+				public String chercherParPersonne(@PathVariable Long id) throws JsonProcessingException {
 					Reponse<TerrainAcheter> reponse = null;
 
 					try {
