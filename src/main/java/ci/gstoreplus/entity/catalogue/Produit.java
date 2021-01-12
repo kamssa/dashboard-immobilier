@@ -54,6 +54,7 @@ public class Produit extends AbstractEntity{
 	private String  unite;
 	private String note;
 	private String prixParMettreCarre;
+	private String superficie;
 	@Column(name = "id_categorie", insertable = false, updatable = false)
 	private long idCategorie;
 	
@@ -73,6 +74,14 @@ public class Produit extends AbstractEntity{
 		this.description = description;
 		this.prix = prix;
 		this.categorie = categorie;
+	}
+
+	public String getSuperficie() {
+		return superficie;
+	}
+
+	public void setSuperficie(String superficie) {
+		this.superficie = superficie;
 	}
 
 	public String getPrixParMettreCarre() {
