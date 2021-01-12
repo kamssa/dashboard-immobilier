@@ -41,6 +41,7 @@ public class Produit extends AbstractEntity{
 	private double latitude;
 	private double longitude;
 	private String numero;
+	
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_categorie")
 	private Categorie categorie;
@@ -52,6 +53,7 @@ public class Produit extends AbstractEntity{
 	private boolean abonneGeo; 
 	private String  unite;
 	private String note;
+	private String prixParMettreCarre;
 	@Column(name = "id_categorie", insertable = false, updatable = false)
 	private long idCategorie;
 	
@@ -72,6 +74,20 @@ public class Produit extends AbstractEntity{
 		this.prix = prix;
 		this.categorie = categorie;
 	}
+
+	public String getPrixParMettreCarre() {
+		return prixParMettreCarre;
+	}
+
+	public void setPrixParMettreCarre(String prixParMettreCarre) {
+		this.prixParMettreCarre = prixParMettreCarre;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	
 
 	public String getPath() {
 		return path;
