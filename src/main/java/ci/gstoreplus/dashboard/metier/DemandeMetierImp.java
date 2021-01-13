@@ -37,7 +37,8 @@ private DemandeRepository demandeRepository;
 
 	@Override
 	public boolean supprimer(Long id) {
-		return false;
+		demandeRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
