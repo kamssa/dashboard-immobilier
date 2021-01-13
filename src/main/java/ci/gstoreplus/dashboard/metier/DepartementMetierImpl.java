@@ -41,8 +41,8 @@ private DepartementRepository departementRepository;
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+    departementRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
