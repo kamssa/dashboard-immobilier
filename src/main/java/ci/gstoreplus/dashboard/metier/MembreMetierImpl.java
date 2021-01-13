@@ -47,8 +47,8 @@ public class MembreMetierImpl implements MembreMetier{
 
 		@Override
 		public boolean supprimer(Long id) {
-			// TODO Auto-generated method stub
-			return false;
+        personneRepository.deleteById(id);
+       return true;
 		}
 
 		@Override
