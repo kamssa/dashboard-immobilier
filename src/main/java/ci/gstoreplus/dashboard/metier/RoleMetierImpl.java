@@ -76,4 +76,10 @@ private RoleRepository roleRepository;
 		return roleRepository.findByName(roleName);
 	}
 
+	@Override
+	public Optional<Role> findByRoleName(String roleName) {
+		// TODO Auto-generated method stub
+		return roleRepository.findByRoleName(roleName);
+	}
+
 }

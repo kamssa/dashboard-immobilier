@@ -1,15 +1,10 @@
 package ci.gstoreplus.dashboard.metier;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
-import ci.gstoreplus.dao.dashboard.personne.VerificationTokenRepository;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
@@ -27,7 +22,6 @@ public class MembreMetierImpl implements MembreMetier{
 
 		@Override
 		public Personne modifier(Personne entity) throws InvalideImmobilierException {
-			// TODO Auto-generated method stub
 			return personneRepository.save(entity);
 		}
 
@@ -41,14 +35,13 @@ public class MembreMetierImpl implements MembreMetier{
 
 		@Override
 		public Personne findById(Long id) {
-			// TODO Auto-generated method stub
 			return personneRepository.findById(id).get();
 		}
 
 		@Override
 		public boolean supprimer(Long id) {
         personneRepository.deleteById(id);
-       return true;
+         return true;
 		}
 
 		@Override
