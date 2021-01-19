@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
+import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.entity.dashboard.shared.Role;
+import ci.gstoreplus.entity.dashboard.shared.RoleName;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;
@@ -89,4 +92,6 @@ public class RoleController {
 				return jsonMapper.writeValueAsString(reponse);
 
 			}
+
+			
 }

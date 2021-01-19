@@ -9,5 +9,5 @@ import ci.gstoreplus.metier.Imetier;
 
 public interface IRoleMetier  extends Imetier<Role, Long>{
 	Optional<Role> findByName(RoleName roleName);
-
+    Optional<Role> findByRoleName(String roleName);
 }

@@ -34,7 +34,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gstoreplus.dashboard.metier.EmployeMetier;
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
 import ci.gstoreplus.dashboard.metier.MembreMetier;
 import ci.gstoreplus.dashboard.metier.PersonneMetier;

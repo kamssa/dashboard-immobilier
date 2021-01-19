@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
 import ci.gstoreplus.dao.dashboard.personne.VerificationTokenRepository;
+import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.entity.dashboard.shared.VerificationToken;
 import ci.gstoreplus.exception.InvalideImmobilierException;
@@ -52,9 +53,19 @@ public static final String TOKEN_VALID = "VALID";
 
 
 	@Override
-	public Personne modifier(Personne entity) throws InvalideImmobilierException {
-		// TODO Auto-generated method stub
-		return personneRepository.save(entity);
+	public Personne modifier(Personne modif) throws InvalideImmobilierException {
+		Optional<Personne> personne = personneRepository.findById(modif.getId());
+		if (personne.isPresent()) {
+
+			if (personne.get().getVersion() != modif.getVersion()) {
+				throw new InvalideImmobilierException("cette personne a deja ete modifier");
+			}
+
+		} else
+			throw new InvalideImmobilierException("modif est un objet null");
+
+		
+		return personneRepository.save(modif);
 	}
 
 	@Override
@@ -70,8 +81,8 @@ public static final String TOKEN_VALID = "VALID";
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+    personneRepository.deleteById(id);
+    return true;
 	}
 
 	@Override
