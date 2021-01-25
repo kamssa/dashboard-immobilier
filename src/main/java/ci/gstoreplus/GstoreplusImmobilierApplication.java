@@ -13,8 +13,12 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import ci.gstoreplus.dao.dashboard.catalogue.ProduitRepository;
 import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
 import ci.gstoreplus.dao.dashboard.personne.RoleRepository;
+import ci.gstoreplus.entity.catalogue.Categorie;
+import ci.gstoreplus.entity.catalogue.Produit;
+import ci.gstoreplus.entity.catalogue.Ville;
 import ci.gstoreplus.entity.dashboard.admin.Admin;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.entity.dashboard.shared.RoleName;
@@ -29,6 +33,8 @@ public class GstoreplusImmobilierApplication implements CommandLineRunner {
 	private PersonneRepository personneRepository;
 	@Autowired
 	private RoleRepository roleRepository;
+	@Autowired
+	private ProduitRepository produitRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@PostConstruct
@@ -49,6 +55,8 @@ public class GstoreplusImmobilierApplication implements CommandLineRunner {
 		Admin ad = new Admin("Traore", "Abdoulaye", "kamssa@gmail.com", passwordEncoder.encode("123456"));
 		ad.setRoles(Collections.singleton(userRole));
          ad = personneRepository.save(ad);*/
+		//this.produitRepository.deleteById(53L);
+		
 	}
 
 }

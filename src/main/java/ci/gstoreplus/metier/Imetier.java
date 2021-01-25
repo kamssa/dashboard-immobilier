@@ -23,7 +23,7 @@ public interface Imetier <T,U>{
 	
 	Boolean existsByPseudo(String pseudo);
 
-	Boolean existsByEmail(String email);
+	boolean existsByEmail(String email);
 	
 
 }

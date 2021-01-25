@@ -12,5 +12,5 @@ import ci.gstoreplus.entity.dashboard.shared.Personne;
 public interface PersonneRepository extends JpaRepository<Personne, Long>{
 	Optional<Personne> findByEmail(String email);
     List<Personne> findByIdIn(List<Long> userIds);
-    Boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
 }

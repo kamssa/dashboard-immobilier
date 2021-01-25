@@ -57,8 +57,8 @@ private DemandeRepository demandeRepository;
 	}
 
 	@Override
-	public Boolean existsByEmail(String email) {
-		return null;
+	public boolean existsByEmail(String email) {
+		return false;
 	}
 
 	@Override

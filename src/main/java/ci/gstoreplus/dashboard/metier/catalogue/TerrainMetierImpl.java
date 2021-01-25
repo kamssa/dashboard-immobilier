@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import ci.gstoreplus.dao.dashboard.catalogue.TerrainRepository;
 import ci.gstoreplus.entity.catalogue.Terrain;
-import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
@@ -83,8 +83,8 @@ private TerrainRepository terrainRepository;
 	}
 
 	@Override
-	public Boolean existsByEmail(String email) {
-		return null;
+	public boolean existsByEmail(String email) {
+		return false;
 	}
 
 	@Override
@@ -98,7 +98,7 @@ private TerrainRepository terrainRepository;
 	public List<Terrain> findTerrainByIdVille(Long id) {
 		List<Terrain> ters = null;
 		List<Terrain> terrains = terrainRepository.findAll();
-	    ters = terrains.stream().filter(t -> t.getId().equals(id)).limit(4).collect(Collectors.toList());
+	    ters = terrains.stream().filter(t -> t.getVille().getId()==id).limit(4).collect(Collectors.toList());
 	    return ters;		
 	}
 

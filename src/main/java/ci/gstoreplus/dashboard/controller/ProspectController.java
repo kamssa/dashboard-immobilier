@@ -207,6 +207,25 @@ public class ProspectController {
 				return jsonMapper.writeValueAsString(reponse);
 			}
 
+			// recherche le membre par email
+			@GetMapping("/getProspect/{email}")
+			public String getProspectByEmail(@PathVariable("email") String email) throws JsonProcessingException {
+
+				Reponse<Personne> reponse;
+
+				try {
+
+					Personne p = personneMetier.findByEmail(email);
+					List<String> messages = new ArrayList<>();
+					messages.add(String.format(" à été créer avec succes"));
+					reponse = new Reponse<Personne>(0, messages, p);
+
+				} catch (Exception e) {
+
+					reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+				}
+				return jsonMapper.writeValueAsString(reponse);
+			}
 
 	
 }
