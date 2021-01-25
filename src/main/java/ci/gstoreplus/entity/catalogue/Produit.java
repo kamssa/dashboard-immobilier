@@ -132,7 +132,7 @@ public class Produit extends AbstractEntity{
 		this.prix = prix;
 	}
 
-	public long getIdCategorie() {
+	 public long getIdCategorie() {
 		return idCategorie;
 	}
 

@@ -62,9 +62,9 @@ private PoduitAcheterRepository terrainAcheterRepository;
 	}
 
 	@Override
-	public Boolean existsByEmail(String email) {
+	public boolean existsByEmail(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override

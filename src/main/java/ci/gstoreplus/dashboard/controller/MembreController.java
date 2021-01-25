@@ -283,4 +283,21 @@ public class MembreController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
+	// recherche le membre par id
+			@GetMapping("/existMembre/{email}")
+			public String existeByEmail(@PathVariable("email") String email) throws JsonProcessingException {
+
+				Reponse<Boolean> reponse = null;
+
+				try {
+
+					reponse = new Reponse<Boolean>(0, null, personneMetier.existsByEmail(email));
+
+				} catch (RuntimeException e1) {
+					reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
+				}
+
+				return jsonMapper.writeValueAsString(reponse);
+			}
+
 }

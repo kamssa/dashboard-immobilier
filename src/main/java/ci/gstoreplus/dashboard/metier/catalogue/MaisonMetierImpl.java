@@ -1,6 +1,7 @@
 package ci.gstoreplus.dashboard.metier.catalogue;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,15 +64,17 @@ private MaisonRepository maisonRepository;
 	}
 
 	@Override
-	public Boolean existsByEmail(String email) {
+	public boolean existsByEmail(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
 	public List<Maison> findMaisonByIdVille(Long id) {
-		// TODO Auto-generated method stub
-		return maisonRepository.findMaisonByIdVille(id);
+		List<Maison> ters = null;
+		List<Maison> terrains = maisonRepository.findAll();
+	    ters = terrains.stream().filter(t -> t.getVille().getId()==id).limit(4).collect(Collectors.toList());
+	    return ters;	
 	}
 
 	@Override

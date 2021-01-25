@@ -15,24 +15,28 @@ public class TerrainAcheter extends AbstractEntity{
 	 */
 	private static final long serialVersionUID = 1L;
 	@OneToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
-	private Produit produits;
+	private Produit produit;
 	@OneToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	private Personne personne;
 	public TerrainAcheter() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public TerrainAcheter(Produit produits, Personne personne) {
+	
+	public TerrainAcheter(Produit produit, Personne personne) {
 		super();
-		this.produits = produits;
+		this.produit = produit;
 		this.personne = personne;
 	}
-	public Produit getTerrains() {
-		return produits;
+
+	public Produit getProduit() {
+		return produit;
 	}
-	public void setTerrains(Produit produits) {
-		this.produits = produits;
+
+	public void setProduit(Produit produit) {
+		this.produit = produit;
 	}
+
 	public Personne getPersonne() {
 		return personne;
 	}

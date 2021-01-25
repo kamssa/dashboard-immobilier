@@ -104,9 +104,9 @@ public static final String TOKEN_VALID = "VALID";
 	}
 
 	@Override
-	public Boolean existsByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean existsByEmail(String email) {
+		personneRepository.existsByEmail(email);
+		return true;
 	}
 	// creer une cle de verification pour un membre
 		@Override

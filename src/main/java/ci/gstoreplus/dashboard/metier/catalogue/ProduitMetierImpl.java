@@ -1,6 +1,7 @@
 package ci.gstoreplus.dashboard.metier.catalogue;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,8 @@ public Produit findById(Long id) {
 
 @Override
 public boolean supprimer(Long id) {
-	// TODO Auto-generated method stub
-	return false;
+    produitRepository.deleteById(id);
+	return true;
 }
 
 @Override
@@ -63,10 +64,24 @@ public Boolean existsByPseudo(String pseudo) {
 }
 
 @Override
-public Boolean existsByEmail(String email) {
+public boolean existsByEmail(String email) {
 	// TODO Auto-generated method stub
-	return null;
+	return false;
 }
+
+@Override
+public List<Produit> produitRecherche(String type, String libelle, double prix) {
+	List<Produit> produitRecherches = null;
+	List<Produit> resultatRecherches = produitRepository.findAll();
+	produitRecherches = resultatRecherches.stream()
+			.filter(p -> p.getType().equals(type))
+			.filter(p -> p.getVille().getLibelle().equals(libelle) )
+			.filter(p -> p.getPrix() <= prix).
+			limit(50).collect(Collectors.toList());
+
+	return produitRecherches;
+}
+
 
 
 }

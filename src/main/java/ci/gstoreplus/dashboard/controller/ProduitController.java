@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ci.gstoreplus.dashboard.metier.catalogue.ProduitMetier;
-import ci.gstoreplus.dashboard.metier.catalogue.ProduitAcheterMetier;
 import ci.gstoreplus.entity.catalogue.Produit;
-import ci.gstoreplus.entity.catalogue.TerrainAcheter;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;
@@ -159,5 +156,51 @@ public class ProduitController {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
-	
+		// get all Produit
+				@GetMapping("/recherche")
+				public String recherche(
+						@RequestParam(value = "type") String type, 
+						@RequestParam(value = "libelle") String libelle,
+						@RequestParam(value = "prix") double prix) throws JsonProcessingException {
+					Reponse<List<Produit>> reponse;
+					try {
+						List<Produit> produits = produitMetier.produitRecherche(type, libelle, prix);
+						if (!produits.isEmpty()) {
+							reponse = new Reponse<List<Produit>>(0, null, produits);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas de Produit enregistrés");
+							reponse = new Reponse<List<Produit>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
+				// get all Produit
+				/*@GetMapping("/recherche")
+				public String recherche(
+						@RequestParam(value = "typeBien") String typeBien, 
+						@RequestParam(value = "location") String location,
+						@RequestParam(value = "prix") double prix) throws JsonProcessingException {
+					Reponse<List<Produit>> reponse;
+					try {
+						List<Produit> produits = produitMetier.recherche(typeBien, location, prix);
+						if (!produits.isEmpty()) {
+							reponse = new Reponse<List<Produit>>(0, null, produits);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas de Produit enregistrés");
+							reponse = new Reponse<List<Produit>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
+			*/
 }

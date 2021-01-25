@@ -82,11 +82,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     		"/api/demande/**",
                     		"/api/upload/**",
                     		"/api/uploadf/**",
-                    		"/api/role/**")
+                    		"/api/role/**",
+                    		"/api/verificationToken/**",
+                    		"/api/auth/prospect/**",
+                    		"/api/produit/**")
                         .permitAll()
                         .antMatchers(HttpMethod.GET, "/api/categorie/**",
                         		"/api/ville/**",
                         		"/api/terrain/**", 
+                        		"/api/maison/**", 
+                        		"/api/uploadMaison/**",
+                        		"/api/getMaisonByIdVille/**",
                         		"/api/flashTerrain/**",
                         		"/api/getTerrainByIdVille/**",
                         		"/api/getVilleByLibelle/**",
@@ -95,6 +101,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         		"/api/imageTerrain/**",
                         		"/api/getImageTerrain/**",
                         		"/api/getMembre/**",
+                        		"/api/recherche/**",
+                        		"/api/auth/getProspect/**",
                         		"/api/getTerrainAcheteByIdPersonne/**",
                         		"/api/role/**","/api/addRoleToEmploye/**").permitAll()
                     .anyRequest()

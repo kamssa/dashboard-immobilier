@@ -59,13 +59,20 @@ public class MembreMetierImpl implements MembreMetier{
 		@Override
 		public Boolean existsByPseudo(String pseudo) {
 			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 
 		@Override
-		public Boolean existsByEmail(String email) {
+		public boolean getMembreByEmail(String email) {
+		    personneRepository.existsByEmail(email);
+			return true;
+		}
+
+
+		@Override
+		public boolean existsByEmail(String email) {
 			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 
 }

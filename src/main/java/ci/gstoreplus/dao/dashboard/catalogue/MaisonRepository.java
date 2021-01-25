@@ -12,7 +12,7 @@ import ci.gstoreplus.entity.catalogue.Terrain;
 
 @Repository
 public interface MaisonRepository extends JpaRepository<Maison, Long>{
-	Optional<Terrain> findByLibelle(String libelle);
-	@Query("select t from Terrain t  where t.ville.id=?1")
+	Optional<Maison> findByLibelle(String libelle);
+	@Query("select m from Maison m  where m.ville.id=?1")
 	List<Maison> findMaisonByIdVille(Long id);
 }
