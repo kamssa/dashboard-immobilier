@@ -230,7 +230,7 @@ private String lien="";
  		"		<table width='100%' border='0' cellspacing='0' cellpadding='0'>\r\n" + 
  		"			<tr><td align='center'>\r\n" + 
  		"				<font face='Arial, Helvetica, sans-serif' size='3' color='#96a5b5' style='font-size: 13px; padding:10px;'>\r\n" + 
- 		"				Localisation : Vallon non loin de ecobank| Email: info@gstoreplus.ci | Tel:(+225) 27 23 59 04 39 | Adresse: 01 BP 13662 ABIDJAN 01<br/>\r\n" + 
+ 		"				Localisation : Vallon non loin de ecobank| Email: info@gstoreplus.ci | Tel:(+225) 27 23 59 04 39 | Adresse: 25 BP 1323 ABIDJAN 25<br/>\r\n" + 
  		"				<span style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #96a5b5;'>\r\n" + 
  		"					© 2020 Copyright: gstoreplus.ci \r\n" + 
  		"				</span></font>				\r\n" + 
