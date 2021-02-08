@@ -82,6 +82,17 @@ public List<Produit> produitRecherche(String type, String libelle, double prix) 
 	return produitRecherches;
 }
 
+@Override
+public List<Produit> produitGeo() {
+	List<Produit> produits = null;
+	List<Produit> resultat = produitRepository.findAll();
+	produits = resultat.stream()
+			.filter(p -> p.isAbonneGeo()== true)
+			.limit(50).collect(Collectors.toList());
+
+	return produits;
+}
+
 
 
 }
