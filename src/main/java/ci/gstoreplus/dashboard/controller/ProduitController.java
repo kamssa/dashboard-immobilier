@@ -180,14 +180,11 @@ public class ProduitController {
 
 				}
 				// get all Produit
-				/*@GetMapping("/recherche")
-				public String recherche(
-						@RequestParam(value = "typeBien") String typeBien, 
-						@RequestParam(value = "location") String location,
-						@RequestParam(value = "prix") double prix) throws JsonProcessingException {
+				@GetMapping("/abonneGeo")
+				public String abonneGeo() throws JsonProcessingException {
 					Reponse<List<Produit>> reponse;
 					try {
-						List<Produit> produits = produitMetier.recherche(typeBien, location, prix);
+						List<Produit> produits = produitMetier.produitGeo();
 						if (!produits.isEmpty()) {
 							reponse = new Reponse<List<Produit>>(0, null, produits);
 						} else {
@@ -202,5 +199,5 @@ public class ProduitController {
 					return jsonMapper.writeValueAsString(reponse);
 
 				}
-			*/
+			
 }
