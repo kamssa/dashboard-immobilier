@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gstoreplus.dashboard.metier.catalogue.CategorieMetier;
-import ci.gstoreplus.entity.catalogue.Categorie;
+import ci.gstoreplus.dashboard.metier.catalogue.DocumentMetier;
+import ci.gstoreplus.entity.catalogue.Document;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;
@@ -27,76 +27,76 @@ import ci.gstoreplus.utilitaire.Static;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class CategorieController {
+public class DocumentController {
 	@Autowired
-	private CategorieMetier categorieMetier;
+	private DocumentMetier categorieMetier;
 	@Autowired
 	private ObjectMapper jsonMapper;
 
 	// recuper Categorie par identifiant
-	private Reponse<Categorie> getCategorieById(Long id) {
-		Categorie categorie = null;
+	private Reponse<Document> getCategorieById(Long id) {
+		Document categorie = null;
 
 		try {
 			categorie = categorieMetier.findById(id);
 			if (categorie == null) {
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("Categorie n'existe pas", id));
-				new Reponse<Categorie>(2, messages, null);
+				new Reponse<Document>(2, messages, null);
 
 			}
 		} catch (RuntimeException e) {
-			new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+			new Reponse<Document>(1, Static.getErreursForException(e), null);
 		}
 
-		return new Reponse<Categorie>(0, null, categorie);
+		return new Reponse<Document>(0, null, categorie);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////// enregistrer une categorie dans la base de donnee
 	////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 	
-	@PostMapping("/categorie")
-	public String creer(@RequestBody Categorie categorie) throws JsonProcessingException {
-		Reponse<Categorie> reponse;
+	@PostMapping("/document")
+	public String creer(@RequestBody Document document) throws JsonProcessingException {
+		Reponse<Document> reponse;
 		try {
 
-			Categorie c = categorieMetier.creer(categorie);
+			Document c = categorieMetier.creer(document);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", c.getId()));
-			reponse = new Reponse<Categorie>(0, messages, c);
+			reponse = new Reponse<Document>(0, messages, c);
 
 		} catch (InvalideImmobilierException e) {
 
-			reponse = new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Document>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
 
-	@PutMapping("/categorie")
-	public String update(@RequestBody Categorie modif) throws JsonProcessingException {
+	@PutMapping("/document")
+	public String update(@RequestBody Document modif) throws JsonProcessingException {
 
-		Reponse<Categorie> reponse = null;
-		Reponse<Categorie> reponseCatsModif = null;
+		Reponse<Document> reponse = null;
+		Reponse<Document> reponseCatsModif = null;
 		// on recupere autre a modifier
 		System.out.println("modif recupere1:" + modif);
 		reponseCatsModif = getCategorieById(modif.getId());
 		if (reponseCatsModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				Categorie categorie = categorieMetier.modifier(modif);
+				Document categorie = categorieMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", categorie.getId()));
-				reponse = new Reponse<Categorie>(0, messages, categorie);
+				reponse = new Reponse<Document>(0, messages, categorie);
 			} catch (InvalideImmobilierException e) {
 
-				reponse = new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<Document>(1, Static.getErreursForException(e), null);
 			}
 
 		} else {
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("La categorie n'existe pas"));
-			reponse = new Reponse<Categorie>(0, messages, null);
+			reponse = new Reponse<Document>(0, messages, null);
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
@@ -104,47 +104,47 @@ public class CategorieController {
 	}
 
 	// recherche les categories par id
-	@GetMapping("/categorie/{id}")
+	@GetMapping("/document/{id}")
 	public String getCategoriesById(@PathVariable("id") Long id) throws JsonProcessingException {
 
-		Reponse<Categorie> reponse;
+		Reponse<Document> reponse;
 
 		try {
 
-			Categorie c = categorieMetier.findById(id);
+			Document c = categorieMetier.findById(id);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format(" à été créer avec succes"));
-			reponse = new Reponse<Categorie>(0, messages, c);
+			reponse = new Reponse<Document>(0, messages, c);
 
 		} catch (Exception e) {
 
-			reponse = new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Document>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
 
 	// recherche les categories par libelle
-	@GetMapping("/getCategorieByNom/{nom}")
-	public String getCategoriesByNom(@PathVariable("nom") String nom) throws JsonProcessingException {
+	@GetMapping("/getdocumentByLibelle/{libelle}")
+	public String getCategoriesByNom(@PathVariable("libelle") String libelle) throws JsonProcessingException {
 
-		Reponse<Categorie> reponse;
+		Reponse<Document> reponse;
 
 		try {
 
-			Categorie c = categorieMetier.findByNom(nom).get();
+			Document c = categorieMetier.findByLibelle(libelle).get();
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format(" à été recuperer avec succes"));
-			reponse = new Reponse<Categorie>(0, messages, c);
+			reponse = new Reponse<Document>(0, messages, c);
 
 		} catch (Exception e) {
 
-			reponse = new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Document>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
 
 	// supprimer une categorie
-	@DeleteMapping("/categorie/{id}")
+	@DeleteMapping("/document/{id}")
 	public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
 
 		Reponse<Boolean> reponse = null;
@@ -161,17 +161,17 @@ public class CategorieController {
 	}
 
 	// get all departement
-	@GetMapping("/categorie")
+	@GetMapping("/document")
 	public String findAll() throws JsonProcessingException {
-		Reponse<List<Categorie>> reponse;
+		Reponse<List<Document>> reponse;
 		try {
-			List<Categorie> pers = categorieMetier.findAll();
+			List<Document> pers = categorieMetier.findAll();
 			if (!pers.isEmpty()) {
-				reponse = new Reponse<List<Categorie>>(0, null, pers);
+				reponse = new Reponse<List<Document>>(0, null, pers);
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add("Pas de categorie enregistrés");
-				reponse = new Reponse<List<Categorie>>(1, messages, new ArrayList<>());
+				reponse = new Reponse<List<Document>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {

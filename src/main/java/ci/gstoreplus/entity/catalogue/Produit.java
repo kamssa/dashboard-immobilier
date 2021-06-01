@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -28,7 +27,7 @@ import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 	@Type(name = "TT", value = TopTerrain.class),
 	@Type(name = "FT", value = FlashTerrain.class),
 	@Type(name = "TE", value = Terrain.class),
-	@Type(name = "MA", value = Maison.class)
+	@Type(name = "MA", value = Maison.class),
 	
 })
 public class Produit extends AbstractEntity{
@@ -43,8 +42,8 @@ public class Produit extends AbstractEntity{
 	private String numero;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
-	@JoinColumn(name = "id_categorie")
-	private Categorie categorie;
+	@JoinColumn(name = "id_document")
+	private Document document;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_ville")
@@ -55,25 +54,23 @@ public class Produit extends AbstractEntity{
 	private String note;
 	private String prixParMettreCarre;
 	private String superficie;
-	@Column(name = "id_categorie", insertable = false, updatable = false)
-	private long idCategorie;
+	@Column(name = "id_document", insertable = false, updatable = false)
+	private long idDocument;
 	
 	@Column(name = "id_ville", insertable = false, updatable = false)
 	private long idVille;
-	
-	
 	@Column(name = "TYPE_PRODUIT", insertable = false, updatable = false)
 	private String type;
 	public Produit() {
 		super();
 	}
 	
-	public Produit(String libelle, String description, double prix, Categorie categorie) {
+	public Produit(String libelle, String description, double prix, Document document) {
 		super();
 		this.libelle = libelle;
 		this.description = description;
 		this.prix = prix;
-		this.categorie = categorie;
+		this.document = document;
 	}
 
 	public String getSuperficie() {
@@ -106,13 +103,7 @@ public class Produit extends AbstractEntity{
 		this.path = path;
 	}
 
-	public Categorie getCategorie() {
-		return categorie;
-	}
 	
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
-	}
 	public String getLibelle() {
 		return libelle;
 	}
@@ -132,12 +123,12 @@ public class Produit extends AbstractEntity{
 		this.prix = prix;
 	}
 
-	 public long getIdCategorie() {
-		return idCategorie;
+	 
+	
+	public long getIdDocument() {
+		return idDocument;
 	}
 
-	
-	
 	public double getLatitude() {
 		return latitude;
 	}
@@ -210,14 +201,22 @@ public class Produit extends AbstractEntity{
 		this.note = note;
 	}
 
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+
 	@Override
 	public String toString() {
 		return "Produit [libelle=" + libelle + ", description=" + description + ", prix=" + prix + ", path=" + path
-				+ ", latitude=" + latitude + ", longitude=" + longitude + ", numero=" + numero + ", categorie="
-				+ categorie + ", ville=" + ville + ", paye=" + paye + ", abonneGeo=" + abonneGeo + ", unite=" + unite
-				+ ", note=" + note + ", idCategorie=" + idCategorie + ", idVille=" + idVille + ", type=" + type + "]";
+				+ ", latitude=" + latitude + ", longitude=" + longitude + ", numero=" + numero + ", document="
+				+ document + ", ville=" + ville + ", paye=" + paye + ", abonneGeo=" + abonneGeo + ", unite=" + unite
+				+ ", note=" + note + ", prixParMettreCarre=" + prixParMettreCarre + ", superficie=" + superficie
+				+ ", idDocument=" + idDocument + ", idVille=" + idVille + ", type=" + type + "]";
 	}
 
 	
-
 }

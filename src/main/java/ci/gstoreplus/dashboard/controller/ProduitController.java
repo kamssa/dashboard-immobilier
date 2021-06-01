@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ci.gstoreplus.dashboard.metier.catalogue.ProduitMetier;
+import ci.gstoreplus.dashboard.metier.catalogue.ProduitsMetier;
 import ci.gstoreplus.entity.catalogue.Produit;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
@@ -27,7 +27,7 @@ import ci.gstoreplus.utilitaire.Static;
 @CrossOrigin
 public class ProduitController {
 	@Autowired
-	private ProduitMetier produitMetier;
+	private ProduitsMetier produitMetier;
 	@Autowired
 	private ObjectMapper jsonMapper;
 

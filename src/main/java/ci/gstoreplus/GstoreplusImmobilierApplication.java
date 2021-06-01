@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ci.gstoreplus.dao.dashboard.catalogue.ProduitRepository;
 import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
 import ci.gstoreplus.dao.dashboard.personne.RoleRepository;
-import ci.gstoreplus.entity.catalogue.Categorie;
+import ci.gstoreplus.entity.catalogue.Document;
 import ci.gstoreplus.entity.catalogue.Produit;
 import ci.gstoreplus.entity.catalogue.Ville;
 import ci.gstoreplus.entity.dashboard.admin.Admin;
@@ -56,7 +56,10 @@ public class GstoreplusImmobilierApplication implements CommandLineRunner {
 		ad.setRoles(Collections.singleton(userRole));
          ad = personneRepository.save(ad);*/
 		//this.produitRepository.deleteById(53L);
-		
+		/*Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
+		Admin ad = new Admin("Traore", "Abdoulaye", "kamssa0@gmail.com", passwordEncoder.encode("Cancer01"));
+		ad.setRoles(Collections.singleton(userRole));	
+		ad = personneRepository.save(ad);*/
 	}
 
 }

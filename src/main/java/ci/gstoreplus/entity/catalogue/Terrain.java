@@ -1,6 +1,4 @@
 package ci.gstoreplus.entity.catalogue;
-
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
