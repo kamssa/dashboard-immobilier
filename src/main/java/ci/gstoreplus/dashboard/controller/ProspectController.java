@@ -36,7 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
 import ci.gstoreplus.dashboard.metier.PersonneMetier;
 import ci.gstoreplus.dashboard.metier.ProspectMetier;
-import ci.gstoreplus.entity.catalogue.Categorie;
+import ci.gstoreplus.entity.catalogue.Document;
 import ci.gstoreplus.entity.catalogue.Demande;
 import ci.gstoreplus.entity.client.Prospect;
 import ci.gstoreplus.entity.dashboard.shared.Personne;

@@ -13,7 +13,7 @@ public class Demande extends AbstractEntity{
 
 private static final long serialVersionUID = 1L;
 @OneToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
-private Produit produit;
+private Produit terrains;
 @OneToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 private Personne personne;
 
@@ -22,18 +22,18 @@ public Demande() {
 	
 }
 
-public Demande(Produit produit, Personne personne) {
+public Demande(Produit terrains, Personne personne) {
 	super();
-	this.produit = produit;
+	this.terrains = terrains;
 	this.personne = personne;
 }
 
-public Produit getProduit() {
-	return produit;
+public Produit getTerrains() {
+	return terrains;
 }
 
-public void setProduit(Produit produit) {
-	this.produit = produit;
+public void setTerrains(Produit terrains) {
+	this.terrains = terrains;
 }
 
 public Personne getPersonne() {

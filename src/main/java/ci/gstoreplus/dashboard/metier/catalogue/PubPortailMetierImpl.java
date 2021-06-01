@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ci.gstoreplus.dao.dashboard.catalogue.CatalogueRepository;
+import ci.gstoreplus.dao.dashboard.catalogue.DocumentRepository;
 import ci.gstoreplus.dao.dashboard.catalogue.PubPortailRepository;
 import ci.gstoreplus.entity.catalogue.PubPortail;
 import ci.gstoreplus.exception.InvalideImmobilierException;

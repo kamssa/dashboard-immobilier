@@ -6,22 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ci.gstoreplus.dao.dashboard.catalogue.CatalogueRepository;
-import ci.gstoreplus.entity.catalogue.Categorie;
+import ci.gstoreplus.dao.dashboard.catalogue.DocumentRepository;
+import ci.gstoreplus.entity.catalogue.Document;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
-public class CategorieMetierImpl implements CategorieMetier {
+public class DocumentMetierImpl implements DocumentMetier {
 @Autowired
-private CatalogueRepository catalogueRepository;
+private DocumentRepository catalogueRepository;
 	@Override
-	public Categorie creer(Categorie entity) throws InvalideImmobilierException {
-		if ((entity.getNom().equals(null)) || (entity.getNom()== "")) {
-			throw new InvalideImmobilierException("Le nom ne peut etre null");
+	public Document creer(Document entity) throws InvalideImmobilierException {
+		if ((entity.getLibelle().equals(null)) || (entity.getLibelle()== "")) {
+			throw new InvalideImmobilierException("Le libelle ne peut etre null");
 		}
-		Optional<Categorie> cats = null;
+		Optional<Document> cats = null;
 
-		cats = catalogueRepository.findByNom(entity.getNom());
+		cats = catalogueRepository.findByLibelle(entity.getLibelle());
 		if (cats.isPresent()) {
 			throw new InvalideImmobilierException("Ce nom est déjà utilisé");
 		}
@@ -30,8 +30,8 @@ private CatalogueRepository catalogueRepository;
 	}
 
 	@Override
-	public Categorie modifier(Categorie modif) throws InvalideImmobilierException {
-		Optional<Categorie> cat = catalogueRepository.findById(modif.getId());
+	public Document modifier(Document modif) throws InvalideImmobilierException {
+		Optional<Document> cat = catalogueRepository.findById(modif.getId());
 		if (cat.isPresent()) {
 
 			if (cat.get().getVersion() != modif.getVersion()) {
@@ -46,12 +46,12 @@ private CatalogueRepository catalogueRepository;
 	}
 
 	@Override
-	public List<Categorie> findAll() {
+	public List<Document> findAll() {
 		return catalogueRepository.findAll();
 	}
 
 	@Override
-	public Categorie findById(Long id) {
+	public Document findById(Long id) {
 		return catalogueRepository.findById(id).get();
 	}
 
@@ -62,7 +62,7 @@ private CatalogueRepository catalogueRepository;
 	}
 
 	@Override
-	public boolean supprimer(List<Categorie> entites) {
+	public boolean supprimer(List<Document> entites) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -86,9 +86,9 @@ private CatalogueRepository catalogueRepository;
 	}
 
 	@Override
-	public Optional<Categorie> findByNom(String nom) {
+	public Optional<Document> findByLibelle(String libelle) {
 		// TODO Auto-generated method stub
-		return catalogueRepository.findByNom(nom);
+		return catalogueRepository.findByLibelle(libelle);
 	}
 
 	

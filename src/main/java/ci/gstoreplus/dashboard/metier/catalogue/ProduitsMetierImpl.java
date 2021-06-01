@@ -11,7 +11,7 @@ import ci.gstoreplus.entity.catalogue.Produit;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
-public class ProduitMetierImpl implements ProduitMetier{
+public class ProduitsMetierImpl implements ProduitsMetier{
 @Autowired
 private ProduitRepository produitRepository;
 

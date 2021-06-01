@@ -102,6 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         		"/api/getImageTerrain/**",
                         		"/api/getMembre/**",
                         		"/api/recherche/**",
+                        		"/api/document/**",
                         		"/api/auth/getProspect/**",
                         		"/api/getTerrainAcheteByIdPersonne/**",
                         		"/api/role/**","/api/addRoleToEmploye/**").permitAll()

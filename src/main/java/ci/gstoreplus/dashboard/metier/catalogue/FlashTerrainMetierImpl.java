@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.catalogue.FlashTerrainRepository;
-import ci.gstoreplus.entity.catalogue.Categorie;
+import ci.gstoreplus.entity.catalogue.Document;
 import ci.gstoreplus.entity.catalogue.FlashTerrain;
 import ci.gstoreplus.entity.catalogue.Ville;
 import ci.gstoreplus.exception.InvalideImmobilierException;
