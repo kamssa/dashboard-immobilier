@@ -194,7 +194,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 		map.add("text", sms);
 		map.add("type", "text");
 		map.add("date", LocalDateTime.now().toString());
-		map.add("to", personne.getAdresse().getTelephone());
+		map.add("to", personne.getTelephone());
 
 		HttpEntity<MultiValueMap<Object, Object>> request = new HttpEntity<MultiValueMap<Object, Object>>(map, headers);
 		RestTemplate restTemplate = new RestTemplate();

@@ -27,8 +27,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gstoreplus.dashboard.metier.CloudinaryService;
 import ci.gstoreplus.dashboard.metier.ImageService;
+import ci.gstoreplus.dashboard.metier.catalogue.ProduitsMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.TerrainMetier;
 import ci.gstoreplus.entity.catalogue.Image;
+import ci.gstoreplus.entity.catalogue.Produit;
 import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
@@ -40,6 +42,8 @@ import ci.gstoreplus.utilitaire.Static;
 public class TerrainController {
 	@Autowired
 	private TerrainMetier terrainMetier;
+	@Autowired
+	private ProduitsMetier produitsMetier;
 	@Autowired
 	CloudinaryService cloudinaryService;
 	@Autowired
@@ -176,7 +180,27 @@ public class TerrainController {
 				return jsonMapper.writeValueAsString(reponse);
 
 			}
-	
+			// get all Terrains
+						@GetMapping("/terrainAbidjan")
+						public String findAllTerrainAbidjan() throws JsonProcessingException {
+							Reponse<List<Produit>> reponse;
+							try {
+								List<Produit> terrains = produitsMetier.findProduitByVille();
+								if (!terrains.isEmpty()) {
+									reponse = new Reponse<List<Produit>>(0, null, terrains);
+								} else {
+									List<String> messages = new ArrayList<>();
+									messages.add("Pas de terrain enregistrés");
+									reponse = new Reponse<List<Produit>>(1, messages, new ArrayList<>());
+								}
+
+							} catch (Exception e) {
+								reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+							}
+							return jsonMapper.writeValueAsString(reponse);
+
+						}
+				
 	//////////recupere les terrains par ville
 				@GetMapping("/getTerrainByIdVille/{id}")
 				public String chercherParVille(@PathVariable Long id) throws JsonProcessingException {

@@ -101,6 +101,13 @@ private TerrainRepository terrainRepository;
 	    ters = terrains.stream().filter(t -> t.getVille().getId()==id).limit(4).collect(Collectors.toList());
 	    return ters;		
 	}
+	@Override
+	public List<Terrain> findTerrainByVille() {
+		List<Terrain> ters = null;
+		List<Terrain> terrains = terrainRepository.findAll();
+	    ters = terrains.stream().filter(t -> t.getVille().getLibelle()=="Abidjan").collect(Collectors.toList());
+	    return ters;		
+	}
 
 	@Override
 	public List<Terrain> recherchePrixMax(String type, String ville, double prix) {

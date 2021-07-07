@@ -65,7 +65,8 @@ public class Personne extends AbstractEntity {
 	@Size(max = 40)
 	@Email
 	private String email;
-
+	private String codePays;
+	private String telephone;
 	@NotBlank
 	@Size(max = 100)
 	private String password;
@@ -129,6 +130,26 @@ public class Personne extends AbstractEntity {
 		this.roles = roles;
 	}
 
+	public Personne(String titre, @NotBlank @Size(max = 40) String nom, @NotBlank @Size(max = 15) String prenom,
+			@NotBlank @Size(max = 40) @Email String email, String codePays, String telephone,
+			@NotBlank @Size(max = 100) String password, String fonction, String nomComplet, Adresse adresse,
+			boolean actived, String type, Set<Role> roles) {
+		super();
+		this.titre = titre;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.codePays = codePays;
+		this.telephone = telephone;
+		this.password = password;
+		this.fonction = fonction;
+		this.nomComplet = nomComplet;
+		this.adresse = adresse;
+		this.actived = actived;
+		this.type = type;
+		this.roles = roles;
+	}
+
 	public String getTitre() {
 		return titre;
 	}
@@ -143,6 +164,22 @@ public class Personne extends AbstractEntity {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public String getCodePays() {
+		return codePays;
+	}
+
+	public void setCodePays(String codePays) {
+		this.codePays = codePays;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getPrenom() {

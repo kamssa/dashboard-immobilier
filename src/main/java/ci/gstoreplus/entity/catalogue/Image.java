@@ -8,6 +8,7 @@ import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 public class Image extends AbstractEntity{
     private static final long serialVersionUID = 1L;
 	private Long idTerrain;
+	private Long idMaison;
 	private String nom;
 	private String imageUrl;
 	private String imageId;
@@ -28,6 +29,14 @@ public class Image extends AbstractEntity{
 		this.nom = nom;
 		this.imageUrl = imageUrl;
 		this.imageId = imageId;
+	}
+
+	public Long getIdMaison() {
+		return idMaison;
+	}
+
+	public void setIdMaison(Long idMaison) {
+		this.idMaison = idMaison;
 	}
 
 	public String getNom() {

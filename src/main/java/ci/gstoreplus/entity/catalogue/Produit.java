@@ -103,7 +103,6 @@ public class Produit extends AbstractEntity{
 		this.path = path;
 	}
 
-	
 	public String getLibelle() {
 		return libelle;
 	}
@@ -123,9 +122,7 @@ public class Produit extends AbstractEntity{
 		this.prix = prix;
 	}
 
-	 
-	
-	public long getIdDocument() {
+	 public long getIdDocument() {
 		return idDocument;
 	}
 

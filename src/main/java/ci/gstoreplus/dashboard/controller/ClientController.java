@@ -28,11 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ci.gstoreplus.dashboard.metier.ClientMetier;
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
 import ci.gstoreplus.dashboard.metier.PersonneMetier;
@@ -40,8 +37,6 @@ import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.entity.dashboard.shared.RoleName;
 import ci.gstoreplus.exception.InvalideImmobilierException;
-import ci.gstoreplus.listener.OnRegistrationCompleteEvent;
-import ci.gstoreplus.models.ApiResponse;
 import ci.gstoreplus.models.JwtAuthenticationResponse;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.security.JwtTokenProvider;
@@ -83,49 +78,30 @@ public class ClientController {
 
 	}
 
-	@PostMapping("/signupc")
+
+	@PostMapping("/signuc")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String registerUser(@Valid @RequestBody Personne signUpRequest,
-			@RequestParam(value = "action") String action, BindingResult result1, HttpServletRequest request,
-			Errors errors) throws Exception {
-
-		Reponse<ResponseEntity<?>> reponse;
-		Reponse<Personne> reponse1 = null;
-
-		 if (result1.hasErrors()) {
-			throw new RuntimeException("erreur");
-		}
-
-		Role userRole = roleMetier.findByName(RoleName.ROLE_CLIENT).get();
-		signUpRequest.setRoles(Collections.singleton(userRole));
-
-		Personne registered =  personneMetier.creer(signUpRequest);
-		//////////////////////////////////////////////////
-		if (registered == null) {
-			result1.rejectValue("email", "message.regError");
-		}
-		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{username}")
-				.buildAndExpand(registered.getEmail()).toUri();
-		reponse = new Reponse<ResponseEntity<?>>(0, null,
-				ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully")));
-
+	public String creatUser(@RequestBody Personne signUpRequest) throws Exception {
+		Reponse<Personne> reponse = null;
+		Personne personne = null;
 		try {
 
-			String appUrl = request.getContextPath();
-			System.out.println(request.getContextPath());
+			Role userRole = roleMetier.findByName(RoleName.ROLE_CLIENT).get();
+			signUpRequest.setRoles(Collections.singleton(userRole));
+             personne = personneMetier.creer(signUpRequest);
+			System.out.println("Voir le nom complet de la personne recuperée:" + personne.getNomComplet());
+			
 
-			eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), action));
-			reponse = new Reponse<ResponseEntity<?>>(0, null,
-					ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully")));
-			System.out.println(request.getContextPath());
-		} catch (Exception e) {
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format("%s  a été créé avec succès", personne.getId()));
+			reponse = new Reponse<Personne>(0, messages, personne);
 
-			reponse = new Reponse<ResponseEntity<?>>(1, Static.getErreursForException(e), null);
-
+		} catch (InvalideImmobilierException e) {
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
 		}
-
 		return jsonMapper.writeValueAsString(reponse);
 	}
+	
 	@GetMapping("/registrationConfirm")
 	public String confirmRegistration(@RequestParam(value = "email") String email,
 			@RequestParam(value = "token") String token) throws InvalideImmobilierException, JsonProcessingException {
@@ -212,5 +188,45 @@ public class ClientController {
 
 				return jsonMapper.writeValueAsString(reponse);
 			}
+			// recherche les employes par id
+			@GetMapping("/client/{id}")
+			public String getPersonnesById(@PathVariable("id") Long id) throws JsonProcessingException {
+
+				Reponse<Personne> reponse;
+
+				try {
+
+					Personne p = personneMetier.findById(id);
+					List<String> messages = new ArrayList<>();
+					messages.add(String.format(" à été créer avec succes"));
+					reponse = new Reponse<Personne>(0, messages, p);
+
+				} catch (Exception e) {
+
+					reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+				}
+				return jsonMapper.writeValueAsString(reponse);
+			}
+
+			// recherche le membre par id
+						@GetMapping("/getClient/{email}")
+						public String getClientByEmail(@PathVariable("email") String email) throws JsonProcessingException {
+
+							Reponse<Personne> reponse;
+
+							try {
+
+								Personne p = personneMetier.findByEmail(email);
+								 System.out.println("getClientById:" +p);
+								List<String> messages = new ArrayList<>();
+								messages.add(String.format(" à été créer avec succes"));
+								reponse = new Reponse<Personne>(0, messages, p);
+
+							} catch (Exception e) {
+
+								reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+							}
+							return jsonMapper.writeValueAsString(reponse);
+						}
 
 }

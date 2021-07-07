@@ -14,4 +14,5 @@ List<Image> findByOrderById();
 //recupere les abonnement par id de espace
 	@Query("select image from Image image  where image.idTerrain=?1")
 	Image findImageByIdTerrain(Long id);
+	
 }
