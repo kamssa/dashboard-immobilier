@@ -10,5 +10,6 @@ public interface TerrainMetier extends Imetier<Terrain, Long> {
 	Optional<Terrain> findByLibelle(String libelle);
 	List<Terrain> findTerrainByIdVille(Long id);
 	List<Terrain> recherchePrixMax(String type, String ville, double prix);
+	public List<Terrain> findTerrainByVille();
 
 }

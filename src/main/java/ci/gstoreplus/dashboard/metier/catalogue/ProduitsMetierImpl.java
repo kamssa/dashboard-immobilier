@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.catalogue.ProduitRepository;
 import ci.gstoreplus.entity.catalogue.Produit;
+import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
@@ -91,6 +92,14 @@ public List<Produit> produitGeo() {
 			.limit(50).collect(Collectors.toList());
 
 	return produits;
+}
+
+@Override
+public List<Produit> findProduitByVille() {
+	List<Produit> ters = null;
+	List<Produit> terrains = produitRepository.findAll();
+    ters = terrains.stream().filter(t -> t.getVille().getLibelle()=="Abidjan").collect(Collectors.toList());
+    return ters;
 }
 
 

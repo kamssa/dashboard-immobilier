@@ -1,6 +1,7 @@
 package ci.gstoreplus.dashboard.metier;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,12 @@ public Boolean existsByPseudo(String pseudo) {
 public boolean existsByEmail(String email) {
 	// TODO Auto-generated method stub
 	return false;
+}
+
+@Override
+public Optional<Personne> findByEmail(String email) {
+	// TODO Auto-generated method stub
+	return null;
 }
 	
 }
