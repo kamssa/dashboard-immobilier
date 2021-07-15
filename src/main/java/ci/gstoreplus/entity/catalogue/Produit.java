@@ -54,6 +54,7 @@ public class Produit extends AbstractEntity{
 	private String note;
 	private String prixParMettreCarre;
 	private String superficie;
+	private String surfaceUtilise;
 	@Column(name = "id_document", insertable = false, updatable = false)
 	private long idDocument;
 	
@@ -83,6 +84,14 @@ public class Produit extends AbstractEntity{
 
 	public String getPrixParMettreCarre() {
 		return prixParMettreCarre;
+	}
+
+	public String getSurfaceUtilise() {
+		return surfaceUtilise;
+	}
+
+	public void setSurfaceUtilise(String surfaceUtilise) {
+		this.surfaceUtilise = surfaceUtilise;
 	}
 
 	public void setPrixParMettreCarre(String prixParMettreCarre) {

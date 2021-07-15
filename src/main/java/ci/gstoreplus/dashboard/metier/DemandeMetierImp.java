@@ -63,10 +63,7 @@ private DemandeRepository demandeRepository;
 
 	@Override
 	public List<Demande> demandeParIdPersonne(Long id) {
-		List<Demande> demande = null;
-		List<Demande> demandes = demandeRepository.findAll();
-		demande = demandes.stream().filter(p -> p.getPersonne().getId().equals(id)).collect(Collectors.toList());
-        return demande;	
+		return null;
         
 	}
 
