@@ -265,6 +265,10 @@ public class Personne extends AbstractEntity {
 		this.nomComplet = nom + " " + prenom;
 	}
 
+	public void setNomComplet(String nomComplet) {
+		this.nomComplet = nomComplet;
+	}
+
 	@Override
 	public String toString() {
 		return "Personne [id=" + id + ", version=" + version + ", nom=" + nom + ", prenom=" + prenom + ", email="
