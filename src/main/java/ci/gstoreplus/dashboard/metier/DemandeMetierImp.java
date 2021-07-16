@@ -66,5 +66,16 @@ private DemandeRepository demandeRepository;
 		return null;
         
 	}
+	@Override
+	public List<Demande> demandeNonLu() {
+		List<Demande> demandeAll = null;
+		List<Demande> demandes = demandeRepository.findAll();
+		demandeAll = demandes.stream()
+				.filter(p -> p.getLu().equals("nonLu")).limit(50).collect(Collectors.toList());
+
+		return demandeAll;
+
+	}
+
 
 }

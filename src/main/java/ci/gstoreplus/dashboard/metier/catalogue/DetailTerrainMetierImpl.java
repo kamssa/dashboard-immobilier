@@ -69,7 +69,7 @@ public boolean existsByEmail(String email) {
 }
 
 @Override
-public DetailTerrain findDetailTerrainIdTerrain(long id) {
+public List<DetailTerrain> findDetailTerrainIdTerrain(long id) {
 	// TODO Auto-generated method stub
 	return detailTerrainRepository.findDetailTerrainIdTerrain(id);
 }

@@ -7,4 +7,5 @@ import ci.gstoreplus.metier.Imetier;
 
 public interface DemandeMetier extends Imetier<Demande, Long>{
 List<Demande> demandeParIdPersonne(Long id);
+public List<Demande> demandeNonLu();
 }

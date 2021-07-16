@@ -129,11 +129,11 @@ public class DetailTerrainController {
 	}
 	@GetMapping("/detailTerrainByIdTerrain/{id}")
 	public String getByIdDetailTerrain(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<DetailTerrain> reponse;
+		Reponse<List<DetailTerrain>> reponse;
 		try {
-			DetailTerrain detailTerrain = detailTerrainMetier.findDetailTerrainIdTerrain(id);
+			List<DetailTerrain> detailTerrain = detailTerrainMetier.findDetailTerrainIdTerrain(id);
 			
-		reponse = new Reponse<DetailTerrain>(0, null, detailTerrain);
+		reponse = new Reponse<List<DetailTerrain>>(0, null, detailTerrain);
 			
      } catch (Exception e) {
 			reponse = new Reponse<>(1, Static.getErreursForException(e), null);

@@ -56,9 +56,9 @@ public class GstoreplusImmobilierApplication implements CommandLineRunner {
 		this.roleRepository.save(new Role(RoleName.ROLE_ABONNE));
 		this.roleRepository.save(new Role(RoleName.ROLE_MEMBRE));
 		this.roleRepository.save(new Role(RoleName.ROLE_CLIENT));
-		this.roleRepository.save(new Role(RoleName.ROLE_ADMIN));
-        Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
-		Admin ad = new Admin("Traore", "Abdoulaye", "kamssa0@gmail.com", passwordEncoder.encode("Cancer01"));
+		this.roleRepository.save(new Role(RoleName.ROLE_ADMIN));*/
+       /* Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
+		Admin ad = new Admin("MORO", "Adou", "adoumoros@gmail.com", passwordEncoder.encode("123Tableau@"));
 		ad.setRoles(Collections.singleton(userRole));	
 		ad = personneRepository.save(ad);*/
 	}

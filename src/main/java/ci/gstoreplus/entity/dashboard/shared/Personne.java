@@ -65,6 +65,7 @@ public class Personne extends AbstractEntity {
 	@Size(max = 40)
 	@Email
 	private String email;
+	private String numCni;
 	private String codePays;
 	private String telephone;
 	@NotBlank
@@ -148,6 +149,14 @@ public class Personne extends AbstractEntity {
 		this.actived = actived;
 		this.type = type;
 		this.roles = roles;
+	}
+
+	public String getNumCni() {
+		return numCni;
+	}
+
+	public void setNumCni(String numCni) {
+		this.numCni = numCni;
 	}
 
 	public String getTitre() {
