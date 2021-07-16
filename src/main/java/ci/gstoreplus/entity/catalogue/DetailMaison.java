@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
@@ -12,7 +13,7 @@ import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 public class DetailMaison extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
 	private String description;
-	@OneToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_Maison", nullable = false)
 	private Maison maison;
 	private int nbreChambre;

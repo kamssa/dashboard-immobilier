@@ -35,83 +35,29 @@ public class Produit extends AbstractEntity{
 	private String libelle;
 	@Column(columnDefinition="TEXT")
 	private String description;
-	private double prix;
 	private String path;
-	private double latitude;
-	private double longitude;
-	private String numero;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
-	@JoinColumn(name = "id_document")
-	private Document document;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_ville")
 	private  Ville ville;
-	private boolean paye;
-	private boolean abonneGeo; 
-	private String  unite;
-	private String note;
-	private String prixParMettreCarre;
-	private String superficie;
-	private String surfaceUtilise;
-	@Column(name = "id_document", insertable = false, updatable = false)
-	private long idDocument;
-	
 	@Column(name = "id_ville", insertable = false, updatable = false)
 	private long idVille;
 	@Column(name = "TYPE_PRODUIT", insertable = false, updatable = false)
 	private String type;
 	public Produit() {
 		super();
-	}
-	
-	public Produit(String libelle, String description, double prix, Document document) {
+	} 
+	public Produit(String libelle, String description, String path, Ville ville, long idVille,
+			String type) {
 		super();
 		this.libelle = libelle;
 		this.description = description;
-		this.prix = prix;
-		this.document = document;
-	}
-
-	public String getSuperficie() {
-		return superficie;
-	}
-
-	public void setSuperficie(String superficie) {
-		this.superficie = superficie;
-	}
-
-	public String getPrixParMettreCarre() {
-		return prixParMettreCarre;
-	}
-
-	public String getSurfaceUtilise() {
-		return surfaceUtilise;
-	}
-
-	public void setSurfaceUtilise(String surfaceUtilise) {
-		this.surfaceUtilise = surfaceUtilise;
-	}
-
-	public void setPrixParMettreCarre(String prixParMettreCarre) {
-		this.prixParMettreCarre = prixParMettreCarre;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
 		this.path = path;
+	
+		this.ville = ville;
+		this.idVille = idVille;
+		this.type = type;
 	}
-
 	public String getLibelle() {
 		return libelle;
 	}
@@ -124,105 +70,79 @@ public class Produit extends AbstractEntity{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public double getPrix() {
-		return prix;
+	public String getPath() {
+		return path;
 	}
-	public void setPrix(double prix) {
-		this.prix = prix;
+	public void setPath(String path) {
+		this.path = path;
 	}
-
-	 public long getIdDocument() {
-		return idDocument;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public boolean isPaye() {
-		return paye;
-	}
-
-	public void setPaye(boolean paye) {
-		this.paye = paye;
-	}
-
-	public boolean isAbonneGeo() {
-		return abonneGeo;
-	}
-
-	public void setAbonneGeo(boolean abonneGeo) {
-		this.abonneGeo = abonneGeo;
-	}
-
+	
 	public Ville getVille() {
 		return ville;
 	}
-
 	public void setVille(Ville ville) {
 		this.ville = ville;
 	}
-
 	public long getIdVille() {
 		return idVille;
 	}
-
 	public String getType() {
 		return type;
 	}
-
-	public String getUnite() {
-		return unite;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + (int) (idVille ^ (idVille >>> 32));
+		result = prime * result + ((libelle == null) ? 0 : libelle.hashCode());
+		result = prime * result + ((path == null) ? 0 : path.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((ville == null) ? 0 : ville.hashCode());
+		return result;
 	}
-
-	public void setUnite(String unite) {
-		this.unite = unite;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produit other = (Produit) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (idVille != other.idVille)
+			return false;
+		if (libelle == null) {
+			if (other.libelle != null)
+				return false;
+		} else if (!libelle.equals(other.libelle))
+			return false;
+		if (path == null) {
+			if (other.path != null)
+				return false;
+		} else if (!path.equals(other.path))
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
+		if (ville == null) {
+			if (other.ville != null)
+				return false;
+		} else if (!ville.equals(other.ville))
+			return false;
+		return true;
 	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero() {
-		this.numero = "P"+ (Math.random() * (10));
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	public Document getDocument() {
-		return document;
-	}
-
-	public void setDocument(Document document) {
-		this.document = document;
-	}
-
 	@Override
 	public String toString() {
-		return "Produit [libelle=" + libelle + ", description=" + description + ", prix=" + prix + ", path=" + path
-				+ ", latitude=" + latitude + ", longitude=" + longitude + ", numero=" + numero + ", document="
-				+ document + ", ville=" + ville + ", paye=" + paye + ", abonneGeo=" + abonneGeo + ", unite=" + unite
-				+ ", note=" + note + ", prixParMettreCarre=" + prixParMettreCarre + ", superficie=" + superficie
-				+ ", idDocument=" + idDocument + ", idVille=" + idVille + ", type=" + type + "]";
+		return "Produit [libelle=" + libelle + ", description=" + description + ", path=" + path + ", ville=" + ville
+				+ ", idVille=" + idVille + ", type=" + type + "]";
 	}
-
 	
 }

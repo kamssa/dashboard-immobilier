@@ -74,11 +74,11 @@ public boolean existsByEmail(String email) {
 public List<Produit> produitRecherche(String type, String libelle, double prix) {
 	List<Produit> produitRecherches = null;
 	List<Produit> resultatRecherches = produitRepository.findAll();
-	produitRecherches = resultatRecherches.stream()
+	/*produitRecherches = resultatRecherches.stream()
 			.filter(p -> p.getType().equals(type))
 			.filter(p -> p.getVille().getLibelle().equals(libelle) )
 			.filter(p -> p.getPrix() <= prix).
-			limit(50).collect(Collectors.toList());
+			limit(50).collect(Collectors.toList());*/
 
 	return produitRecherches;
 }
@@ -87,9 +87,9 @@ public List<Produit> produitRecherche(String type, String libelle, double prix) 
 public List<Produit> produitGeo() {
 	List<Produit> produits = null;
 	List<Produit> resultat = produitRepository.findAll();
-	produits = resultat.stream()
+	/*produits = resultat.stream()
 			.filter(p -> p.isAbonneGeo()== true)
-			.limit(50).collect(Collectors.toList());
+			.limit(50).collect(Collectors.toList());*/
 
 	return produits;
 }

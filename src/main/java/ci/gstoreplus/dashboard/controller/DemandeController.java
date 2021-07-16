@@ -159,5 +159,25 @@ public class DemandeController {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
-		
+		// get all demande
+				@GetMapping("/demandeNonLu")
+				public String findAllDemandeNonLu() throws JsonProcessingException {
+					Reponse<List<Demande>> reponse;
+					try {
+						List<Demande> demandes = demandeMetier.demandeNonLu();
+						if (!demandes.isEmpty()) {
+							reponse = new Reponse<List<Demande>>(0, null, demandes);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas de demande enregistrés");
+							reponse = new Reponse<List<Demande>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
+				
 }
