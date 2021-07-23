@@ -68,7 +68,7 @@ private ImageDetailMaisonRepository imageDetailMaisonRepository;
 	@Override
 	public List<ImageDetailMaison> findImageByIdDetailMaisonn(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return imageDetailMaisonRepository.findImageByIdDetailMaisonn(id);
 	}
 
 }

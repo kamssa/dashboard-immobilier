@@ -133,11 +133,11 @@ public class DetailMaisonController {
 	}
 	@GetMapping("/detailMaisonByIdMaison/{id}")
 	public String getByIdDetailMaison(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<DetailMaison> reponse;
+		Reponse<List<DetailMaison>> reponse;
 		try {
-			DetailMaison detailTerrain = detailMaisonMetier.findDetailMaisonIdMaison(id);
+			List<DetailMaison> detailTerrain = detailMaisonMetier.findDetailMaisonIdMaison(id);
 			
-		reponse = new Reponse<DetailMaison>(0, null, detailTerrain);
+		reponse = new Reponse<List<DetailMaison>>(0, null, detailTerrain);
 			
      } catch (Exception e) {
 			reponse = new Reponse<>(1, Static.getErreursForException(e), null);

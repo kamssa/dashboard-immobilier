@@ -10,7 +10,6 @@ import ci.gstoreplus.entity.catalogue.ImageDetail;
 public interface ImageDetailReposirtory extends JpaRepository<ImageDetail, Long>{
 	List<ImageDetail> findByOrderById();
 	//recupere l'image par id de article
-		@Query("select image from ImageDetail image  where image.idDetailTerrain=?1")
-		List<ImageDetail> findImageByIdDetailTerrain(Long id);
-		
+	@Query("select image from ImageDetail image  where image.detailTerrain.id=?1")
+		List<ImageDetail> findImageByIdDetailTerrain(Long id);	
 }
