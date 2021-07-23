@@ -1,6 +1,10 @@
 package ci.gstoreplus.entity.catalogue;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
@@ -11,7 +15,9 @@ public class ImageDetail extends AbstractEntity{
 
 	
 	private static final long serialVersionUID = 1L;
-	private Long idDetailTerrain;
+	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
+	@JoinColumn(name = "id_DetailTerrain", nullable = false)
+	private DetailTerrain detailTerrain;
 	private String imageUrl;
 	private String imageId;
 	
@@ -20,20 +26,19 @@ public class ImageDetail extends AbstractEntity{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ImageDetail(Long idDetailTerrain, String imageUrl, String imageId) {
+	public ImageDetail(DetailTerrain detailTerrain, String imageUrl, String imageId) {
 		super();
-		this.idDetailTerrain = idDetailTerrain;
+		this.detailTerrain = detailTerrain;
 		this.imageUrl = imageUrl;
 		this.imageId = imageId;
 	}
 
-	
-	public Long getIdDetailTerrain() {
-		return idDetailTerrain;
+	public DetailTerrain getDetailTerrain() {
+		return detailTerrain;
 	}
 
-	public void setIdDetailTerrain(Long idDetailTerrain) {
-		this.idDetailTerrain = idDetailTerrain;
+	public void setDetailTerrain(DetailTerrain detailTerrain) {
+		this.detailTerrain = detailTerrain;
 	}
 
 	public String getImageUrl() {
@@ -52,4 +57,10 @@ public class ImageDetail extends AbstractEntity{
 		this.imageId = imageId;
 	}
 
+	@Override
+	public String toString() {
+		return "ImageDetail [detailTerrain=" + detailTerrain + ", imageUrl=" + imageUrl + ", imageId=" + imageId + "]";
+	}
+
+	
 	}

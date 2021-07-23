@@ -69,7 +69,7 @@ private DetailMaisonRepository detailMaisonRepository;
 	}
 
 	@Override
-	public DetailMaison findDetailMaisonIdMaison(long id) {
+	public List<DetailMaison> findDetailMaisonIdMaison(long id) {
 		// TODO Auto-generated method stub
 		return detailMaisonRepository.findDetailMaisonIdMaison(id);
 	}

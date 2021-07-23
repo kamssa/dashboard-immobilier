@@ -1,11 +1,15 @@
 package ci.gstoreplus.entity.catalogue;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
@@ -33,6 +37,7 @@ public class DetailTerrain  extends AbstractEntity{
 	@OneToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_document")
 	private Document document;
+	
 	
 	public DetailTerrain() {
 		super();
@@ -165,7 +170,6 @@ public class DetailTerrain  extends AbstractEntity{
 		this.document = document;
 	}
 
-	
 	
 	
 }

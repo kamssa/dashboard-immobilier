@@ -178,7 +178,7 @@ public class DetailTerrainController {
 			return jsonMapper.writeValueAsString(reponse);
 		}
 
-		@GetMapping("/image/{iDdetailTerrains}")
+		/*@GetMapping("/image/{iDdetailTerrains}")
 		public String getImageByIdDetailArticle(@PathVariable("iDdetailTerrains") long iDdetailTerrains)
 				throws JsonProcessingException, InvalideImmobilierException{
 			Reponse<List<ImageDetail>> reponse;
@@ -197,6 +197,6 @@ public class DetailTerrainController {
 			}
 			return jsonMapper.writeValueAsString(reponse);
 
-		}
+		}*/
 		
 }

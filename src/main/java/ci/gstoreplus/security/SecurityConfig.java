@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     		"/api/verificationToken/**",
                     		"/api/auth/prospect/**",
                     		"/api/produit/**","/api/detailTerrain/**",
-                    		"/api/detailMaison/**","/stomp","/api/demande/**")
+                    		"/api/detailMaison/**","/stomp","/api/imageDetail/**")
                         .permitAll()
                         .antMatchers(HttpMethod.GET, "/api/categorie/**","/api/imageDetailMaison/**",
                         		"/api/ville/**",
@@ -109,8 +109,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         		"/api/role/**","/api/addRoleToEmploye/**",
                         		"/api/terrainAbidjan/**",
                         		"/api/detailTerrainByIdTerrain/**",
-                        		"/api/detailTerrain/**","/api/image/**","/api/auth/getClient/**",
-                        		"/api/auth/client/**","/api/detailMaisonByIdMaison/**","/api/demandeNonLu/**").permitAll()
+                        		"/api/detailTerrain/**","/api/image/**",
+                        		"/api/auth/getClient/**",
+                        		"/api/auth/client/**",
+                        		"/api/detailMaisonByIdMaison/**",
+                        		"/api/demandeNonLu/**","/api/imageDetailByIdDetail/**").permitAll()
                     .anyRequest()
                         .authenticated();
 

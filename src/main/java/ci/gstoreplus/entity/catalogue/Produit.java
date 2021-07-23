@@ -40,14 +40,12 @@ public class Produit extends AbstractEntity{
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_ville")
 	private  Ville ville;
-	@Column(name = "id_ville", insertable = false, updatable = false)
-	private long idVille;
 	@Column(name = "TYPE_PRODUIT", insertable = false, updatable = false)
 	private String type;
 	public Produit() {
 		super();
 	} 
-	public Produit(String libelle, String description, String path, Ville ville, long idVille,
+	public Produit(String libelle, String description, String path, Ville ville,
 			String type) {
 		super();
 		this.libelle = libelle;
@@ -55,7 +53,7 @@ public class Produit extends AbstractEntity{
 		this.path = path;
 	
 		this.ville = ville;
-		this.idVille = idVille;
+		
 		this.type = type;
 	}
 	public String getLibelle() {
@@ -83,9 +81,7 @@ public class Produit extends AbstractEntity{
 	public void setVille(Ville ville) {
 		this.ville = ville;
 	}
-	public long getIdVille() {
-		return idVille;
-	}
+	
 	public String getType() {
 		return type;
 	}
@@ -94,7 +90,6 @@ public class Produit extends AbstractEntity{
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + (int) (idVille ^ (idVille >>> 32));
 		result = prime * result + ((libelle == null) ? 0 : libelle.hashCode());
 		result = prime * result + ((path == null) ? 0 : path.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -114,8 +109,6 @@ public class Produit extends AbstractEntity{
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (idVille != other.idVille)
 			return false;
 		if (libelle == null) {
 			if (other.libelle != null)
@@ -142,7 +135,7 @@ public class Produit extends AbstractEntity{
 	@Override
 	public String toString() {
 		return "Produit [libelle=" + libelle + ", description=" + description + ", path=" + path + ", ville=" + ville
-				+ ", idVille=" + idVille + ", type=" + type + "]";
+				+ ", type=" + type + "]";
 	}
 	
 }

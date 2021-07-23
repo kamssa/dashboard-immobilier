@@ -1,6 +1,10 @@
 package ci.gstoreplus.entity.catalogue;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
@@ -11,7 +15,9 @@ public class ImageDetailMaison extends AbstractEntity{
 
 	
 	private static final long serialVersionUID = 1L;
-	private Long  idDetailMaison;
+	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
+	@JoinColumn(name = "id_DetailMaison", nullable = false)
+	private DetailMaison detailMaison;
 	private String imageUrl;
 	private String imageId;
 	
@@ -20,12 +26,19 @@ public class ImageDetailMaison extends AbstractEntity{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Long getIdDetailMaison() {
-		return idDetailMaison;
+	public ImageDetailMaison(DetailMaison detailMaison, String imageUrl, String imageId) {
+		super();
+		this.detailMaison = detailMaison;
+		this.imageUrl = imageUrl;
+		this.imageId = imageId;
 	}
 
-	public void setIdDetailMaison(Long idDetailMaison) {
-		this.idDetailMaison = idDetailMaison;
+	public DetailMaison getDetailMaison() {
+		return detailMaison;
+	}
+
+	public void setDetailMaison(DetailMaison detailMaison) {
+		this.detailMaison = detailMaison;
 	}
 
 	public String getImageUrl() {
