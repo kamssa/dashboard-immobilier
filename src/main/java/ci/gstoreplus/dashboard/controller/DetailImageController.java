@@ -65,6 +65,7 @@ public class DetailImageController {
 				//imageMetier.modifier(img);
 				return new ResponseEntity(result, HttpStatus.OK);
 			}
+			
 			@GetMapping("/imageDetailByIdDetail/{id}")
 			public String getByIdDetail(@PathVariable Long id) throws JsonProcessingException {
 				Reponse<List<ImageDetail>> reponse;

@@ -31,6 +31,7 @@ public class DetailTerrain  extends AbstractEntity{
 	private double longitude;
 	private String numero;
 	private double prix;
+	private String path;
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_Terrain", nullable = false)
 	private Terrain terrain;
@@ -48,6 +49,14 @@ public class DetailTerrain  extends AbstractEntity{
 		super();
 		this.terrain = terrain;
 		
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public boolean isPaye() {
