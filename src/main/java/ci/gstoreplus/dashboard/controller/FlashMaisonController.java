@@ -32,9 +32,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gstoreplus.dashboard.metier.CloudinaryService;
 import ci.gstoreplus.dashboard.metier.ImageService;
-import ci.gstoreplus.dashboard.metier.catalogue.FlashTerrainMetier;
+import ci.gstoreplus.dashboard.metier.catalogue.FlashMaisonMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.TerrainMetier;
-import ci.gstoreplus.entity.catalogue.FlashTerrain;
+import ci.gstoreplus.entity.catalogue.FlashMaison;
 import ci.gstoreplus.entity.catalogue.Image;
 import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
@@ -44,9 +44,9 @@ import ci.gstoreplus.utilitaire.Static;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class FlashTerrainController {
+public class FlashMaisonController {
 	@Autowired
-	private FlashTerrainMetier flashTerrainMetier;
+	private FlashMaisonMetier flashMaisonMetier;
 	@Autowired
 	CloudinaryService cloudinaryService;
 	@Autowired
@@ -57,105 +57,105 @@ public class FlashTerrainController {
 	private String storeImage;
 	
 	// recuper Categorie par identifiant
-		private Reponse<FlashTerrain> getFlashTerrainById(Long id) {
-			FlashTerrain flashTerrain = null;
+		private Reponse<FlashMaison> getFlashMaisonById(Long id) {
+			FlashMaison flashMaison = null;
 
 			try {
-				flashTerrain = flashTerrainMetier.findById(id);
-				if (flashTerrain == null) {
+				flashMaison = flashMaisonMetier.findById(id);
+				if (flashMaison == null) {
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format("Flash terrain n'existe pas", id));
-					new Reponse<Terrain>(2, messages, null);
+					new Reponse<FlashMaison>(2, messages, null);
 
 				}
 			} catch (RuntimeException e) {
-				new Reponse<FlashTerrain>(1, Static.getErreursForException(e), null);
+				new Reponse<FlashMaison>(1, Static.getErreursForException(e), null);
 			}
 
-			return new Reponse<FlashTerrain>(0, null, flashTerrain);
+			return new Reponse<FlashMaison>(0, null, flashMaison);
 		}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////// enregistrer un terrain  dans la base de donnee
 	////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
-		@PostMapping("/flashTerrain")
-		public String creer(@RequestBody FlashTerrain flashTerrain) throws JsonProcessingException {
-			System.out.println("voir terrain"+ flashTerrain);
-			Reponse<FlashTerrain> reponse;
+		@PostMapping("/flashMaison")
+		public String creer(@RequestBody FlashMaison flashMaison) throws JsonProcessingException {
+			System.out.println("voir terrain"+ flashMaison);
+			Reponse<FlashMaison> reponse;
 			
 			try {
                  
-				FlashTerrain t = flashTerrainMetier.creer(flashTerrain);
+				FlashMaison t = flashMaisonMetier.creer(flashMaison);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s  à été créer avec succes", t.getId()));
-				reponse = new Reponse<FlashTerrain>(0, messages, t);
+				reponse = new Reponse<FlashMaison>(0, messages, t);
 
 			} catch (InvalideImmobilierException e) {
 
-				reponse = new Reponse<FlashTerrain>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<FlashMaison>(1, Static.getErreursForException(e), null);
 			}
 			return jsonMapper.writeValueAsString(reponse);
 		}
-		@PutMapping("/flashTerrain")
-		public String update(@RequestBody FlashTerrain  modif) throws JsonProcessingException {
+		@PutMapping("/flashMaison")
+		public String update(@RequestBody FlashMaison  modif) throws JsonProcessingException {
 
-			Reponse<FlashTerrain> reponse = null;
-			Reponse<FlashTerrain> reponseTerrainModif = null;
+			Reponse<FlashMaison> reponse = null;
+			Reponse<FlashMaison> reponseTerrainModif = null;
 			// on recupere autre a modifier
 			System.out.println("modif recupere1:"+ modif);
-			reponseTerrainModif = getFlashTerrainById(modif.getId());
+			reponseTerrainModif = getFlashMaisonById(modif.getId());
 			if (reponseTerrainModif.getBody() != null) {
 				try {
 					modif.setPath(reponseTerrainModif.getBody().getPath());
 					System.out.println("modif recupere2:"+ modif);
 					System.out.println("modif recupere2:"+ modif);
-					FlashTerrain terrain = flashTerrainMetier.modifier(modif);
+					FlashMaison terrain = flashMaisonMetier.modifier(modif);
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format("%s a modifier avec succes", terrain.getId()));
-					reponse = new Reponse<FlashTerrain>(0, messages, terrain);
+					reponse = new Reponse<FlashMaison>(0, messages, terrain);
 				} catch (InvalideImmobilierException e) {
 
-					reponse = new Reponse<FlashTerrain>(1, Static.getErreursForException(e), null);
+					reponse = new Reponse<FlashMaison>(1, Static.getErreursForException(e), null);
 				}
 
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("Le Terrain n'existe pas"));
-				reponse = new Reponse<FlashTerrain>(0, messages, null);
+				reponse = new Reponse<FlashMaison>(0, messages, null);
 			}
 
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
 		// recherche les terrains par id
-			@GetMapping("/flashTerrain/{id}")
+			@GetMapping("/flashMaison/{id}")
 			public String getTerrainsById(@PathVariable("id") Long id) throws JsonProcessingException {
 
-				Reponse<FlashTerrain> reponse;
+				Reponse<FlashMaison> reponse;
 
 				try {
 
-					FlashTerrain t = flashTerrainMetier.findById(id);
+					FlashMaison t = flashMaisonMetier.findById(id);
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format(" à été créer avec succes"));
-					reponse = new Reponse<FlashTerrain>(0, messages, t);
+					reponse = new Reponse<FlashMaison>(0, messages, t);
 
 				} catch (Exception e) {
 
-					reponse = new Reponse<FlashTerrain>(1, Static.getErreursForException(e), null);
+					reponse = new Reponse<FlashMaison>(1, Static.getErreursForException(e), null);
 				}
 				return jsonMapper.writeValueAsString(reponse);
 			}
 			// supprimer un  terrain
-					@DeleteMapping("/flashTerrain/{id}")
+					@DeleteMapping("/flashMaison/{id}")
 					public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
 
 						Reponse<Boolean> reponse = null;
 
 						try {
 
-							reponse = new Reponse<Boolean>(0, null, flashTerrainMetier.supprimer(id));
+							reponse = new Reponse<Boolean>(0, null, flashMaisonMetier.supprimer(id));
 
 						} catch (RuntimeException e1) {
 							reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
@@ -165,17 +165,17 @@ public class FlashTerrainController {
 					}
 
 		// get all Terrains
-			@GetMapping("/flashTerrain")
+			@GetMapping("/flashMaison")
 			public String findAll() throws JsonProcessingException {
-				Reponse<List<FlashTerrain>> reponse;
+				Reponse<List<FlashMaison>> reponse;
 				try {
-					List<FlashTerrain> terrains = flashTerrainMetier.findAll();
+					List<FlashMaison> terrains = flashMaisonMetier.findAll();
 					if (!terrains.isEmpty()) {
-						reponse = new Reponse<List<FlashTerrain>>(0, null, terrains);
+						reponse = new Reponse<List<FlashMaison>>(0, null, terrains);
 					} else {
 						List<String> messages = new ArrayList<>();
 						messages.add("Pas de terrain enregistrés");
-						reponse = new Reponse<List<FlashTerrain>>(1, messages, new ArrayList<>());
+						reponse = new Reponse<List<FlashMaison>>(1, messages, new ArrayList<>());
 					}
 
 				} catch (Exception e) {
@@ -185,25 +185,25 @@ public class FlashTerrainController {
 
 			}
 			// solution alterntive cloudinary//////////////////////////
-			@PostMapping("/uploadf")
+			@PostMapping("/uploadfashMaison")
 			public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile,
 					@RequestParam Long id) throws IOException, InvalideImmobilierException{
 				Map result = cloudinaryService.upload(multipartFile);
-				FlashTerrain ft = flashTerrainMetier.findById(id);
+				FlashMaison ft = flashMaisonMetier.findById(id);
 				ft.setPath((String) result.get("url"));
-				 flashTerrainMetier.modifier(ft);
+				 flashMaisonMetier.modifier(ft);
 				
 				return new ResponseEntity(result, HttpStatus.OK);
 			}
 			// supp image
-			@DeleteMapping("/supprim/{id}")
+			@DeleteMapping("/deleteflashMaison/{id}")
 			public ResponseEntity<?> delete(@PathVariable("id") Long id) throws IOException{
 				Image image = imageSevice.findById(id).get();
 				Map result = cloudinaryService.delete(image.getImageId());
 				imageSevice.deleteById(id);
 				return new ResponseEntity(new InvalideImmobilierException("image supprimée"), HttpStatus.OK);
 			}
-			@GetMapping("/downloadImgft/{publicId}")
+			@GetMapping("/downloadImgflashMaison/{publicId}")
 		     public ResponseEntity<ByteArrayResource> downloadImg(@PathVariable String publicId) {
 		        return cloudinaryService.downloadImg(publicId);
 		    }

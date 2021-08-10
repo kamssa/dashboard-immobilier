@@ -86,15 +86,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     		"/api/verificationToken/**",
                     		"/api/auth/prospect/**",
                     		"/api/produit/**","/api/detailTerrain/**",
-                    		"/api/detailMaison/**","/stomp","/api/imageDetail/**")
+                    		"/api/detailMaison/**","/stomp",
+                    		"/api/imageDetail/**","/api/uploadImageAccueil/**",
+                    		"/api/detailMaison/**", "/api/uploadImageAccueil/**",
+                    		"/api/detailFlashMaison/**",
+                    		"/api/imageFlashByIdFlash/**",
+                    		"/api/uploadDetailFlashMaison/**",
+                    		"/api/imageDetailFlashMaison/**")
                         .permitAll()
-                        .antMatchers(HttpMethod.GET, "/api/categorie/**","/api/imageDetailMaison/**",
+                        .antMatchers(HttpMethod.GET, "/api/categorie/**",
+                        		"/api/imageDetailMaison/**",
                         		"/api/ville/**",
                         		"/api/terrain/**", 
                         		"/api/maison/**", 
                         		"/api/uploadMaison/**",
                         		"/api/getMaisonByIdVille/**",
                         		"/api/flashTerrain/**",
+                        		"/api/flashMaison/**",
                         		"/api/getTerrainByIdVille/**",
                         		"/api/getVilleByLibelle/**",
                         		"/api/getCategorieByNom/**",
@@ -113,7 +121,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         		"/api/auth/getClient/**",
                         		"/api/auth/client/**",
                         		"/api/detailMaisonByIdMaison/**",
-                        		"/api/demandeNonLu/**","/api/imageDetailByIdDetail/**").permitAll()
+                        		"/api/demandeNonLu/**","/api/imageDetailByIdDetail/**",
+                        		"/api/imageFlashByIdFlash/**",
+                        		"/api/imageDetailByIdDetailFlashMaison/**",
+                        		"/api/imageAccueil/**",
+                        		"/api/uploadImageAccueil/**",
+                        		"/api/detailFlashMaison/**",
+                        		"/api/detailFlashByIdflash/**",
+                        		"/api/imageFlashByIdFlash/**",
+                        		"/api/imageFlashByIdFlash/**").permitAll()
                     .anyRequest()
                         .authenticated();
 

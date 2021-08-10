@@ -50,13 +50,15 @@ public class DetailImageMaisonController {
 	
 	// solution alterntive cloudinary//////////////////////////
 			@PostMapping("/uploadDetailMaison")
-			public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile,
+			public ResponseEntity<?> uploadMaison(@RequestParam MultipartFile multipartFile,
 					@RequestParam Long id) throws IOException, InvalideImmobilierException{
 				Map result = cloudinaryService.upload(multipartFile);
 				DetailMaison d = detailMaisonMetier.findById(id);
+				System.out.println("voir image detail maison:"+d);
 				ImageDetailMaison image = new ImageDetailMaison();
 				image.setDetailMaison(d);
 				image.setImageUrl((String) result.get("url"));
+				System.out.println("voir image:"+d);
 				imageDetailMaisonMetier.creer(image);
 				
 				

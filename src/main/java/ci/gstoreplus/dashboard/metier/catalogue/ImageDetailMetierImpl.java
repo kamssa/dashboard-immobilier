@@ -46,8 +46,8 @@ private ImageDetailReposirtory imageDetailReposirtory;
 
 	@Override
 	public boolean supprimer(List<ImageDetail> entites) {
-		// TODO Auto-generated method stub
-		return false;
+		imageDetailReposirtory.deleteAll(entites);;
+		return true;
 	}
 
 	@Override

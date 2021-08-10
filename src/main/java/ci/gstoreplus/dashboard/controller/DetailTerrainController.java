@@ -168,7 +168,8 @@ public class DetailTerrainController {
 			Reponse<Boolean> reponse = null;
 
 			try {
-
+               List<ImageDetail> imgd =  imageDetailTerrainMetier.findImageByIdDetailTerrain(id);
+               imageDetailTerrainMetier.supprimer(imgd);
 				reponse = new Reponse<Boolean>(0, null, detailTerrainMetier.supprimer(id));
 
 			} catch (RuntimeException e1) {

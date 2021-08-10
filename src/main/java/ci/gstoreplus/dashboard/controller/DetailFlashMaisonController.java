@@ -18,14 +18,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gstoreplus.dashboard.metier.CloudinaryService;
-import ci.gstoreplus.dashboard.metier.catalogue.DetailMaisonMetier;
-import ci.gstoreplus.dashboard.metier.catalogue.DetailTerrainMetier;
-import ci.gstoreplus.dashboard.metier.catalogue.ImageDetailMaisonMetier;
-import ci.gstoreplus.dashboard.metier.catalogue.ImageDetailTerrainMetier;
-import ci.gstoreplus.entity.catalogue.DetailMaison;
-import ci.gstoreplus.entity.catalogue.DetailTerrain;
-import ci.gstoreplus.entity.catalogue.ImageDetail;
-import ci.gstoreplus.entity.catalogue.ImageDetailMaison;
+import ci.gstoreplus.dashboard.metier.DetailFlashMaisonMetier;
+import ci.gstoreplus.dashboard.metier.catalogue.ImageDetailFlashMaisonMetier;
+import ci.gstoreplus.entity.catalogue.DetailFlashMaison;
+import ci.gstoreplus.entity.catalogue.ImageDetailFlashMaison;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;
@@ -33,12 +29,11 @@ import ci.gstoreplus.utilitaire.Static;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class DetailMaisonController {
+public class DetailFlashMaisonController {
 	@Autowired
-	private DetailMaisonMetier detailMaisonMetier;
+	private DetailFlashMaisonMetier detailFlashMaisonMetier;
 	@Autowired
-	private ImageDetailMaisonMetier imageDetailMaisonMetier;
-
+	private ImageDetailFlashMaisonMetier imageDetailFlashMaisonMetier;
 	@Autowired
 	private ObjectMapper jsonMapper;
 	@Autowired
@@ -47,70 +42,70 @@ public class DetailMaisonController {
 
 
 // recuper categorie par identifiant
-	private Reponse<DetailMaison> getDetailMaisonById(Long id) {
-		DetailMaison detailMaison = null;
+	private Reponse<DetailFlashMaison> getDetailDetailFlashMaisonById(Long id) {
+		DetailFlashMaison detailFlashMaison = null;
 
 		try {
-			detailMaison = detailMaisonMetier.findById(id);
-			if (detailMaison == null) {
+			detailFlashMaison = detailFlashMaisonMetier.findById(id);
+			if (detailFlashMaison == null) {
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("Le detailTerrain n'existe pas", id));
-				new Reponse<DetailMaison>(2, messages, null);
+				new Reponse<DetailFlashMaison>(2, messages, null);
 
 			}
 		} catch (RuntimeException e) {
-			new Reponse<DetailMaison>(1, Static.getErreursForException(e), null);
+			new Reponse<DetailFlashMaison>(1, Static.getErreursForException(e), null);
 		}
 
-		return new Reponse<DetailMaison>(0, null, detailMaison);
+		return new Reponse<DetailFlashMaison>(0, null, detailFlashMaison);
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////// enregistrer une categories  dans la base de donnee
 ////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
-	@PostMapping("/detailMaison")
-	public String creer(@RequestBody DetailMaison detailMaison) throws JsonProcessingException {
-		Reponse<DetailMaison> reponse;
-		System.out.println(detailMaison);
+	@PostMapping("/detailFlashMaison")
+	public String creer(@RequestBody DetailFlashMaison detailFlashMaison) throws JsonProcessingException {
+		Reponse<DetailFlashMaison> reponse;
+		System.out.println(detailFlashMaison);
 		try {
 
-			DetailMaison detailArticle = detailMaisonMetier.creer(detailMaison);
+			DetailFlashMaison detailArticle = detailFlashMaisonMetier.creer(detailFlashMaison);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", detailArticle.getId()));
-			reponse = new Reponse<DetailMaison>(0, messages, detailArticle);
+			reponse = new Reponse<DetailFlashMaison>(0, messages, detailArticle);
 
 		} catch (InvalideImmobilierException e) {
 
-			reponse = new Reponse<DetailMaison>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<DetailFlashMaison>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
 
-	@PutMapping("/detailMaison")
-	public String update(@RequestBody DetailMaison modif) throws JsonProcessingException {
+	@PutMapping("/detailFlashMaison")
+	public String update(@RequestBody DetailFlashMaison modif) throws JsonProcessingException {
 
-		Reponse<DetailMaison> reponse = null;
-		Reponse<DetailMaison> reponsePersModif = null;
+		Reponse<DetailFlashMaison> reponse = null;
+		Reponse<DetailFlashMaison> reponsePersModif = null;
 		// on recupere abonnement a modifier
 		System.out.println("modif recupere1:" + modif);
-		reponsePersModif = getDetailMaisonById(modif.getId());
+		reponsePersModif = getDetailDetailFlashMaisonById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				DetailMaison detailArticles = detailMaisonMetier.modifier(modif);
+				DetailFlashMaison detailArticles = detailFlashMaisonMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", detailArticles.getId()));
-				reponse = new Reponse<DetailMaison>(0, messages, detailArticles);
+				reponse = new Reponse<DetailFlashMaison>(0, messages, detailArticles);
 			} catch (InvalideImmobilierException e) {
 
-				reponse = new Reponse<DetailMaison>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<DetailFlashMaison>(1, Static.getErreursForException(e), null);
 			}
 
 		} else {
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format(" DetailTerrain n'existe pas"));
-			reponse = new Reponse<DetailMaison>(0, messages, null);
+			reponse = new Reponse<DetailFlashMaison>(0, messages, null);
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
@@ -118,12 +113,12 @@ public class DetailMaisonController {
 	}
 
     ////////recuperer une categorie  par son id
-	@GetMapping("/detailMaison/{id}")
+	@GetMapping("/detailFlashMaison/{id}")
 	public String getById(@PathVariable Long id) throws JsonProcessingException {
 		// Annotation @PathVariable permet de recuperer le paremettre dans URI
-		Reponse<DetailMaison> reponse = null;
+		Reponse<DetailFlashMaison> reponse = null;
 
-		reponse = getDetailMaisonById(id);
+		reponse = getDetailDetailFlashMaisonById(id);
 		if (reponse.getBody() == null) {
 			throw new RuntimeException("pas d'enregistrement pour ce DetailTerrain");
 		}
@@ -131,13 +126,13 @@ public class DetailMaisonController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
-	@GetMapping("/detailMaisonByIdMaison/{id}")
+	@GetMapping("/detailFlashByIdflash/{id}")
 	public String getByIdDetailMaison(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<List<DetailMaison>> reponse;
+		Reponse<List<DetailFlashMaison>> reponse;
 		try {
-			List<DetailMaison> detailTerrain = detailMaisonMetier.findDetailMaisonIdMaison(id);
+			List<DetailFlashMaison> detailTerrain = detailFlashMaisonMetier.findDetailFashMaisonIdFlashMaison(id);
 			
-		reponse = new Reponse<List<DetailMaison>>(0, null, detailTerrain);
+		reponse = new Reponse<List<DetailFlashMaison>>(0, null, detailTerrain);
 			
      } catch (Exception e) {
 			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
@@ -146,17 +141,17 @@ public class DetailMaisonController {
 	}
 
         //get all categories
-	@GetMapping("/detailMaison")
+	@GetMapping("/detailFlashMaison")
 	public String findAll() throws JsonProcessingException {
-		Reponse<List<DetailMaison>> reponse;
+		Reponse<List<DetailFlashMaison>> reponse;
 		try {
-			List<DetailMaison> detailTerrains = detailMaisonMetier.findAll();
+			List<DetailFlashMaison> detailTerrains = detailFlashMaisonMetier.findAll();
 			if (!detailTerrains.isEmpty()) {
-				reponse = new Reponse<List<DetailMaison>>(0, null, detailTerrains);
+				reponse = new Reponse<List<DetailFlashMaison>>(0, null, detailTerrains);
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add("Pas d'abonnés enregistrées");
-				reponse = new Reponse<List<DetailMaison>>(1, messages, new ArrayList<>());
+				reponse = new Reponse<List<DetailFlashMaison>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {
@@ -166,15 +161,15 @@ public class DetailMaisonController {
 
 	}
 	// supprimer une categorie
-		@DeleteMapping("/detailMaison/{id}")
+		@DeleteMapping("/detailFlashMaison/{id}")
 		public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
 
 			Reponse<Boolean> reponse = null;
 
 			try {
-				 List<ImageDetailMaison> imgd =  imageDetailMaisonMetier.findImageByIdDetailMaisonn(id);
-				 imageDetailMaisonMetier.supprimer(imgd);
-				reponse = new Reponse<Boolean>(0, null, detailMaisonMetier.supprimer(id));
+				 List<ImageDetailFlashMaison> imgd =  imageDetailFlashMaisonMetier.findImageByIdDetailFlash(id);
+				 imageDetailFlashMaisonMetier.supprimer(imgd);
+				reponse = new Reponse<Boolean>(0, null, detailFlashMaisonMetier.supprimer(id));
 
 			} catch (RuntimeException e1) {
 				reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
@@ -183,43 +178,43 @@ public class DetailMaisonController {
 			return jsonMapper.writeValueAsString(reponse);
 		}
 
-		@GetMapping("/imageDetailMaison/{iDdetailMaison}")
-		public String getImageByIdDetailMaison(@PathVariable("iDdetailMaison") long iDdetailTerrains)
+		@GetMapping("/imageDetailFlashMaison/{id}")
+		public String getImageByIdDetailMaison(@PathVariable("id") long id)
 				throws JsonProcessingException, InvalideImmobilierException{
-			Reponse<List<ImageDetailMaison>> reponse;
+			Reponse<List<ImageDetailFlashMaison>> reponse;
 			try {
-				List<ImageDetailMaison> photos = imageDetailMaisonMetier.findImageByIdDetailMaisonn(iDdetailTerrains);
+				List<ImageDetailFlashMaison> photos = imageDetailFlashMaisonMetier.findImageByIdDetailFlash(id);
 				if (!photos.isEmpty()) {
-					reponse = new Reponse<List<ImageDetailMaison>>(0, null, photos);
+					reponse = new Reponse<List<ImageDetailFlashMaison>>(0, null, photos);
 				} else {
 					List<String> messages = new ArrayList<>();
 					messages.add("Pas de photos enregistrées");
-					reponse = new Reponse<List<ImageDetailMaison>>(1, messages, new ArrayList<>());
+					reponse = new Reponse<List<ImageDetailFlashMaison>>(1, messages, new ArrayList<>());
 				}
 
 			} catch (Exception e) {
-				reponse = new Reponse<List<ImageDetailMaison>>(1, Static.getErreursForException(e), new ArrayList<>());
+				reponse = new Reponse<List<ImageDetailFlashMaison>>(1, Static.getErreursForException(e), new ArrayList<>());
 			}
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
-		@GetMapping("/imageDetailByIdDetailMaison/{id}")
+		/*@GetMapping("/imageDetailByIdDetailFlashMaison/{id}")
 		public String getImageByDetailMaisonBy(@PathVariable Long id) throws JsonProcessingException {
-			Reponse<List<ImageDetailMaison>> reponse;
+			Reponse<List<ImageDetailFlashMaison>> reponse;
 			try {
-				List<ImageDetailMaison> imageDetail = imageDetailMaisonMetier.findImageByIdDetailMaisonn(id);
+				List<ImageDetailFlashMaison> imageDetail = imageDetailFlashMaisonMetier.findImageByIdDetailFlash(id);
 				if (!imageDetail.isEmpty()) {
-					reponse = new Reponse<List<ImageDetailMaison>>(0, null, imageDetail);
+					reponse = new Reponse<List<ImageDetailFlashMaison>>(0, null, imageDetail);
 				} else {
 					List<String> messages = new ArrayList<>();
 					messages.add("Pas d' imageDetail enregistrées");
-					reponse = new Reponse<List<ImageDetailMaison>>(1, messages, new ArrayList<>());
+					reponse = new Reponse<List<ImageDetailFlashMaison>>(1, messages, new ArrayList<>());
 				}
 
 			} catch (Exception e) {
 				reponse = new Reponse<>(1, Static.getErreursForException(e), null);
 			}
 			return jsonMapper.writeValueAsString(reponse);
-		}
+		}*/
 
 }

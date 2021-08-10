@@ -25,9 +25,10 @@ import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ 
 	@Type(name = "TT", value = TopTerrain.class),
-	@Type(name = "FT", value = FlashTerrain.class),
+	@Type(name = "FM", value = FlashMaison.class),
 	@Type(name = "TE", value = Terrain.class),
 	@Type(name = "MA", value = Maison.class),
+	
 	
 })
 public class Produit extends AbstractEntity{

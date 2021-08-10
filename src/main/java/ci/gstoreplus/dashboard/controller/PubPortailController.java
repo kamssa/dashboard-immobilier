@@ -26,9 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gstoreplus.dashboard.metier.catalogue.FlashTerrainMetier;
+import ci.gstoreplus.dashboard.metier.catalogue.FlashMaisonMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.PubPortailMetier;
-import ci.gstoreplus.entity.catalogue.FlashTerrain;
+import ci.gstoreplus.entity.catalogue.FlashMaison;
 import ci.gstoreplus.entity.catalogue.PubPortail;
 import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
@@ -46,7 +46,7 @@ public class PubPortailController {
 	private ObjectMapper jsonMapper;
 	@Value("${dir.images}")
 	private String storeImage;
-	private Imetier<FlashTerrain, Long> flashTerrainMetier;
+	private Imetier<FlashMaison, Long> flashTerrainMetier;
 	
 	// recuper Categorie par identifiant
 		private Reponse<PubPortail> getPubPotailById(Long id) {

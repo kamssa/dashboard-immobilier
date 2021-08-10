@@ -50,6 +50,11 @@ public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throw
 	Map result = cloudinaryService.upload(multipartFile);
 	return new ResponseEntity(result, HttpStatus.OK);
 }
+@PostMapping("/modifUpload")
+public ResponseEntity<?> modifUpload(@RequestParam MultipartFile multipartFile) throws IOException{
+	Map result = cloudinaryService.upload(multipartFile);
+	return new ResponseEntity(result, HttpStatus.OK);
+}
 @DeleteMapping("/delete/{id}")
 public ResponseEntity<?> delete(@PathVariable("id") Long id) throws IOException{
 	if(!imageSevice.exists(id)) {

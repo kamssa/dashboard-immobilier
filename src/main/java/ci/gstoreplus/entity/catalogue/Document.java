@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
 @Entity
-public class Document extends AbstractEntity{
+public class Document extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 	private String libelle;

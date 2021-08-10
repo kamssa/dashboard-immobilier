@@ -11,60 +11,51 @@ import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
 
 @Entity
-public class ImageDetailMaison extends AbstractEntity{
+public class ImageDetailFlashMaison extends AbstractEntity{
     
 	private static final long serialVersionUID = 1L;
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
-	@JoinColumn(name = "id_DetailMaison", nullable = false)
-	private DetailMaison detailMaison;
+	@JoinColumn(name = "id_DetailFashMaison", nullable = false)
+	private DetailFlashMaison detailFashMaison;
 	private String imageUrl;
 	private String imageId;
-	
-	public ImageDetailMaison() {
+	public ImageDetailFlashMaison() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-
-	public ImageDetailMaison(DetailMaison detailMaison, String imageUrl, String imageId) {
+	public ImageDetailFlashMaison(DetailFlashMaison detailFashMaison, String imageUrl, String imageId) {
 		super();
-		this.detailMaison = detailMaison;
+		this.detailFashMaison = detailFashMaison;
 		this.imageUrl = imageUrl;
 		this.imageId = imageId;
 	}
-
-	public DetailMaison getDetailMaison() {
-		return detailMaison;
+	public DetailFlashMaison getDetailFashMaison() {
+		return detailFashMaison;
 	}
-
-	public void setDetailMaison(DetailMaison detailMaison) {
-		this.detailMaison = detailMaison;
+	public void setDetailFashMaison(DetailFlashMaison detailFashMaison) {
+		this.detailFashMaison = detailFashMaison;
 	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
-
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-
 	public String getImageId() {
 		return imageId;
 	}
-
 	public void setImageId(String imageId) {
 		this.imageId = imageId;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((detailMaison == null) ? 0 : detailMaison.hashCode());
+		result = prime * result + ((detailFashMaison == null) ? 0 : detailFashMaison.hashCode());
 		result = prime * result + ((imageId == null) ? 0 : imageId.hashCode());
 		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -73,11 +64,11 @@ public class ImageDetailMaison extends AbstractEntity{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ImageDetailMaison other = (ImageDetailMaison) obj;
-		if (detailMaison == null) {
-			if (other.detailMaison != null)
+		ImageDetailFlashMaison other = (ImageDetailFlashMaison) obj;
+		if (detailFashMaison == null) {
+			if (other.detailFashMaison != null)
 				return false;
-		} else if (!detailMaison.equals(other.detailMaison))
+		} else if (!detailFashMaison.equals(other.detailFashMaison))
 			return false;
 		if (imageId == null) {
 			if (other.imageId != null)
@@ -91,12 +82,10 @@ public class ImageDetailMaison extends AbstractEntity{
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
-		return "ImageDetailMaison [detailMaison=" + detailMaison + ", imageUrl=" + imageUrl + ", imageId=" + imageId
-				+ "]";
+		return "ImageDetailFlashMaison [detailFashMaison=" + detailFashMaison + ", imageUrl=" + imageUrl + ", imageId="
+				+ imageId + "]";
 	}
-
 	
 }
