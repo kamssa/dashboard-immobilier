@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.catalogue.ClientRepository;
@@ -17,17 +18,29 @@ public class ClientMetirImpl implements ClientMetier {
 
 @Autowired
 private ClientRepository clientRepository;
-
+@Autowired
+PasswordEncoder passwordEncoder;
 @Override
 public Personne creer(Personne entity) throws InvalideImmobilierException {
 	// TODO Auto-generated method stub
+	entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 	return clientRepository.save(entity);
 }
 
 @Override
-public Personne modifier(Personne entity) throws InvalideImmobilierException {
-	// TODO Auto-generated method stub
-	return clientRepository.save(entity);
+public Personne modifier(Personne modif) throws InvalideImmobilierException {
+	Optional<Personne> personne = clientRepository.findById(modif.getId());
+	if (personne.isPresent()) {
+
+		if (personne.get().getVersion() != modif.getVersion()) {
+			throw new InvalideImmobilierException("cette personne a deja ete modifier");
+		}
+
+	} else
+		throw new InvalideImmobilierException("modif est un objet null");
+
+	modif.setPassword(passwordEncoder.encode(modif.getPassword()));
+	return clientRepository.save(modif);
 }
 
 @Override
