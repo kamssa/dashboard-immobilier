@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ci.gstoreplus.dashboard.metier.ClientMetier;
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
 import ci.gstoreplus.dashboard.metier.PersonneMetier;
+import ci.gstoreplus.entity.client.Client;
+import ci.gstoreplus.entity.dashboard.admin.Departement;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.entity.dashboard.shared.RoleName;
@@ -151,6 +154,35 @@ public class ClientController {
 			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
+	}
+	@PutMapping("/client")
+	public String update(@RequestBody Personne  modif) throws JsonProcessingException {
+
+		Reponse<Personne> reponse = null;
+		Reponse<Personne> reponsePersModif = null;
+		// on recupere autre a modifier
+		System.out.println("modif recupere1:"+ modif);
+		Personne client = clientMetier.findById(modif.getId());
+		if (client != null) {
+			try {
+				System.out.println("modif recupere2:"+ modif);
+				Personne c = clientMetier.modifier(modif);
+				List<String> messages = new ArrayList<>();
+				messages.add(String.format("%s a modifier avec succes", c.getId()));
+				reponse = new Reponse<Personne>(0, messages, c);
+			} catch (InvalideImmobilierException e) {
+
+				reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+			}
+
+		} else {
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format("Client n'existe pas"));
+			reponse = new Reponse<Personne>(0, messages, null);
+		}
+
+		return jsonMapper.writeValueAsString(reponse);
+
 	}
 	// get all demande
 			@GetMapping("/client")

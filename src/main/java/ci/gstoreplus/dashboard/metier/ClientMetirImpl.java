@@ -21,13 +21,13 @@ private ClientRepository clientRepository;
 @Override
 public Personne creer(Personne entity) throws InvalideImmobilierException {
 	// TODO Auto-generated method stub
-	return null;
+	return clientRepository.save(entity);
 }
 
 @Override
 public Personne modifier(Personne entity) throws InvalideImmobilierException {
 	// TODO Auto-generated method stub
-	return null;
+	return clientRepository.save(entity);
 }
 
 @Override
@@ -41,13 +41,13 @@ public List<Personne> findAll() {
 @Override
 public Personne findById(Long id) {
 	// TODO Auto-generated method stub
-	return null;
+	return clientRepository.findById(id).get();
 }
 
 @Override
 public boolean supprimer(Long id) {
-	// TODO Auto-generated method stub
-	return false;
+	clientRepository.deleteById(id);
+	return true;
 }
 
 @Override
