@@ -163,17 +163,17 @@ public String update(@RequestBody TerrainVendu  modif) throws JsonProcessingExce
          //////////recupere les terrains achetés par id personne
 			@GetMapping("/getTerrainVenduByIdPersonne/{id}")
 			public String chercherParPersonne(@PathVariable Long id) throws JsonProcessingException {
-				Reponse<TerrainVendu> reponse = null;
+				Reponse<List<TerrainVendu>> reponse = null;
 
 				try {
-					TerrainVendu t = terrainVenduMetier.findTerrainVenduByIdPersonne(id);
+					List<TerrainVendu> t = terrainVenduMetier.findTerrainVenduByIdPersonne(id);
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format(" à été créer avec succes"));
-					reponse = new Reponse<TerrainVendu>(0, messages, t);
+					reponse = new Reponse<List<TerrainVendu>>(0, messages, t);
 
 				} catch (Exception e) {
 
-					reponse = new Reponse<TerrainVendu>(1, Static.getErreursForException(e), null);
+					reponse = new Reponse<List<TerrainVendu>>(1, Static.getErreursForException(e), null);
 				}
 				return jsonMapper.writeValueAsString(reponse);
 

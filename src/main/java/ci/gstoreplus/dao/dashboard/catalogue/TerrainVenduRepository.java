@@ -10,5 +10,5 @@ import ci.gstoreplus.entity.catalogue.TerrainVendu;
 public interface TerrainVenduRepository extends JpaRepository<TerrainVendu, Long>{
 	// recupere les abonnement par id de espace
 			@Query("select t from TerrainVendu t  where t.personne.id=?1")
-			 TerrainVendu findTerrainVenduByIdPersonne(long id);
+			 List<TerrainVendu> findTerrainVenduByIdPersonne(long id);
 }

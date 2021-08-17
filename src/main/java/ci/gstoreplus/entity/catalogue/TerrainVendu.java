@@ -33,7 +33,7 @@ public class TerrainVendu extends AbstractEntity{
 	private String path;
 	private String nomVille;
 	private String typeDocument;
-	@OneToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	private Personne personne;
 	public TerrainVendu() {
 		super();

@@ -68,7 +68,7 @@ private TerrainVenduRepository terrainVenduRepository;
 	}
 
 	@Override
-	public TerrainVendu findTerrainVenduByIdPersonne(long id) {
+	public List<TerrainVendu> findTerrainVenduByIdPersonne(long id) {
 		// TODO Auto-generated method stub
 		return terrainVenduRepository.findTerrainVenduByIdPersonne(id);
 	}
