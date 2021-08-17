@@ -92,7 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     		"/api/detailFlashMaison/**",
                     		"/api/imageFlashByIdFlash/**",
                     		"/api/uploadDetailFlashMaison/**",
-                    		"/api/imageDetailFlashMaison/**")
+                    		"/api/imageDetailFlashMaison/**",
+                    		"/api/uploadBlog/**")
                         .permitAll()
                         .antMatchers(HttpMethod.GET, "/api/categorie/**",
                         		"/api/imageDetailMaison/**",
@@ -129,9 +130,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         		"/api/detailFlashMaison/**",
                         		"/api/detailFlashByIdflash/**",
                         		"/api/imageFlashByIdFlash/**",
-                        		"/api/imageFlashByIdFlash/**").permitAll()
-                    .anyRequest()
-                        .authenticated();
+                        		"/api/imageFlashByIdFlash/**",
+                        		"/api/blog/**","/api/terrainVendu/**", 
+                        		"/api/getTerrainVenduByIdPersonne/**").permitAll()
+                                .anyRequest()
+                                .authenticated();
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

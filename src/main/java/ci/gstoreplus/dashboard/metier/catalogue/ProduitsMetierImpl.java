@@ -1,6 +1,7 @@
 package ci.gstoreplus.dashboard.metier.catalogue;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,16 @@ private ProduitRepository produitRepository;
 
 @Override
 public Produit creer(Produit entity) throws InvalideImmobilierException {
-	// TODO Auto-generated method stub
+	if ((entity.getLibelle().equals(null)) || (entity.getLibelle()== "")) {
+		throw new InvalideImmobilierException("Le libelle ne peut etre null");
+	}
+	Optional<Produit> cats = null;
+
+	cats = produitRepository.findByLibelle(entity.getLibelle());
+	if (cats.isPresent()) {
+		throw new InvalideImmobilierException("Ce libelle est deja utilise");
+	}
+	
 	return produitRepository.save(entity);
 }
 
