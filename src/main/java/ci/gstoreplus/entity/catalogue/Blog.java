@@ -7,14 +7,13 @@ import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
 @Entity
 public class Blog extends AbstractEntity{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private String libelle;
 	@Column(columnDefinition="TEXT")
 	private String description;
 	private String path;
+	private boolean im;
 	
 	public Blog() {
 		super();
@@ -26,6 +25,16 @@ public class Blog extends AbstractEntity{
 		this.libelle = libelle;
 		this.description = description;
 		this.path = path;
+	}
+
+	
+
+	public Blog(String libelle, String description, String path, boolean im) {
+		super();
+		this.libelle = libelle;
+		this.description = description;
+		this.path = path;
+		this.im = im;
 	}
 
 	public String getLibelle() {
@@ -45,6 +54,17 @@ public class Blog extends AbstractEntity{
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	
+
+	
+	public boolean isIm() {
+		return im;
+	}
+
+	public void setIm(boolean im) {
+		this.im = im;
 	}
 
 	@Override

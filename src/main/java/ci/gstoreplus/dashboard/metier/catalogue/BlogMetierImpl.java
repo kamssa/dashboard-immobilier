@@ -1,12 +1,14 @@
 package ci.gstoreplus.dashboard.metier.catalogue;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.catalogue.BlogRepository;
 import ci.gstoreplus.entity.catalogue.Blog;
+import ci.gstoreplus.entity.catalogue.Produit;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
@@ -65,6 +67,22 @@ private BlogRepository blogRepository;
 	public boolean existsByEmail(String email) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Blog> getBlocsFalse() {
+		List<Blog> b = null;
+		List<Blog> blogs = blogRepository.findAll();
+	    b = blogs.stream().filter(t -> t.isIm()==false).collect(Collectors.toList());
+	    return b;
+	}
+
+	@Override
+	public List<Blog> getBlocsTrue() {
+		List<Blog> b = null;
+		List<Blog> blogs = blogRepository.findAll();
+	    b = blogs.stream().filter(t -> t.isIm()==true).collect(Collectors.toList());
+	    return b;
 	}
 
 }

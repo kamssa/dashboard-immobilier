@@ -38,6 +38,17 @@ public class CloudinaryService {
 		file.delete();
 		return result;
 	}
+	public Map uploadVideo(MultipartFile multipartFile) throws IOException {
+		Map params = ObjectUtils.asMap(
+			    "overwrite", true,
+			    "resource_type", "video",   
+			    "resource_type", "image"
+			);
+		File file = convert(multipartFile);
+		Map uploadResult = cloudinary.uploader().upload(file, params);
+		file.delete();
+		return uploadResult;
+	}
    
 	public Map delete(String id) throws IOException {
 		Map result = cloudinary.uploader().destroy(id, ObjectUtils.emptyMap());

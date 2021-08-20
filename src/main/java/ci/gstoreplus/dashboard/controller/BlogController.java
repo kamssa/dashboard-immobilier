@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,7 @@ import ci.gstoreplus.dashboard.metier.CloudinaryService;
 import ci.gstoreplus.dashboard.metier.catalogue.BlogMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.ImageAccueilMetier;
 import ci.gstoreplus.entity.catalogue.Blog;
+import ci.gstoreplus.entity.catalogue.Demande;
 import ci.gstoreplus.entity.catalogue.ImageAccueil;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
@@ -86,6 +88,35 @@ public class BlogController {
 			}
 			return jsonMapper.writeValueAsString(reponse);
 		}
+		@PutMapping("/blog")
+		public String update(@RequestBody Blog  modif) throws JsonProcessingException {
+
+			Reponse<Blog> reponse = null;
+			Reponse<Blog> reponseDemandeModif = null;
+			// on recupere autre a modifier
+			System.out.println("modif recupere1:"+ modif);
+			reponseDemandeModif = getBlogById(modif.getId());
+			if (reponseDemandeModif.getBody() != null) {
+				try {
+					System.out.println("modif recupere2:"+ modif);
+					Blog demande = blogMetier.modifier(modif);
+					List<String> messages = new ArrayList<>();
+					messages.add(String.format("%s a modifier avec succes", demande.getId()));
+					reponse = new Reponse<Blog>(0, messages, demande);
+				} catch (InvalideImmobilierException e) {
+
+					reponse = new Reponse<Blog>(1, Static.getErreursForException(e), null);
+				}
+
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add(String.format("Demande n'existe pas"));
+				reponse = new Reponse<Blog>(0, messages, null);
+			}
+
+			return jsonMapper.writeValueAsString(reponse);
+
+		}
 		// recherche les terrains par id
 			@GetMapping("/blog/{id}")
 			public String getblogById(@PathVariable("id") Long id) throws JsonProcessingException {
@@ -142,11 +173,49 @@ public class BlogController {
 				return jsonMapper.writeValueAsString(reponse);
 
 			}
+				@GetMapping("/blogTrue")
+				public String findAllBlockTrue() throws JsonProcessingException {
+					Reponse<List<Blog>> reponse;
+					try {
+						List<Blog> terrains = blogMetier.getBlocsTrue();
+						if (!terrains.isEmpty()) {
+							reponse = new Reponse<List<Blog>>(0, null, terrains);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas de terrain enregistrés");
+							reponse = new Reponse<List<Blog>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
+					@GetMapping("/blogFalse")
+					public String findAllBlockFalse() throws JsonProcessingException {
+						Reponse<List<Blog>> reponse;
+						try {
+							List<Blog> terrains = blogMetier.getBlocsFalse();
+							if (!terrains.isEmpty()) {
+								reponse = new Reponse<List<Blog>>(0, null, terrains);
+							} else {
+								List<String> messages = new ArrayList<>();
+								messages.add("Pas de terrain enregistrés");
+								reponse = new Reponse<List<Blog>>(1, messages, new ArrayList<>());
+							}
+
+						} catch (Exception e) {
+							reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+						}
+						return jsonMapper.writeValueAsString(reponse);
+
+					}
 			// solution alterntive cloudinary//////////////////////////
 			@PostMapping("/uploadBlog")
 			public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile,
 					@RequestParam Long id) throws IOException, InvalideImmobilierException{
-				Map result = cloudinaryService.upload(multipartFile);
+				Map result = cloudinaryService.uploadVideo(multipartFile);
 				Blog ft = blogMetier.findById(id);
 				ft.setPath((String) result.get("url"));
 				 blogMetier.modifier(ft);
