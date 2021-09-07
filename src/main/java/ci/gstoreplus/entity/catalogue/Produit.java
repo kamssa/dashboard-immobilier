@@ -36,7 +36,8 @@ public class Produit extends AbstractEntity{
 	private String libelle;
 	@Column(columnDefinition="TEXT")
 	private String description;
-	private String path;
+	
+    private String path;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
 	@JoinColumn(name = "id_ville")
@@ -86,6 +87,8 @@ public class Produit extends AbstractEntity{
 	public String getType() {
 		return type;
 	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
