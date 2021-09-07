@@ -10,9 +10,8 @@ import javax.persistence.Entity;
 public class Maison extends Produit {
 
 	private static final long serialVersionUID = 1L;
-	private String surafceUtile;
+	private String surfaceUtile;
 	private String surfaceTerrain;
-    private String nbrePieces;
     private String situationGeographique;
     private String typeChambre;
     private TypeMaison typeMaison;
@@ -20,15 +19,18 @@ public class Maison extends Produit {
 		super();
 	}
 	
-	
-	public String getSurafceUtile() {
-		return surafceUtile;
+	public String getSurfaceUtile() {
+		return surfaceUtile;
 	}
 
 
-	public void setSurafceUtile(String surafceUtile) {
-		this.surafceUtile = surafceUtile;
+
+
+	public void setSurfaceUtile(String surfaceUtile) {
+		this.surfaceUtile = surfaceUtile;
 	}
+
+
 
 
 	public String getSurfaceTerrain() {
@@ -40,14 +42,7 @@ public class Maison extends Produit {
 		this.surfaceTerrain = surfaceTerrain;
 	}
 
-
-	public String getNbrePieces() {
-		return nbrePieces;
-	}
-	public void setNbrePieces(String nbrePieces) {
-		this.nbrePieces = nbrePieces;
-	}
-	public String getSituationGeographique() {
+   public String getSituationGeographique() {
 		return situationGeographique;
 	}
 	public void setSituationGeographique(String situationGeographique) {
