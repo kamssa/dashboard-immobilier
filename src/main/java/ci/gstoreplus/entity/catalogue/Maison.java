@@ -1,5 +1,7 @@
 package ci.gstoreplus.entity.catalogue;
 
+import java.math.BigDecimal;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -13,26 +15,34 @@ public class Maison extends Produit {
 	private String surfaceUtile;
 	private String surfaceTerrain;
     private String situationGeographique;
-    private String typeMaison;
+    private String maisonType;
+    private BigDecimal prix;
+
 	public Maison() {
 		super();
 	}
 	
-  public String getSituationGeographique() {
+  public Maison(String surfaceUtile, String surfaceTerrain, String situationGeographique, String maisonType) {
+		super();
+		this.surfaceUtile = surfaceUtile;
+		this.surfaceTerrain = surfaceTerrain;
+		this.situationGeographique = situationGeographique;
+		this.maisonType = maisonType;
+	}
+
+public String getSituationGeographique() {
 		return situationGeographique;
 	}
 	public void setSituationGeographique(String situationGeographique) {
 		this.situationGeographique = situationGeographique;
 	}
 	
-	
-
-	public String getTypeMaison() {
-		return typeMaison;
+	public String getMaisonType() {
+		return maisonType;
 	}
 
-	public void setTypeMaison(String typeMaison) {
-		this.typeMaison = typeMaison;
+	public void setMaisonType(String maisonType) {
+		this.maisonType = maisonType;
 	}
 
 	public String getSurfaceUtile() {
@@ -50,6 +60,15 @@ public class Maison extends Produit {
 	public void setSurfaceTerrain(String surfaceTerrain) {
 		this.surfaceTerrain = surfaceTerrain;
 	}
+
+	public BigDecimal getPrix() {
+		return prix;
+	}
+
+	public void setPrix(BigDecimal prix) {
+		this.prix = prix;
+	}
+
 	
     
 	}
