@@ -13,7 +13,7 @@ public class Maison extends Produit {
 	private String surfaceUtile;
 	private String surfaceTerrain;
     private String situationGeographique;
-    private TypeMaison typeMaison;
+    private String typeMaison;
 	public Maison() {
 		super();
 	}
@@ -25,10 +25,13 @@ public class Maison extends Produit {
 		this.situationGeographique = situationGeographique;
 	}
 	
-	public TypeMaison getTypeMaison() {
+	
+
+	public String getTypeMaison() {
 		return typeMaison;
 	}
-	public void setTypeMaison(TypeMaison typeMaison) {
+
+	public void setTypeMaison(String typeMaison) {
 		this.typeMaison = typeMaison;
 	}
 
