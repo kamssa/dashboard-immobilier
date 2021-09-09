@@ -31,16 +31,6 @@ private DocumentRepository catalogueRepository;
 
 	@Override
 	public Document modifier(Document modif) throws InvalideImmobilierException {
-		Optional<Document> cat = catalogueRepository.findById(modif.getId());
-		if (cat.isPresent()) {
-
-			if (cat.get().getVersion() != modif.getVersion()) {
-				throw new InvalideImmobilierException("ce libelle a deja ete modifier");
-			}
-
-		} else
-			throw new InvalideImmobilierException("modif est un objet null");
-
 		
 		return catalogueRepository.save(modif);
 	}

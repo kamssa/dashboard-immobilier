@@ -13,46 +13,16 @@ public class Maison extends Produit {
 	private String surfaceUtile;
 	private String surfaceTerrain;
     private String situationGeographique;
-    private String typeChambre;
     private TypeMaison typeMaison;
 	public Maison() {
 		super();
 	}
 	
-	public String getSurfaceUtile() {
-		return surfaceUtile;
-	}
-
-
-
-
-	public void setSurfaceUtile(String surfaceUtile) {
-		this.surfaceUtile = surfaceUtile;
-	}
-
-
-
-
-	public String getSurfaceTerrain() {
-		return surfaceTerrain;
-	}
-
-
-	public void setSurfaceTerrain(String surfaceTerrain) {
-		this.surfaceTerrain = surfaceTerrain;
-	}
-
-   public String getSituationGeographique() {
+  public String getSituationGeographique() {
 		return situationGeographique;
 	}
 	public void setSituationGeographique(String situationGeographique) {
 		this.situationGeographique = situationGeographique;
-	}
-	public String getTypeChambre() {
-		return typeChambre;
-	}
-	public void setTypeChambre(String typeChambre) {
-		this.typeChambre = typeChambre;
 	}
 	
 	public TypeMaison getTypeMaison() {
@@ -60,6 +30,22 @@ public class Maison extends Produit {
 	}
 	public void setTypeMaison(TypeMaison typeMaison) {
 		this.typeMaison = typeMaison;
+	}
+
+	public String getSurfaceUtile() {
+		return surfaceUtile;
+	}
+
+	public void setSurfaceUtile(String surfaceUtile) {
+		this.surfaceUtile = surfaceUtile;
+	}
+
+	public String getSurfaceTerrain() {
+		return surfaceTerrain;
+	}
+
+	public void setSurfaceTerrain(String surfaceTerrain) {
+		this.surfaceTerrain = surfaceTerrain;
 	}
 	
     
