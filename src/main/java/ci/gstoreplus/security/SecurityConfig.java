@@ -133,7 +133,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         		"/api/imageFlashByIdFlash/**",
                         		"/api/blog/**","/api/terrainVendu/**", 
                         		"/api/getTerrainVenduByIdPersonne/**",
-                        		"/api/blogFalse/**","/api/blogTrue/**").permitAll()
+                        		"/api/blogFalse/**","/api/blogTrue/**","/api/auth/updatePassword/**").permitAll()
                                 .anyRequest()
                                 .authenticated();
 

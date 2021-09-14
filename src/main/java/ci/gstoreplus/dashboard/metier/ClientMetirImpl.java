@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.catalogue.ClientRepository;
+import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
 import ci.gstoreplus.entity.client.Client;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.exception.InvalideImmobilierException;
@@ -18,6 +19,8 @@ public class ClientMetirImpl implements ClientMetier {
 
 @Autowired
 private ClientRepository clientRepository;
+@Autowired
+private PersonneRepository personneRepository;
 @Autowired
 PasswordEncoder passwordEncoder;
 @Override
@@ -91,6 +94,14 @@ public boolean existsByEmail(String email) {
 public Optional<Personne> findByEmail(String email) {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+@Override
+public Personne modifPassword(Personne p) {
+	Personne pers = personneRepository.findByEmail(p.getEmail()).get();
+	pers.setPassword(passwordEncoder.encode(p.getPassword()));
+	return personneRepository.save(pers);
+	
 }
 	
 }

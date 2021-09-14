@@ -260,5 +260,26 @@ public class ClientController {
 							}
 							return jsonMapper.writeValueAsString(reponse);
 						}
+						@PutMapping("/updatePassword")
+						public String updatePassword(@RequestBody Personne  modif) throws JsonProcessingException {
+
+							Reponse<Personne> reponse = null;
+							// on recupere autre a modifier
+							
+								try {
+									Personne c = clientMetier.modifPassword(modif);
+									List<String> messages = new ArrayList<>();
+									messages.add(String.format("%s a modifier avec succes", c.getId()));
+									reponse = new Reponse<Personne>(0, messages, c);
+								} catch (Exception e) {
+
+									reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+								}
+
+							
+
+							return jsonMapper.writeValueAsString(reponse);
+
+						}
 
 }
