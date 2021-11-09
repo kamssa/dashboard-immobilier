@@ -26,6 +26,7 @@ PasswordEncoder passwordEncoder;
 @Override
 public Personne creer(Personne entity) throws InvalideImmobilierException {
 	// TODO Auto-generated method stub
+	System.out.println("voir le client--->"+entity);
 	entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 	return clientRepository.save(entity);
 }
@@ -102,6 +103,12 @@ public Personne modifPassword(Personne p) {
 	pers.setPassword(passwordEncoder.encode(p.getPassword()));
 	return personneRepository.save(pers);
 	
+}
+
+@Override
+public List<Personne> findAllPersonnesParMc(String mc) {
+	// TODO Auto-generated method stub
+	return personneRepository.findByNomCompletLike( mc);
 }
 	
 }

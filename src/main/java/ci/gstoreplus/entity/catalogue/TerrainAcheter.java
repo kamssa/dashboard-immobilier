@@ -28,7 +28,7 @@ public class TerrainAcheter extends AbstractEntity{
 
 	public DetailTerrain getDetailTerrain() {
 		return detailTerrain;
-	}
+	} 
 	public void setDetailTerrain(DetailTerrain detailTerrain) {
 		this.detailTerrain = detailTerrain;
 	}

@@ -1,6 +1,5 @@
 package ci.gstoreplus;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
@@ -20,9 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ci.gstoreplus.dao.dashboard.catalogue.ProduitRepository;
 import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
 import ci.gstoreplus.dao.dashboard.personne.RoleRepository;
-import ci.gstoreplus.entity.dashboard.admin.Admin;
-import ci.gstoreplus.entity.dashboard.shared.Role;
-import ci.gstoreplus.entity.dashboard.shared.RoleName;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = { 

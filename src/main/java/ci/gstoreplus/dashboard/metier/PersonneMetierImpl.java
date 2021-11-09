@@ -151,4 +151,20 @@ public static final String TOKEN_VALID = "VALID";
 			return personneRepository.findByEmail(email).get();
 		}
 
+
+		@Override
+		public List<Personne> findAllPersonnesParMc(String mc) {
+			List<Personne> pers = null;
+			List<Personne> personne = personneRepository.findAllPersonnesParMc(mc);
+		    pers = personne.stream().filter(p -> p.getType().equals("CL")).collect(Collectors.toList());
+		    return pers;		
+		    }
+
+
+		@Override
+		public Personne findByNumCni(String numCni) {
+			// TODO Auto-generated method stub
+			return personneRepository.findByNumCni(numCni);
+		}
+
 }

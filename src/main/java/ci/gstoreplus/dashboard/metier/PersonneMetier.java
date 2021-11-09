@@ -1,5 +1,7 @@
 package ci.gstoreplus.dashboard.metier;
 
+import java.util.List;
+
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.metier.Imetier;
 
@@ -8,5 +10,8 @@ public interface PersonneMetier  extends Imetier<Personne, Long>{
 	 Personne getPersonne(String verificationToken);
 	 String validateVerificationToken(String token);
 	 Personne findByEmail(String email);
+	 List<Personne> findAllPersonnesParMc(String mc);
+	 Personne findByNumCni(String numCni);
+
 	 
 }

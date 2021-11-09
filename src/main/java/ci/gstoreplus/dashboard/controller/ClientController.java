@@ -1,11 +1,9 @@
 package ci.gstoreplus.dashboard.controller;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,13 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ci.gstoreplus.dashboard.metier.ClientMetier;
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
 import ci.gstoreplus.dashboard.metier.PersonneMetier;
-import ci.gstoreplus.entity.client.Client;
-import ci.gstoreplus.entity.dashboard.admin.Departement;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.entity.dashboard.shared.RoleName;
@@ -281,5 +277,43 @@ public class ClientController {
 							return jsonMapper.writeValueAsString(reponse);
 
 						}
+						// recherche une personne par son un mot cle
+						@GetMapping("/clientbyMc/{mc}")
+						public String getClientByMc(@PathVariable("mc") String mc) throws JsonProcessingException {
+
+							Reponse<List<Personne>> reponse;
+
+							try {
+
+								List<Personne> p = personneMetier.findAllPersonnesParMc(mc);
+								List<String> messages = new ArrayList<>();
+								messages.add(String.format(" à été créer avec succes"));
+								reponse = new Reponse<List<Personne>>(0, messages, p);
+
+							} catch (Exception e) {
+
+								reponse = new Reponse<List<Personne>>(1, Static.getErreursForException(e), null);
+							}
+							return jsonMapper.writeValueAsString(reponse);
+						}
+						@GetMapping("/getClient/{numCni}")
+						public String getPersonnesByCni(@PathVariable("numCni") String numCni) throws JsonProcessingException {
+
+							Reponse<Personne> reponse;
+
+							try {
+
+								Personne p = personneMetier.findByNumCni(numCni);
+								List<String> messages = new ArrayList<>();
+								messages.add(String.format(" à été créer avec succes"));
+								reponse = new Reponse<Personne>(0, messages, p);
+
+							} catch (Exception e) {
+
+								reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+							}
+							return jsonMapper.writeValueAsString(reponse);
+						}
+
 
 }

@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import ci.gstoreplus.entity.client.Abonne;
 import ci.gstoreplus.entity.client.Client;
-import ci.gstoreplus.entity.client.Membre;
 import ci.gstoreplus.entity.client.Prospect;
 import ci.gstoreplus.entity.dashboard.admin.Admin;
 import ci.gstoreplus.entity.dashboard.admin.Employe;
@@ -45,8 +45,7 @@ import ci.gstoreplus.entity.dashboard.admin.Manager;
 	@Type(name = "EM", value = Employe.class), 
 	@Type(name = "AB", value = Abonne.class),
 	@Type(name = "CL", value = Client.class),
-	@Type(name = "PR", value = Prospect.class),
-	@Type(name = "ME", value = Membre.class)
+	@Type(name = "PR", value = Prospect.class)
 })
 public class Personne extends AbstractEntity {
 
@@ -66,6 +65,7 @@ public class Personne extends AbstractEntity {
 	@Email
 	private String email;
 	private String numCni;
+	private String numPassport;
 	private String codePays;
 	private String telephone;
 	@NotBlank
@@ -78,6 +78,8 @@ public class Personne extends AbstractEntity {
 	private Adresse adresse;
 	@Column(name = "actived")
 	private boolean actived;
+	@Column(name = "desactiver")
+	private Boolean desactiver;
 	@Column(name = "TYPE_PERSONNE", insertable = false, updatable = false)
 	private String type;
 
@@ -89,6 +91,7 @@ public class Personne extends AbstractEntity {
 	public Personne() {
 		super();
 		 this.actived=false;
+		 this.desactiver = false;
 	}
 
 	public Personne(@NotBlank @Size(max = 40) String nom, @NotBlank @Size(max = 15) String prenom,
@@ -149,6 +152,24 @@ public class Personne extends AbstractEntity {
 		this.actived = actived;
 		this.type = type;
 		this.roles = roles;
+	}
+
+	public String getNumPassport() {
+		return numPassport;
+	}
+
+	public void setNumPassport(String numPassport) {
+		this.numPassport = numPassport;
+	}
+
+	
+
+	public Boolean getDesactiver() {
+		return desactiver;
+	}
+
+	public void setDesactiver(Boolean desactiver) {
+		this.desactiver = desactiver;
 	}
 
 	public String getNumCni() {
@@ -270,6 +291,7 @@ public class Personne extends AbstractEntity {
 	}
 
 	@PrePersist
+	@PreUpdate
 	public void setNomComplet() {
 		this.nomComplet = nom + " " + prenom;
 	}
