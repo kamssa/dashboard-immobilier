@@ -296,7 +296,7 @@ public class ClientController {
 							}
 							return jsonMapper.writeValueAsString(reponse);
 						}
-						@GetMapping("/getClient/{numCni}")
+						@GetMapping("/getClientByNumCni/{numCni}")
 						public String getPersonnesByCni(@PathVariable("numCni") String numCni) throws JsonProcessingException {
 
 							Reponse<Personne> reponse;
