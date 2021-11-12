@@ -20,6 +20,7 @@ import ci.gstoreplus.exception.InvalideImmobilierException;
 public class EmployemetierImpl implements EmployeMetier{
 @Autowired
 private PersonneRepository personneRepository;
+@Autowired
 private RoleRepository roleRepository;
 @Autowired
 PasswordEncoder passwordEncoder;
