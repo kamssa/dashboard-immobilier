@@ -72,70 +72,22 @@ public class EmployeController {
 	
 	@PostMapping("/employe")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String createEmploye(@Valid @RequestBody Personne signUpRequest, @RequestParam(value = "roleName") String roleName) throws Exception {
-		Reponse<Personne> reponse = null;
-		Personne empl = null;
-		
-			if (roleName.equals("ROLE_ADMIN")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_ADMIN).get();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.creer(signUpRequest);
+	public String createEmploye(@Valid @RequestBody Personne signUpRequest) throws Exception {
+		Reponse<Personne> reponse;
+		System.out.println(signUpRequest);
+		try {
+			Role userRole = roleMetier.findByName(RoleName.ROLE_EMPLOYE).get();
+			signUpRequest.setRoles(Collections.singleton(userRole));
+			Personne d = personneMetier.creer(signUpRequest);
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format("%s  à été créer avec succes", d.getId()));
+			reponse = new Reponse<Personne>(0, messages, d);
 
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
+		} catch (InvalideImmobilierException e) {
 
-			}else if (roleName.equals("ROLE_MANAGER")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_MANAGER).get();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.creer(signUpRequest);
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			}else if (roleName.equals("ROLE_COMMERCIAL") ) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_COMMERCIAL).get();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.creer(signUpRequest);
-				System.out.println("Voir le nom complet de la personne recuperée:" + empl.getNomComplet());
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			} else if (roleName.equals("ROLE_EXPLOITANT")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_EXPLOITANT).get();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.creer(signUpRequest);
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			}
-			
-			else if (roleName.equals("ROLE_EMPLOYE")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_EMPLOYE).get();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.creer(signUpRequest);
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			}else {
-              jsonMapper.writeValueAsString(reponse);
-	
-			}
-			return jsonMapper.writeValueAsString(reponse);
-			
-						
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
 			
 
 		

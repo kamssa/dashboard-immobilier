@@ -35,7 +35,6 @@ public class TerrainVendu extends AbstractEntity{
 	private Personne personne;
 	public TerrainVendu() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public TerrainVendu(String libelle, boolean paye, boolean abonneGeo, String unite, String note,
 			String prixParMettreCarre, String superficie, String surfaceUtilise, String description, double latitude,
@@ -165,5 +164,4 @@ public class TerrainVendu extends AbstractEntity{
 		this.personne = personne;
 	}
 
-	
 }

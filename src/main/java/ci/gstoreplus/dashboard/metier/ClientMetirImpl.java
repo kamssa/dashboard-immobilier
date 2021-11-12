@@ -1,5 +1,6 @@
 package ci.gstoreplus.dashboard.metier;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.catalogue.ClientRepository;
 import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
+import ci.gstoreplus.dao.dashboard.personne.RoleRepository;
 import ci.gstoreplus.entity.client.Client;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
+import ci.gstoreplus.entity.dashboard.shared.Role;
+import ci.gstoreplus.entity.dashboard.shared.RoleName;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
@@ -21,6 +25,8 @@ public class ClientMetirImpl implements ClientMetier {
 private ClientRepository clientRepository;
 @Autowired
 private PersonneRepository personneRepository;
+@Autowired
+private RoleRepository roleRepository;
 @Autowired
 PasswordEncoder passwordEncoder;
 @Override
@@ -44,6 +50,8 @@ public Personne modifier(Personne modif) throws InvalideImmobilierException {
 		throw new InvalideImmobilierException("modif est un objet null");
 
 	modif.setPassword(passwordEncoder.encode(modif.getPassword()));
+	Role userRole = roleRepository.findByName(RoleName.ROLE_CLIENT).get();
+	modif.setRoles(Collections.singleton(userRole));
 	return clientRepository.save(modif);
 }
 

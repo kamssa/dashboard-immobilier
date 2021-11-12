@@ -139,7 +139,8 @@ public class ClientController {
 		Reponse<Personne> reponse;
 		System.out.println(client);
 		try {
-
+			Role userRole = roleMetier.findByName(RoleName.ROLE_CLIENT).get();
+			client.setRoles(Collections.singleton(userRole));
 			Personne d = clientMetier.creer(client);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", d.getId()));
