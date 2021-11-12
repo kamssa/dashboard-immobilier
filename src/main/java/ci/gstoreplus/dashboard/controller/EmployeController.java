@@ -35,7 +35,7 @@ import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @CrossOrigin
 public class EmployeController {
 	@Autowired
@@ -252,4 +252,24 @@ public class EmployeController {
 			
 						
 			}
+	// recherche le membre par id
+	@GetMapping("/getEmployeByEmail/{email}")
+	public String getEmployeByEmail(@PathVariable("email") String email) throws JsonProcessingException {
+
+		Reponse<Personne> reponse;
+
+		try {
+
+			Personne p = personneMetier.findByEmail(email);
+			 System.out.println("getClientById:" +p);
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format(" à été créer avec succes"));
+			reponse = new Reponse<Personne>(0, messages, p);
+
+		} catch (Exception e) {
+
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
+	}
 }
