@@ -78,7 +78,7 @@ public class EmployeController {
 		try {
 			Role userRole = roleMetier.findByName(RoleName.ROLE_EMPLOYE).get();
 			signUpRequest.setRoles(Collections.singleton(userRole));
-			Personne d = personneMetier.creer(signUpRequest);
+			Personne d = employeMetier.creer(signUpRequest);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", d.getId()));
 			reponse = new Reponse<Personne>(0, messages, d);
@@ -103,7 +103,7 @@ public class EmployeController {
 		if (reponsePersModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				Personne personne = personneMetier.modifier(modif);
+				Personne personne = employeMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", personne.getId()));
 				reponse = new Reponse<Personne>(0, messages, personne);
@@ -130,9 +130,9 @@ public class EmployeController {
 
 		try {
 
-			Personne p = personneMetier.findById(id);
+			Personne p = employeMetier.findById(id);
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format(" à été créer avec succes"));
+			messages.add(String.format("Employé retouvé avec succes"));
 			reponse = new Reponse<Personne>(0, messages, p);
 
 		} catch (Exception e) {

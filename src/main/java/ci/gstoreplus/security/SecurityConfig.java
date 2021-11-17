@@ -93,7 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     		"/api/imageFlashByIdFlash/**",
                     		"/api/uploadDetailFlashMaison/**",
                     		"/api/imageDetailFlashMaison/**",
-                    		"/api/uploadBlog/**","/api/versement/**","/api/dversementByIdPersonne/**")
+                    		"/api/uploadBlog/**","/api/versement/**","/api/dversementByIdPersonne/**",
+                    		"/api/entreprise/**")
                         .permitAll()
                         .antMatchers(HttpMethod.GET, "/api/categorie/**",
                         		"/api/imageDetailMaison/**",

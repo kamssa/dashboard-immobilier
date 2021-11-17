@@ -18,11 +18,19 @@ public class Departement extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
     private String libelle;
 	private String description;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_Entreprise")
-	private Entrepise entreprise;
+	private Entreprise entreprise;
 	
 	
+	public Departement(String libelle, String description, Entreprise entreprise) {
+		super();
+		this.libelle = libelle;
+		this.description = description;
+		this.entreprise = entreprise;
+	}
+
+
 	public Departement() {
 		super();
 	}
@@ -48,13 +56,19 @@ public class Departement extends AbstractEntity{
 	}
 
 
-	public Entrepise getEntreprise() {
+	public Entreprise getEntreprise() {
 		return entreprise;
 	}
 
 
-	public void setEntreprise(Entrepise entreprise) {
+	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Departement [libelle=" + libelle + ", description=" + description + ", entreprise=" + entreprise + "]";
 	}
 	
 }

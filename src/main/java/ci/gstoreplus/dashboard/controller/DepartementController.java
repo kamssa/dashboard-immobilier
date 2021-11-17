@@ -59,7 +59,6 @@ public class DepartementController {
 	@PostMapping("/departement")
 	public String creer(@RequestBody Departement departement) throws JsonProcessingException {
 		Reponse<Departement> reponse;
-		System.out.println(departement);
 		try {
 
 			Departement d = departementMetier.creer(departement);

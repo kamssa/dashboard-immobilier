@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.personne.DepartementRepository;
+import ci.gstoreplus.dao.dashboard.personne.EntrepriseRepository;
 import ci.gstoreplus.entity.dashboard.admin.Departement;
+import ci.gstoreplus.entity.dashboard.admin.Entreprise;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 
@@ -15,12 +17,19 @@ import ci.gstoreplus.exception.InvalideImmobilierException;
 public class DepartementMetierImpl implements IDepartementMetier{
 @Autowired
 private DepartementRepository departementRepository;
+@Autowired
+private EntrepriseRepository entrepriseRepository;
 	@Override
 	public Departement creer(Departement entity) throws InvalideImmobilierException {
-		// TODO Auto-generated method stub
+		
+        Entreprise entreprise = entrepriseRepository.findByNom("GSTORE PLUS SARL").get();
+        System.out.println("Voir entreprise"+entreprise);
+        entity.setEntreprise(entreprise);
+		System.out.println("Voir departement"+entity);
+
 		return departementRepository.save(entity);
 	}
-
+  
 	@Override
 	public Departement modifier(Departement entity) throws InvalideImmobilierException {
 		// TODO Auto-generated method stub

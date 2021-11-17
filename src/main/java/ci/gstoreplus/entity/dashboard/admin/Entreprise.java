@@ -5,14 +5,23 @@ import javax.persistence.Entity;
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
 @Entity
-public class Entrepise extends AbstractEntity{
+public class Entreprise extends AbstractEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nom;
 	private String description;
-	public Entrepise() {
+	public Entreprise() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Entrepise(String nom, String description) {
+	
+	public Entreprise(String nom) {
+		super();
+		this.nom = nom;
+	}
+
+	public Entreprise(String nom, String description) {
 		super();
 		this.nom = nom;
 		this.description = description;
@@ -28,6 +37,11 @@ public class Entrepise extends AbstractEntity{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "Entreprise [nom=" + nom + ", description=" + description + "]";
 	}
 	
 }
