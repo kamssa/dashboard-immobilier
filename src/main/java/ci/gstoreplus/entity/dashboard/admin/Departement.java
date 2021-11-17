@@ -20,7 +20,7 @@ public class Departement extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
     private String libelle;
 	private String description;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_Entreprise")
 	private Entreprise entreprise;
 	
