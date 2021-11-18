@@ -14,12 +14,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gstoreplus.dashboard.metier.PersonneMetier;
+import ci.gstoreplus.entity.dashboard.admin.Employe;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @CrossOrigin
 public class PersonneController {
 	@Autowired
@@ -65,4 +66,5 @@ public class PersonneController {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
+		
 }

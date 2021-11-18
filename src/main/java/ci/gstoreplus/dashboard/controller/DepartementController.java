@@ -78,11 +78,10 @@ public class DepartementController {
 		Reponse<Departement> reponse = null;
 		Reponse<Departement> reponsePersModif = null;
 		// on recupere autre a modifier
-		System.out.println("modif recupere1:"+ modif);
 		reponsePersModif = getDepartementById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
-				System.out.println("modif recupere2:"+ modif);
+				System.out.println("modif recupere2:"+ reponsePersModif.getBody());
 				Departement departement = departementMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", departement.getId()));

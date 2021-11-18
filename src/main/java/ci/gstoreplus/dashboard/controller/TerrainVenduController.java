@@ -178,4 +178,24 @@ public String update(@RequestBody TerrainVendu  modif) throws JsonProcessingExce
 				return jsonMapper.writeValueAsString(reponse);
 
 			}
+			// get all TerrainAcheter
+			@GetMapping("/terrainVenduAbonneGeo")
+			public String findAllAbonneGeo() throws JsonProcessingException {
+				Reponse<List<TerrainVendu>> reponse;
+				try {
+					List<TerrainVendu> terrainAcheters = terrainVenduMetier.findAllTerrainAbonneGeo();
+					if (!terrainAcheters.isEmpty()) {
+						reponse = new Reponse<List<TerrainVendu>>(0, null, terrainAcheters);
+					} else {
+						List<String> messages = new ArrayList<>();
+						messages.add("Pas de TerrainAcheter enregistrés");
+						reponse = new Reponse<List<TerrainVendu>>(1, messages, new ArrayList<>());
+					}
+
+				} catch (Exception e) {
+					reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+				}
+				return jsonMapper.writeValueAsString(reponse);
+
+			}
 }

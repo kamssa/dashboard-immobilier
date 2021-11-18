@@ -27,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ci.gstoreplus.dashboard.metier.EmployeMetier;
 import ci.gstoreplus.dashboard.metier.IRoleMetier;
 import ci.gstoreplus.dashboard.metier.PersonneMetier;
+import ci.gstoreplus.entity.catalogue.DetailTerrain;
+import ci.gstoreplus.entity.dashboard.admin.Employe;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.entity.dashboard.shared.RoleName;
@@ -40,52 +42,53 @@ import ci.gstoreplus.utilitaire.Static;
 public class EmployeController {
 	@Autowired
 	AuthenticationManager authenticationManager;
-    @Autowired
-	PersonneMetier personneMetier;
+   
     @Autowired
     EmployeMetier employeMetier;
+    @Autowired
+    PersonneMetier personneMetier;
 	@Autowired
 	IRoleMetier roleMetier;
     @Autowired
 	private ObjectMapper jsonMapper;
 	
  // recuper personne par identifiant
- 	private Reponse<Personne> getPersonneById(Long id) {
- 		Personne personne = null;
+ 	private Reponse<Employe> getEmployeById(Long id) {
+ 		Employe personne = null;
 
  		try {
- 			personne = personneMetier.findById(id);
+ 			personne = employeMetier.findById(id);
  			if (personne == null) {
  				List<String> messages = new ArrayList<>();
  				messages.add(String.format("Personne n'existe pas", id));
- 				new Reponse<Personne>(2, messages, null);
+ 				new Reponse<Employe>(2, messages, null);
 
  			}
  		} catch (RuntimeException e) {
- 			new Reponse<Personne>(1, Static.getErreursForException(e), null);
+ 			new Reponse<Employe>(1, Static.getErreursForException(e), null);
  		}
 
- 		return new Reponse<Personne>(0, null, personne);
+ 		return new Reponse<Employe>(0, null, personne);
  	}
 
     
 	
 	@PostMapping("/employe")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String createEmploye(@Valid @RequestBody Personne signUpRequest) throws Exception {
-		Reponse<Personne> reponse;
+	public String createEmploye(@Valid @RequestBody Employe signUpRequest) throws Exception {
+		Reponse<Employe> reponse;
 		System.out.println(signUpRequest);
 		try {
 			Role userRole = roleMetier.findByName(RoleName.ROLE_EMPLOYE).get();
 			signUpRequest.setRoles(Collections.singleton(userRole));
-			Personne d = employeMetier.creer(signUpRequest);
+			Employe d = employeMetier.creer(signUpRequest);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", d.getId()));
-			reponse = new Reponse<Personne>(0, messages, d);
+			reponse = new Reponse<Employe>(0, messages, d);
 
 		} catch (InvalideImmobilierException e) {
 
-			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Employe>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 			
@@ -93,29 +96,29 @@ public class EmployeController {
 		
 	}
 	@PutMapping("/employe")
-	public String update(@RequestBody Personne modif) throws JsonProcessingException {
+	public String update(@RequestBody Employe modif) throws JsonProcessingException {
 
-		Reponse<Personne> reponse = null;
-		Reponse<Personne> reponsePersModif = null;
+		Reponse<Employe> reponse = null;
+		Reponse<Employe> reponsePersModif = null;
 		// on recupere autre a modifier
 		System.out.println("modif recupere1:" + modif);
-		reponsePersModif = getPersonneById(modif.getId());
+		reponsePersModif = getEmployeById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				Personne personne = employeMetier.modifier(modif);
+				Employe personne = employeMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", personne.getId()));
-				reponse = new Reponse<Personne>(0, messages, personne);
+				reponse = new Reponse<Employe>(0, messages, personne);
 			} catch (InvalideImmobilierException e) {
 
-				reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<Employe>(1, Static.getErreursForException(e), null);
 			}
 
 		} else {
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("La personne n'existe pas"));
-			reponse = new Reponse<Personne>(0, messages, null);
+			reponse = new Reponse<Employe>(0, messages, null);
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
@@ -126,18 +129,18 @@ public class EmployeController {
 	@GetMapping("/employe/{id}")
 	public String getPersonnesById(@PathVariable("id") Long id) throws JsonProcessingException {
 
-		Reponse<Personne> reponse;
+		Reponse<Employe> reponse;
 
 		try {
 
-			Personne p = employeMetier.findById(id);
+			Employe p = employeMetier.findById(id);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("Employé retouvé avec succes"));
-			reponse = new Reponse<Personne>(0, messages, p);
+			reponse = new Reponse<Employe>(0, messages, p);
 
 		} catch (Exception e) {
 
-			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Employe>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
@@ -150,7 +153,7 @@ public class EmployeController {
 
 		try {
 
-			reponse = new Reponse<Boolean>(0, null, personneMetier.supprimer(id));
+			reponse = new Reponse<Boolean>(0, null, employeMetier.supprimer(id));
 
 		} catch (RuntimeException e1) {
 			reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
@@ -162,15 +165,15 @@ public class EmployeController {
 	// get all employe
 	@GetMapping("/employe")
 	public String findAll() throws JsonProcessingException {
-		Reponse<List<Personne>> reponse;
+		Reponse<List<Employe>> reponse;
 		try {
-			List<Personne> pers = employeMetier.findAll();
+			List<Employe> pers = employeMetier.findAll();
 			if (!pers.isEmpty()) {
-				reponse = new Reponse<List<Personne>>(0, null, pers);
+				reponse = new Reponse<List<Employe>>(0, null, pers);
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add("Pas d'employes enregistrés");
-				reponse = new Reponse<List<Personne>>(1, messages, new ArrayList<>());
+				reponse = new Reponse<List<Employe>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {
@@ -179,97 +182,39 @@ public class EmployeController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
-	@GetMapping("/addRoleToEmploye/{id}/{roleName}")
-	public String addRoleToEmploye(@PathVariable("id") Long id,  @PathVariable("roleName")String roleName) throws Exception {
-       
-
-		Reponse<Personne> reponse = null;
-		Personne empl = null;
-		
-			if (roleName.equals("ROLE_ADMIN")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_ADMIN).get();
-				Personne signUpRequest = getPersonneById(id).getBody();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.modifier(signUpRequest);
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			}else if (roleName.equals("ROLE_MANAGER")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_MANAGER).get();
-				Personne signUpRequest = getPersonneById(id).getBody();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.modifier(signUpRequest);
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			}else if (roleName.equals("ROLE_COMMERCIAL") ) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_COMMERCIAL).get();
-				Personne signUpRequest = personneMetier.findById(id);
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.modifier(signUpRequest);
-				System.out.println("Voir le nom complet de la personne recuperée:" + empl.getNomComplet());
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			} else if (roleName.equals("ROLE_EXPLOITANT")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_EXPLOITANT).get();
-				Personne signUpRequest = getPersonneById(id).getBody();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.modifier(signUpRequest);
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			}
-			
-			else if (roleName.equals("ROLE_EMPLOYE")) {
-				Role userRole = roleMetier.findByName(RoleName.ROLE_EMPLOYE).get();
-				Personne signUpRequest = getPersonneById(id).getBody();
-				signUpRequest.setRoles(Collections.singleton(userRole));
-				empl = personneMetier.modifier(signUpRequest);
-
-				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  a été créé avec succès", empl.getId()));
-				reponse = new Reponse<Personne>(0, messages, empl);
-				return jsonMapper.writeValueAsString(reponse);
-
-			}else {
-              jsonMapper.writeValueAsString(reponse);
-	
-			}
-			return jsonMapper.writeValueAsString(reponse);
-			
-						
-			}
-	// recherche le membre par id
-	@GetMapping("/getEmployeByEmail/{email}")
-	public String getEmployeByEmail(@PathVariable("email") String email) throws JsonProcessingException {
-
-		Reponse<Personne> reponse;
-
+	// employe par id departement
+	@GetMapping("/employeByDepartement/{id}")
+	public String getEmployeByIdDepartement(@PathVariable Long id) throws JsonProcessingException {
+		Reponse<List<Employe>> reponse;
 		try {
-
-			Personne p = personneMetier.findByEmail(email);
-			 System.out.println("getClientById:" +p);
-			List<String> messages = new ArrayList<>();
-			messages.add(String.format(" à été créer avec succes"));
-			reponse = new Reponse<Personne>(0, messages, p);
-
-		} catch (Exception e) {
-
-			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+			List<Employe> detailTerrain = employeMetier.findEmployeByDepartement(id);
+			
+		reponse = new Reponse<List<Employe>>(0, null, detailTerrain);
+			
+     } catch (Exception e) {
+			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
+	// recherche les employes par id
+			@GetMapping("/getPersonneByEmail/{email}")
+			public String getPersonnesByEmail(@PathVariable("email") String email) throws JsonProcessingException {
+
+				Reponse<Personne> reponse;
+
+				try {
+
+					Personne p = personneMetier.findByEmail(email);
+					List<String> messages = new ArrayList<>();
+					messages.add(String.format("personne retouvé avec succes"));
+					reponse = new Reponse<Personne>(0, messages, p);
+
+				} catch (Exception e) {
+
+					reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+				}
+				return jsonMapper.writeValueAsString(reponse);
+			}
+		
+	
 }

@@ -33,6 +33,11 @@ private EntrepriseRepository entrepriseRepository;
 	@Override
 	public Departement modifier(Departement entity) throws InvalideImmobilierException {
 		// TODO Auto-generated method stub
+		
+		 Entreprise entreprise = entrepriseRepository.findByNom("GSTORE PLUS SARL").get();
+	        System.out.println("Voir entreprise:"+entreprise);
+	        entity.setEntreprise(entreprise);
+	        System.out.println("Voir departement modif:"+entity);
 		return departementRepository.save(entity);
 	}
 

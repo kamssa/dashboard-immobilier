@@ -1,12 +1,16 @@
 package ci.gstoreplus.dashboard.metier.catalogue;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.catalogue.TerrainVenduRepository;
 import ci.gstoreplus.entity.catalogue.TerrainVendu;
+import ci.gstoreplus.entity.dashboard.admin.Employe;
+import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
 @Service
@@ -15,13 +19,18 @@ public class TerrainVenduMetierImpl implements TerrainVenduMetier{
 private TerrainVenduRepository terrainVenduRepository;
 	@Override
 	public TerrainVendu creer(TerrainVendu entity) throws InvalideImmobilierException {
-		// TODO Auto-generated method stub
+		if(entity.getPersonne()== null) {
+			throw new InvalideImmobilierException("Le terrain doit avoir un client");
+		}
 		return terrainVenduRepository.save(entity);
 	}
 
 	@Override
 	public TerrainVendu modifier(TerrainVendu entity) throws InvalideImmobilierException {
-		// TODO Auto-generated method stub
+		Optional<TerrainVendu> t = terrainVenduRepository.findById(entity.getId());
+		if(entity.getPersonne()== null) {
+			entity.setPersonne(t.get().getPersonne());
+		} 
 		return terrainVenduRepository.save(entity);
 	}
 
@@ -72,5 +81,12 @@ private TerrainVenduRepository terrainVenduRepository;
 		// TODO Auto-generated method stub
 		return terrainVenduRepository.findTerrainVenduByIdPersonne(id);
 	}
+	@Override
+	public List<TerrainVendu> findAllTerrainAbonneGeo() {
+		List<TerrainVendu> t = null;
+		List<TerrainVendu> terrainvendus = terrainVenduRepository.findAll();
+	    t = terrainvendus.stream().filter(p -> p.isAbonneGeo() == true).collect(Collectors.toList());
+	    return t;		
+	    }
 
 }

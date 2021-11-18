@@ -3,15 +3,14 @@ package ci.gstoreplus.dashboard.metier;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ci.gstoreplus.dao.dashboard.personne.PersonneRepository;
+import ci.gstoreplus.dao.dashboard.personne.EmployeRepository;
 import ci.gstoreplus.dao.dashboard.personne.RoleRepository;
-import ci.gstoreplus.entity.dashboard.shared.Personne;
+import ci.gstoreplus.entity.dashboard.admin.Employe;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.entity.dashboard.shared.RoleName;
 import ci.gstoreplus.exception.InvalideImmobilierException;
@@ -19,58 +18,58 @@ import ci.gstoreplus.exception.InvalideImmobilierException;
 @Service
 public class EmployemetierImpl implements EmployeMetier{
 @Autowired
-private PersonneRepository personneRepository;
+private EmployeRepository employeRepository;
 @Autowired
 private RoleRepository roleRepository;
 @Autowired
 PasswordEncoder passwordEncoder;
 	@Override
-	public Personne creer(Personne entity) throws InvalideImmobilierException {
+	public Employe creer(Employe entity) throws InvalideImmobilierException {
 		System.out.println("voir le client--->"+entity);
-		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-		return personneRepository.save(entity);
+		if(entity.getDepartement()!= null) {
+			entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+			
+		}else {
+			throw new InvalideImmobilierException("Le departement ne doit pas etre null");
+		}
+		
+		return employeRepository.save(entity);
 	}
 
 	@Override
-	public Personne modifier(Personne modif) throws InvalideImmobilierException {
-		Optional<Personne> personne = personneRepository.findById(modif.getId());
-		if (personne.isPresent()) {
+	public Employe modifier(Employe modif) throws InvalideImmobilierException {
+		Optional<Employe> personne = employeRepository.findById(modif.getId());
+		if (modif.getDepartement()== null) {
 
-			if (personne.get().getVersion()  != modif.getVersion()) {
-				throw new InvalideImmobilierException("cette personne a deja ete modifier");
-			}
+			modif.setDepartement(personne.get().getDepartement());
 
-		} else
-			throw new InvalideImmobilierException("modif est un objet null");
+		} 
 
 		modif.setPassword(passwordEncoder.encode(modif.getPassword()));
 		Role userRole = roleRepository.findByName(RoleName.ROLE_EMPLOYE).get();
 		modif.setRoles(Collections.singleton(userRole));
-		return personneRepository.save(modif);
+		return employeRepository.save(modif);
 	}
 
 	@Override
-	public List<Personne> findAll() {
-		List<Personne> pers = null;
-		List<Personne> personne = personneRepository.findAll();
-        pers = personne.stream().filter(p -> p.getType().equals("EM")).collect(Collectors.toList());
-        return pers;
+	public List<Employe> findAll() {
+		return employeRepository.findAll();
 	}
 
 	@Override
-	public Personne findById(Long id) {
+	public Employe findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return employeRepository.findById(id).get();
 	}
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		employeRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
-	public boolean supprimer(List<Personne> entites) {
+	public boolean supprimer(List<Employe> entites) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -91,6 +90,12 @@ PasswordEncoder passwordEncoder;
 	public boolean existsByEmail(String email) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Employe> findEmployeByDepartement(long id) {
+		// TODO Auto-generated method stub
+		return employeRepository.findEmployeByDepartement(id);
 	}
 
 }
