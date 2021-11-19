@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.personne.ProspectRepository;
+import ci.gstoreplus.entity.client.Prospect;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
@@ -17,37 +18,37 @@ public class ProspectMetierImpl implements ProspectMetier{
 private ProspectRepository prospectRepository;
 
 @Override
-public Personne creer(Personne entity) throws InvalideImmobilierException {
+public Prospect creer(Prospect entity) throws InvalideImmobilierException {
+	// TODO Auto-generated method stub
 	return prospectRepository.save(entity);
 }
 
 @Override
-public Personne modifier(Personne entity) throws InvalideImmobilierException {
+public Prospect modifier(Prospect entity) throws InvalideImmobilierException {
+	// TODO Auto-generated method stub
 	return prospectRepository.save(entity);
 }
 
 @Override
-public List<Personne> findAll() {
-	List<Personne> pers = null;
-	List<Personne> personne = prospectRepository.findAll();
-    pers = personne.stream().filter(p -> p.getType().equals("PR")).collect(Collectors.toList());
-    return pers;
+public List<Prospect> findAll() {
+	// TODO Auto-generated method stub
+	return prospectRepository.findAll();
 }
 
 @Override
-public Personne findById(Long id) {
+public Prospect findById(Long id) {
 	// TODO Auto-generated method stub
 	return prospectRepository.findById(id).get();
 }
 
 @Override
 public boolean supprimer(Long id) {
-prospectRepository.deleteById(id);
+	prospectRepository.deleteById(id);
 	return true;
 }
 
 @Override
-public boolean supprimer(List<Personne> entites) {
+public boolean supprimer(List<Prospect> entites) {
 	// TODO Auto-generated method stub
 	return false;
 }
@@ -69,6 +70,6 @@ public boolean existsByEmail(String email) {
 	// TODO Auto-generated method stub
 	return false;
 }
-	
+
 
 }

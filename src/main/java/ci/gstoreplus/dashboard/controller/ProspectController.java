@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +40,7 @@ import ci.gstoreplus.dashboard.metier.ProspectMetier;
 import ci.gstoreplus.entity.catalogue.Document;
 import ci.gstoreplus.entity.catalogue.Demande;
 import ci.gstoreplus.entity.client.Prospect;
+import ci.gstoreplus.entity.dashboard.admin.Employe;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.entity.dashboard.shared.Role;
 import ci.gstoreplus.entity.dashboard.shared.RoleName;
@@ -72,6 +74,25 @@ public class ProspectController {
 	private ObjectMapper jsonMapper;
 	@Autowired
 	ApplicationEventPublisher eventPublisher;
+
+	// recuper personne par identifiant
+	 	private Reponse<Prospect> getProspectByIdProspect(Long id) {
+	 		Prospect personne = null;
+
+	 		try {
+	 			personne = prospectMetier.findById(id);
+	 			if (personne == null) {
+	 				List<String> messages = new ArrayList<>();
+	 				messages.add(String.format("Personne n'existe pas", id));
+	 				new Reponse<Prospect>(2, messages, null);
+
+	 			}
+	 		} catch (RuntimeException e) {
+	 			new Reponse<Prospect>(1, Static.getErreursForException(e), null);
+	 		}
+
+	 		return new Reponse<Prospect>(0, null, personne);
+	 	}
 
 	@PostMapping("/signinp")
 	public String authenticateUser(@Valid @RequestBody Personne loginRequest) throws JsonProcessingException {
@@ -135,34 +156,64 @@ public class ProspectController {
 		return jsonMapper.writeValueAsString(reponses);
 	}
 	@PostMapping("/prospect")
-	public String creer(@RequestBody Personne prospect) throws JsonProcessingException {
-		Reponse<Personne> reponse;
+	public String creer(@RequestBody Prospect prospect) throws JsonProcessingException {
+		Reponse<Prospect> reponse;
 		System.out.println(prospect);
 		try {
 
-			Personne d = prospectMetier.creer(prospect);
+			Prospect d = prospectMetier.creer(prospect);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", d.getId()));
-			reponse = new Reponse<Personne>(0, messages, d);
+			reponse = new Reponse<Prospect>(0, messages, d);
 
 		} catch (InvalideImmobilierException e) {
 
-			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Prospect>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
+	@PutMapping("/prospect")
+	public String update(@RequestBody Prospect modif) throws JsonProcessingException {
+
+		Reponse<Prospect> reponse = null;
+		Reponse<Prospect> reponsePersModif = null;
+		// on recupere autre a modifier
+		System.out.println("modif recupere1:" + modif);
+		reponsePersModif = getProspectByIdProspect(modif.getId());
+		if (reponsePersModif.getBody() != null) {
+			try {
+				System.out.println("modif recupere2:" + modif);
+				Prospect personne = prospectMetier.modifier(modif);
+				List<String> messages = new ArrayList<>();
+				messages.add(String.format("%s a modifier avec succes", personne.getId()));
+				reponse = new Reponse<Prospect>(0, messages, personne);
+			} catch (InvalideImmobilierException e) {
+
+				reponse = new Reponse<Prospect>(1, Static.getErreursForException(e), null);
+			}
+
+		} else {
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format("La personne n'existe pas"));
+			reponse = new Reponse<Prospect>(0, messages, null);
+		}
+
+		return jsonMapper.writeValueAsString(reponse);
+
+	}
+
 	// get all demande
 			@GetMapping("/prospect")
 			public String findAll() throws JsonProcessingException {
-				Reponse<List<Personne>> reponse;
+				Reponse<List<Prospect>> reponse;
 				try {
-					List<Personne> prospects = prospectMetier.findAll();
+					List<Prospect> prospects = prospectMetier.findAll();
 					if (!prospects.isEmpty()) {
-						reponse = new Reponse<List<Personne>>(0, null, prospects);
+						reponse = new Reponse<List<Prospect>>(0, null, prospects);
 					} else {
 						List<String> messages = new ArrayList<>();
 						messages.add("Pas de Prospect enregistrés");
-						reponse = new Reponse<List<Personne>>(1, messages, new ArrayList<>());
+						reponse = new Reponse<List<Prospect>>(1, messages, new ArrayList<>());
 					}
 
 				} catch (Exception e) {
@@ -191,18 +242,18 @@ public class ProspectController {
 			@GetMapping("/prospect/{id}")
 			public String getProspectById(@PathVariable("id") Long id) throws JsonProcessingException {
 
-				Reponse<Personne> reponse;
+				Reponse<Prospect> reponse;
 
 				try {
 
-					Personne c = prospectMetier.findById(id);
+					Prospect c = prospectMetier.findById(id);
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format(" à été créer avec succes"));
-					reponse = new Reponse<Personne>(0, messages, c);
+					reponse = new Reponse<Prospect>(0, messages, c);
 
 				} catch (Exception e) {
 
-					reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+					reponse = new Reponse<Prospect>(1, Static.getErreursForException(e), null);
 				}
 				return jsonMapper.writeValueAsString(reponse);
 			}

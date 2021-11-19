@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ci.gstoreplus.entity.client.Prospect;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 
-public interface ProspectRepository extends JpaRepository<Personne, Long>{
+public interface ProspectRepository extends JpaRepository<Prospect, Long>{
 
 }
