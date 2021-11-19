@@ -45,7 +45,7 @@ import ci.gstoreplus.entity.dashboard.admin.Manager;
 	@Type(name = "EM", value = Employe.class), 
 	@Type(name = "AB", value = Abonne.class),
 	@Type(name = "CL", value = Client.class),
-	@Type(name = "PR", value = Prospect.class)
+	
 })
 public class Personne extends AbstractEntity {
 

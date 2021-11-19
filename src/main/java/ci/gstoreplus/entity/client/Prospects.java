@@ -1,13 +1,11 @@
 package ci.gstoreplus.entity.client;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
 @Entity
-public class Prospect extends AbstractEntity{
+public class Prospects extends AbstractEntity{
 
 	
 	private static final long serialVersionUID = 1L;
@@ -17,14 +15,13 @@ public class Prospect extends AbstractEntity{
 	private String  codePays;
 	private String   telephone;
 	private  String    fonction;
-            
-	public Prospect() {
+	
+	public Prospects() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Prospect(String nom, String prenom, String email, String codePays, String telephone, String fonction,
-			boolean satisfait, String preocupation) {
+	public Prospects(String nom, String prenom, String email, String codePays, String telephone, String fonction) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -32,26 +29,8 @@ public class Prospect extends AbstractEntity{
 		this.codePays = codePays;
 		this.telephone = telephone;
 		this.fonction = fonction;
-		this.satisfait = satisfait;
-		this.preocupation = preocupation;
 	}
 
-	@Column(name = "satisfait")
-	private boolean satisfait;
-	private String preocupation;
-	
-	public boolean isSatisfait() {
-		return satisfait;
-	}
-	public void setSatisfait(boolean satisfait) {
-		this.satisfait = satisfait;
-	}
-	public String getPreocupation() {
-		return preocupation;
-	}
-	public void setPreocupation(String preocupation) {
-		this.preocupation = preocupation;
-	}
 	public String getNom() {
 		return nom;
 	}
@@ -91,9 +70,8 @@ public class Prospect extends AbstractEntity{
 
 	@Override
 	public String toString() {
-		return "Prospect [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", codePays=" + codePays
-				+ ", telephone=" + telephone + ", fonction=" + fonction + ", satisfait=" + satisfait + ", preocupation="
-				+ preocupation + "]";
+		return "Prospects [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", codePays=" + codePays
+				+ ", telephone=" + telephone + ", fonction=" + fonction + "]";
 	}
 	
 }

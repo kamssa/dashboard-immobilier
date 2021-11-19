@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ci.gstoreplus.dao.dashboard.personne.ProspectRepository;
 import ci.gstoreplus.entity.client.Prospect;
+import ci.gstoreplus.entity.client.Prospects;
 import ci.gstoreplus.entity.dashboard.shared.Personne;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 
@@ -18,25 +19,25 @@ public class ProspectMetierImpl implements ProspectMetier{
 private ProspectRepository prospectRepository;
 
 @Override
-public Prospect creer(Prospect entity) throws InvalideImmobilierException {
+public Prospects creer(Prospects entity) throws InvalideImmobilierException {
 	// TODO Auto-generated method stub
 	return prospectRepository.save(entity);
 }
 
 @Override
-public Prospect modifier(Prospect entity) throws InvalideImmobilierException {
+public Prospects modifier(Prospects entity) throws InvalideImmobilierException {
 	// TODO Auto-generated method stub
 	return prospectRepository.save(entity);
 }
 
 @Override
-public List<Prospect> findAll() {
+public List<Prospects> findAll() {
 	// TODO Auto-generated method stub
 	return prospectRepository.findAll();
 }
 
 @Override
-public Prospect findById(Long id) {
+public Prospects findById(Long id) {
 	// TODO Auto-generated method stub
 	return prospectRepository.findById(id).get();
 }
@@ -48,7 +49,7 @@ public boolean supprimer(Long id) {
 }
 
 @Override
-public boolean supprimer(List<Prospect> entites) {
+public boolean supprimer(List<Prospects> entites) {
 	// TODO Auto-generated method stub
 	return false;
 }
