@@ -96,10 +96,7 @@ public class Prospect extends AbstractEntity{
 		return nomComplet;
 	}
 
-	public void setNomComplet(String nomComplet) {
-		this.nomComplet = nomComplet;
-	}
-
+	
 	@PrePersist
 	@PreUpdate
 	public void setNomComplet() {
