@@ -3,6 +3,8 @@ package ci.gstoreplus.entity.client;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
@@ -13,7 +15,8 @@ public class Prospect extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
 	private  String nom ;
 	private String  prenom ;
-	private String  email ;
+	private String  nomComplet ;
+    private String  email ;
 	private String  codePays;
 	private String   telephone;
 	private  String    fonction;
@@ -88,7 +91,20 @@ public class Prospect extends AbstractEntity{
 	public void setFonction(String fonction) {
 		this.fonction = fonction;
 	}
+	
+	public String getNomComplet() {
+		return nomComplet;
+	}
 
+	public void setNomComplet(String nomComplet) {
+		this.nomComplet = nomComplet;
+	}
+
+	@PrePersist
+	@PreUpdate
+	public void setNomComplet() {
+		this.nomComplet = nom + " " + prenom;
+	}
 	@Override
 	public String toString() {
 		return "Prospect [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", codePays=" + codePays
