@@ -18,6 +18,8 @@ public class Prospects extends AbstractEntity{
 	private String  codePays;
 	private String   telephone;
 	private  String    fonction;
+	private boolean satisfait;
+	private String preocupation;
 	
 	public Prospects() {
 		super();
@@ -83,6 +85,23 @@ public class Prospects extends AbstractEntity{
 	public void setNomComplet() {
 		this.nomComplet = nom + " " + prenom;
 	}
+	
+	public boolean isSatisfait() {
+		return satisfait;
+	}
+
+	public void setSatisfait(boolean satisfait) {
+		this.satisfait = satisfait;
+	}
+
+	public String getPreocupation() {
+		return preocupation;
+	}
+
+	public void setPreocupation(String preocupation) {
+		this.preocupation = preocupation;
+	}
+
 	@Override
 	public String toString() {
 		return "Prospects [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", codePays=" + codePays
