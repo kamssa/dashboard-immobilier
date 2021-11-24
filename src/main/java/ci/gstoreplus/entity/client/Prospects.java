@@ -1,5 +1,6 @@
 package ci.gstoreplus.entity.client;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -18,6 +19,7 @@ public class Prospects extends AbstractEntity{
 	private String  codePays;
 	private String   telephone;
 	private  String    fonction;
+	@Column(nullable = true)
 	private boolean satisfait;
 	private String preocupation;
 	
@@ -34,6 +36,21 @@ public class Prospects extends AbstractEntity{
 		this.codePays = codePays;
 		this.telephone = telephone;
 		this.fonction = fonction;
+	}
+	
+
+	public Prospects(String nom, String prenom, String email, String nomComplet, String codePays, String telephone,
+			String fonction, boolean satisfait, String preocupation) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.nomComplet = nomComplet;
+		this.codePays = codePays;
+		this.telephone = telephone;
+		this.fonction = fonction;
+		this.satisfait = satisfait;
+		this.preocupation = preocupation;
 	}
 
 	public String getNom() {
@@ -80,12 +97,12 @@ public class Prospects extends AbstractEntity{
 	public void setNomComplet(String nomComplet) {
 		this.nomComplet = nomComplet;
 	}
+	
 	@PrePersist
 	@PreUpdate
 	public void setNomComplet() {
 		this.nomComplet = nom + " " + prenom;
 	}
-	
 	public boolean isSatisfait() {
 		return satisfait;
 	}
