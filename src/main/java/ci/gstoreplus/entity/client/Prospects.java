@@ -20,7 +20,7 @@ public class Prospects extends AbstractEntity{
 	private String   telephone;
 	private  String    fonction;
 	@Column(nullable = true)
-	private boolean satisfait;
+	private Boolean satisfait;
 	private String preocupation;
 	
 	public Prospects() {
