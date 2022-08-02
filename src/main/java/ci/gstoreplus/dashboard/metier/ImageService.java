@@ -33,7 +33,7 @@ public class ImageService {
 		return imageRepository.existsById(id);
 	}
 	public Image findImageByIdTerrain(Long id) {
-		return imageRepository.findImageByIdTerrain(id);
+		return imageRepository.findImageByIdProduit(id);
 	}
 
 }

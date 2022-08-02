@@ -52,7 +52,7 @@ public class ClientController {
 	PersonneMetier personneMetier;
 	@Autowired
 	private ClientMetier clientMetier;
-	
+
 	@Autowired
 	IRoleMetier roleMetier;
 
@@ -77,7 +77,6 @@ public class ClientController {
 
 	}
 
-
 	@PostMapping("/signuc")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String creatUser(@RequestBody Personne signUpRequest) throws Exception {
@@ -87,9 +86,8 @@ public class ClientController {
 
 			Role userRole = roleMetier.findByName(RoleName.ROLE_CLIENT).get();
 			signUpRequest.setRoles(Collections.singleton(userRole));
-             personne = personneMetier.creer(signUpRequest);
+			personne = personneMetier.creer(signUpRequest);
 			System.out.println("Voir le nom complet de la personne recuperée:" + personne.getNomComplet());
-			
 
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  a été créé avec succès", personne.getId()));
@@ -100,7 +98,7 @@ public class ClientController {
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
-	
+
 	@GetMapping("/registrationConfirm")
 	public String confirmRegistration(@RequestParam(value = "email") String email,
 			@RequestParam(value = "token") String token) throws InvalideImmobilierException, JsonProcessingException {
@@ -108,7 +106,7 @@ public class ClientController {
 		Reponse<Personne> reponse = null;
 
 		Personne user = null;
-		// on recupre le membre a patir de son token dans la base 
+		// on recupre le membre a patir de son token dans la base
 		user = personneMetier.getPersonne(token);
 		if (user.getEmail().equals(email)) {
 
@@ -134,6 +132,7 @@ public class ClientController {
 
 		return jsonMapper.writeValueAsString(reponse);
 	}
+
 	@PostMapping("/client")
 	public String creer(@RequestBody Personne client) throws JsonProcessingException {
 		Reponse<Personne> reponse;
@@ -152,17 +151,18 @@ public class ClientController {
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
+
 	@PutMapping("/client")
-	public String update(@RequestBody Personne  modif) throws JsonProcessingException {
+	public String update(@RequestBody Personne modif) throws JsonProcessingException {
 
 		Reponse<Personne> reponse = null;
 		Reponse<Personne> reponsePersModif = null;
 		// on recupere autre a modifier
-		System.out.println("modif recupere1:"+ modif);
+		System.out.println("modif recupere1:" + modif);
 		Personne client = clientMetier.findById(modif.getId());
 		if (client != null) {
 			try {
-				System.out.println("modif recupere2:"+ modif);
+				System.out.println("modif recupere2:" + modif);
 				Personne c = clientMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", c.getId()));
@@ -181,140 +181,143 @@ public class ClientController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
+
 	// get all demande
-			@GetMapping("/client")
-			public String findAll() throws JsonProcessingException {
-				Reponse<List<Personne>> reponse;
-				try {
-					List<Personne> clients = clientMetier.findAll();
-					if (!clients.isEmpty()) {
-						reponse = new Reponse<List<Personne>>(0, null, clients);
-					} else {
-						List<String> messages = new ArrayList<>();
-						messages.add("Pas de client enregistrés");
-						reponse = new Reponse<List<Personne>>(1, messages, new ArrayList<>());
-					}
-
-				} catch (Exception e) {
-					reponse = new Reponse<>(1, Static.getErreursForException(e), null);
-				}
-				return jsonMapper.writeValueAsString(reponse);
-
-			}
-			// supprimer une demande
-			@DeleteMapping("/client/{id}")
-			public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
-
-				Reponse<Boolean> reponse = null;
-
-				try {
-
-					reponse = new Reponse<Boolean>(0, null, clientMetier.supprimer(id));
-
-				} catch (RuntimeException e1) {
-					reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
-				}
-
-				return jsonMapper.writeValueAsString(reponse);
-			}
-			// recherche les employes par id
-			@GetMapping("/client/{id}")
-			public String getPersonnesById(@PathVariable("id") Long id) throws JsonProcessingException {
-
-				Reponse<Personne> reponse;
-
-				try {
-
-					Personne p = personneMetier.findById(id);
-					List<String> messages = new ArrayList<>();
-					messages.add(String.format(" à été créer avec succes"));
-					reponse = new Reponse<Personne>(0, messages, p);
-
-				} catch (Exception e) {
-
-					reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
-				}
-				return jsonMapper.writeValueAsString(reponse);
+	@GetMapping("/client")
+	public String findAll() throws JsonProcessingException {
+		Reponse<List<Personne>> reponse;
+		try {
+			List<Personne> clients = clientMetier.findAll();
+			if (!clients.isEmpty()) {
+				reponse = new Reponse<List<Personne>>(0, null, clients);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de client enregistrés");
+				reponse = new Reponse<List<Personne>>(1, messages, new ArrayList<>());
 			}
 
-			// recherche le membre par id
-						@GetMapping("/getClient/{email}")
-						public String getClientByEmail(@PathVariable("email") String email) throws JsonProcessingException {
+		} catch (Exception e) {
+			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
 
-							Reponse<Personne> reponse;
+	}
 
-							try {
+	// supprimer une demande
+	@DeleteMapping("/client/{id}")
+	public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
 
-								Personne p = personneMetier.findByEmail(email);
-								 System.out.println("getClientById:" +p);
-								List<String> messages = new ArrayList<>();
-								messages.add(String.format(" à été créer avec succes"));
-								reponse = new Reponse<Personne>(0, messages, p);
+		Reponse<Boolean> reponse = null;
 
-							} catch (Exception e) {
+		try {
 
-								reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
-							}
-							return jsonMapper.writeValueAsString(reponse);
-						}
-						@PutMapping("/updatePassword")
-						public String updatePassword(@RequestBody Personne  modif) throws JsonProcessingException {
+			reponse = new Reponse<Boolean>(0, null, clientMetier.supprimer(id));
 
-							Reponse<Personne> reponse = null;
-							// on recupere autre a modifier
-							
-								try {
-									Personne c = clientMetier.modifPassword(modif);
-									List<String> messages = new ArrayList<>();
-									messages.add(String.format("%s a modifier avec succes", c.getId()));
-									reponse = new Reponse<Personne>(0, messages, c);
-								} catch (Exception e) {
+		} catch (RuntimeException e1) {
+			reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
+		}
 
-									reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
-								}
+		return jsonMapper.writeValueAsString(reponse);
+	}
 
-							
+	// recherche les employes par id
+	@GetMapping("/client/{id}")
+	public String getPersonnesById(@PathVariable("id") Long id) throws JsonProcessingException {
 
-							return jsonMapper.writeValueAsString(reponse);
+		Reponse<Personne> reponse;
 
-						}
-						// recherche une personne par son un mot cle
-						@GetMapping("/clientbyMc/{mc}")
-						public String getClientByMc(@PathVariable("mc") String mc) throws JsonProcessingException {
+		try {
 
-							Reponse<List<Personne>> reponse;
+			Personne p = personneMetier.findById(id);
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format(" à été créer avec succes"));
+			reponse = new Reponse<Personne>(0, messages, p);
 
-							try {
+		} catch (Exception e) {
 
-								List<Personne> p = personneMetier.findAllPersonnesParMc(mc);
-								List<String> messages = new ArrayList<>();
-								messages.add(String.format(" à été créer avec succes"));
-								reponse = new Reponse<List<Personne>>(0, messages, p);
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
+	}
 
-							} catch (Exception e) {
+	// recherche le membre par id
+	@GetMapping("/getClient/{email}")
+	public String getClientByEmail(@PathVariable("email") String email) throws JsonProcessingException {
 
-								reponse = new Reponse<List<Personne>>(1, Static.getErreursForException(e), null);
-							}
-							return jsonMapper.writeValueAsString(reponse);
-						}
-						@GetMapping("/getClientByNumCni/{numCni}")
-						public String getPersonnesByCni(@PathVariable("numCni") String numCni) throws JsonProcessingException {
+		Reponse<Personne> reponse;
 
-							Reponse<Personne> reponse;
+		try {
 
-							try {
+			Personne p = personneMetier.findByEmail(email);
+			System.out.println("getClientById:" + p);
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format(" à été créer avec succes"));
+			reponse = new Reponse<Personne>(0, messages, p);
 
-								Personne p = personneMetier.findByNumCni(numCni);
-								List<String> messages = new ArrayList<>();
-								messages.add(String.format(" à été créer avec succes"));
-								reponse = new Reponse<Personne>(0, messages, p);
+		} catch (Exception e) {
 
-							} catch (Exception e) {
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
+	}
 
-								reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
-							}
-							return jsonMapper.writeValueAsString(reponse);
-						}
+	@PutMapping("/updatePassword")
+	public String updatePassword(@RequestBody Personne modif) throws JsonProcessingException {
 
+		Reponse<Personne> reponse = null;
+		// on recupere autre a modifier
+
+		try {
+			Personne c = clientMetier.modifPassword(modif);
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format("%s a modifier avec succes", c.getId()));
+			reponse = new Reponse<Personne>(0, messages, c);
+		} catch (Exception e) {
+
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+		}
+
+		return jsonMapper.writeValueAsString(reponse);
+
+	}
+
+	// recherche une personne par son un mot cle
+	@GetMapping("/clientbyMc/{mc}")
+	public String getClientByMc(@PathVariable("mc") String mc) throws JsonProcessingException {
+
+		Reponse<List<Personne>> reponse;
+
+		try {
+
+			List<Personne> p = personneMetier.findAllPersonnesParMc(mc);
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format(" à été créer avec succes"));
+			reponse = new Reponse<List<Personne>>(0, messages, p);
+
+		} catch (Exception e) {
+
+			reponse = new Reponse<List<Personne>>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
+	}
+
+	@GetMapping("/getClientByNumCni/{numCni}")
+	public String getPersonnesByCni(@PathVariable("numCni") String numCni) throws JsonProcessingException {
+
+		Reponse<Personne> reponse;
+
+		try {
+
+			Personne p = personneMetier.findByNumCni(numCni);
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format(" à été créer avec succes"));
+			reponse = new Reponse<Personne>(0, messages, p);
+
+		} catch (Exception e) {
+
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
+	}
 
 }

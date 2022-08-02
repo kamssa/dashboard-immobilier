@@ -26,10 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gstoreplus.dashboard.metier.CloudinaryService;
 import ci.gstoreplus.dashboard.metier.catalogue.BlogMetier;
-import ci.gstoreplus.dashboard.metier.catalogue.ImageAccueilMetier;
 import ci.gstoreplus.entity.catalogue.Blog;
-import ci.gstoreplus.entity.catalogue.Demande;
-import ci.gstoreplus.entity.catalogue.ImageAccueil;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
 import ci.gstoreplus.utilitaire.Static;

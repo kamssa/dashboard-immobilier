@@ -10,9 +10,9 @@ import ci.gstoreplus.entity.catalogue.Image;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
-List<Image> findByOrderById();
-//recupere les abonnement par id de espace
-	@Query("select image from Image image  where image.idTerrain=?1")
-	Image findImageByIdTerrain(Long id);
-	
+	List<Image> findByOrderById();
+
+	@Query("select image from Image image  where image.idProduit=?1")
+	Image findImageByIdProduit(Long id);
+
 }

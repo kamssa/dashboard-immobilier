@@ -20,10 +20,10 @@ private TerrainRepository terrainRepository;
 		if ((entity.getLibelle().equals(null)) || (entity.getLibelle()== "")) {
 			throw new InvalideImmobilierException("Le libelle ne peut etre null");
 		}
-		Optional<Terrain> cats = null;
+		Optional<Terrain> terrain = null;
 
-		cats = terrainRepository.findByLibelle(entity.getLibelle());
-		if (cats.isPresent()) {
+		terrain = terrainRepository.findByLibelle(entity.getLibelle());
+		if (terrain.isPresent()) {
 			throw new InvalideImmobilierException("Ce libelle est deja utilise");
 		}
 		

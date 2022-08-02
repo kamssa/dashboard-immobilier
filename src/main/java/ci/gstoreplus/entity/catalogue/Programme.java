@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 import ci.gstoreplus.entity.dashboard.shared.AbstractEntity;
 
 @Entity
-public class Paiement extends AbstractEntity{
-private double montantVerset;
+public class Programme extends AbstractEntity{
+
+	private static final long serialVersionUID = 1L;
 
 }

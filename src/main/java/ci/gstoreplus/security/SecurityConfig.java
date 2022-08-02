@@ -90,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     		"/api/imageDetail/**","/api/uploadImageAccueil/**",
                     		"/api/detailMaison/**", "/api/uploadImageAccueil/**",
                     		"/api/detailFlashMaison/**",
-                    		"/api/imageFlashByIdFlash/**",
+                    		"/api/imageFlashByIdFlash/**","/api/client/**",
                     		"/api/uploadDetailFlashMaison/**",
                     		"/api/imageDetailFlashMaison/**",
                     		"/api/uploadBlog/**","/api/versement/**","/api/dversementByIdPersonne/**",

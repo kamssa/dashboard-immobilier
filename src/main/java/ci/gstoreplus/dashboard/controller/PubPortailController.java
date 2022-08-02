@@ -22,15 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ci.gstoreplus.dashboard.metier.catalogue.FlashMaisonMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.PubPortailMetier;
 import ci.gstoreplus.entity.catalogue.FlashMaison;
 import ci.gstoreplus.entity.catalogue.PubPortail;
-import ci.gstoreplus.entity.catalogue.Terrain;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.metier.Imetier;
 import ci.gstoreplus.models.Reponse;

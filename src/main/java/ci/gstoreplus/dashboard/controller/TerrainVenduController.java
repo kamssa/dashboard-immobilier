@@ -13,13 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ci.gstoreplus.dashboard.metier.catalogue.ProduitAcheterMetier;
 import ci.gstoreplus.dashboard.metier.catalogue.TerrainVenduMetier;
-import ci.gstoreplus.entity.catalogue.TerrainAcheter;
 import ci.gstoreplus.entity.catalogue.TerrainVendu;
 import ci.gstoreplus.exception.InvalideImmobilierException;
 import ci.gstoreplus.models.Reponse;
